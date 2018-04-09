@@ -1,7 +1,8 @@
 package dataLayer;
 
 public interface DataLayer {
-
+	DataContext data;
+	
 	/* CRUD PERSON */
 	public abstract void createPerson(Person p);
 
