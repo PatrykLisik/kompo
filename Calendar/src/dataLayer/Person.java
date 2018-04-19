@@ -30,4 +30,11 @@ public class Person {
 		surName = "No Surname";
 	}
 
+	public boolean equals(Person p) {
+		if (p == null)
+			return false;
+
+		return this.name.equals(p.getName()) && this.surName.equals(p.getSurName());
+	}
+
 }
