@@ -78,7 +78,9 @@ public class LogicLayerNoSQL implements LogicLayer {
 	 */
 	@Override
 	public void importFromBianry(String fileName) {
-		// TODO Auto-generated method stub
+		Importer imp=new BinaryImporter();
+		data=imp.importData(fileName);
+		
 
 	}
 
