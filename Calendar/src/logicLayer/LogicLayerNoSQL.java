@@ -21,10 +21,29 @@ import dataLayer.Person;
 public class LogicLayerNoSQL implements LogicLayer {
 	DataService data = new DataServiceNoSQL();
 
+	/**
+	 * Generic method to save 
+	 * @param fileName
+	 * @param saver
+	 */
+	private void save(String fileName, Saver saver) {
+		saver.save(fileName,data);
+	}
+
+	/**
+	 * Generic method to import
+	 * 
+	 * @param fileName
+	 * @param saver
+	 */
+	private void importData(String fileName, Importer importer) {
+		data = importer.importData(fileName);
+	}
+
 	@Override
 	public void saveToBianry(String fileName) {
-		Saver saver=new BianrySaver();
-		saver.save(fileName,data);
+		this.save(fileName, new BianrySaver());
+
 	}
 
 	/*
@@ -34,7 +53,7 @@ public class LogicLayerNoSQL implements LogicLayer {
 	 */
 	@Override
 	public void saveToXML(String fileName) {
-		// TODO Auto-generated method stub
+		this.save(fileName, new XMLSaver());
 
 	}
 
@@ -78,10 +97,8 @@ public class LogicLayerNoSQL implements LogicLayer {
 	 */
 	@Override
 	public void importFromBianry(String fileName) {
-		Importer imp=new BinaryImporter();
-		data=imp.importData(fileName);
-		
-
+		Importer imp = new BinaryImporter();
+		data = imp.importData(fileName);
 	}
 
 	/*
@@ -91,7 +108,7 @@ public class LogicLayerNoSQL implements LogicLayer {
 	 */
 	@Override
 	public void importFromXML(String fileName) {
-		// TODO Auto-generated method stub
+		this.importData(fileName,new XMLImporter());
 
 	}
 

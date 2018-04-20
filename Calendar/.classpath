@@ -6,5 +6,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="/usr/share/java/xstream/xstream.jar" sourcepath="/usr/share/java/xstream"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
