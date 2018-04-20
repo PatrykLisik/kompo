@@ -6,10 +6,14 @@ package dataLayer;
 import java.util.HashMap;
 
 /**
- * @author plisik Data service implementation of DataService without SQL queries
- *         Class which contains data about events and persons
+ * Data service implementation of DataService without SQL queries Class which
+ * contains data about events and persons
+ * 
+ * @author plisik
  */
 public class DataServiceNoSQL implements DataService {
+
+	private static final long serialVersionUID = -8592342610457018786L;
 
 	// Structure which actually contains all data
 	DataContext data = new DataContext();
@@ -43,7 +47,7 @@ public class DataServiceNoSQL implements DataService {
 		if (data.Persons.containsKey(id)) {
 			data.Persons.put(id, p);
 		} else {
-			// TODO exception person not listed 
+			// TODO exception person not listed
 		}
 
 	}
@@ -82,7 +86,7 @@ public class DataServiceNoSQL implements DataService {
 		if (data.Events.containsKey(id)) {
 			data.Events.put(id, ev);
 		} else {
-			// TODO exception event not listed 
+			// TODO exception event not listed
 		}
 
 	}
@@ -122,19 +126,17 @@ public class DataServiceNoSQL implements DataService {
 
 	@Override
 	public void addPersonsToEvent(int eventId, int... personIDs) {
-		if(!data.Events.containsKey(eventId)) {
-			//TODO exception event don't exist
+		if (!data.Events.containsKey(eventId)) {
+			// TODO exception event don't exist
 		}
-		for(int id : personIDs) {
-			if(data.Persons.containsKey(id)) {
+		for (int id : personIDs) {
+			if (data.Persons.containsKey(id)) {
 				data.Events.get(id).addAssociatedPerson(id);
-			} else
-			{
-				//TODO exception person not listed
+			} else {
+				// TODO exception person not listed
 			}
 		}
-		
+
 	}
-	
 
 }

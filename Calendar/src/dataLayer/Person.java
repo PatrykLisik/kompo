@@ -1,12 +1,15 @@
 package dataLayer;
 
-public class Person {
-	String name;
-	String surName;
+import java.io.Serializable;
 
-	Person(String _name, String _surName) {
+@SuppressWarnings("serial")
+public class Person implements Serializable{
+	String name;
+	String surname;
+
+	public Person(String _name, String _surname) {
 		name = _name;
-		surName = _surName;
+		surname = _surname;
 	}
 
 	public String getName() {
@@ -17,24 +20,24 @@ public class Person {
 		this.name = name;
 	}
 
-	public String getSurName() {
-		return surName;
+	public String getSurname() {
+		return surname;
 	}
 
 	public void setSurName(String surName) {
-		this.surName = surName;
+		this.surname = surName;
 	}
 
 	Person() {
 		name = "No Name";
-		surName = "No Surname";
+		surname = "No Surname";
 	}
 
 	public boolean equals(Person p) {
 		if (p == null)
 			return false;
 
-		return this.name.equals(p.getName()) && this.surName.equals(p.getSurName());
+		return this.name.equals(p.getName()) && this.surname.equals(p.getSurname());
 	}
 
 }

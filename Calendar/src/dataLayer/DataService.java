@@ -1,8 +1,9 @@
 package dataLayer;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public interface DataService {
+public interface DataService extends Serializable{
 	
 	public abstract DataContext getDataContext();
 	

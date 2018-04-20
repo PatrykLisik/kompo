@@ -1,10 +1,15 @@
 package dataLayer;
 
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Vector;
 
-public class Event {
+public class Event implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1005358754582029756L;
 	Date start;
 	Date end;
 	Vector<Integer> associatedPersons = new Vector<Integer>();
