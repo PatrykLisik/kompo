@@ -7,17 +7,29 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import dataLayer.DataService;
+import dataLayer.DataServiceNoSQL;
 import dataLayer.Event;
 import dataLayer.Person;
 
 /**
- * Implementation of all operations on data in calendar 
+ * Implementation of all operations on data in calendar
+ * 
  * @author plisik
  *
  */
 public class LogicLayerNoSQL implements LogicLayer {
+	DataService data = new DataServiceNoSQL();
 
-	/* (non-Javadoc)
+	@Override
+	public void saveToBianry(String fileName) {
+		Saver saver=new BianrySaver();
+		saver.save(fileName,data);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logicLayer.LogicLayer#saveToXML(java.lang.String)
 	 */
 	@Override
@@ -26,7 +38,9 @@ public class LogicLayerNoSQL implements LogicLayer {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logicLayer.LogicLayer#saveToEvolution(java.lang.String)
 	 */
 	@Override
@@ -35,7 +49,9 @@ public class LogicLayerNoSQL implements LogicLayer {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logicLayer.LogicLayer#saveToTXT(java.lang.String)
 	 */
 	@Override
@@ -44,7 +60,9 @@ public class LogicLayerNoSQL implements LogicLayer {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logicLayer.LogicLayer#saveToGoogleCalendar(java.lang.String)
 	 */
 	@Override
@@ -53,7 +71,20 @@ public class LogicLayerNoSQL implements LogicLayer {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see logicLayer.LogicLayer#importFromBianry(java.lang.String)
+	 */
+	@Override
+	public void importFromBianry(String fileName) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logicLayer.LogicLayer#importFromXML(java.lang.String)
 	 */
 	@Override
@@ -62,7 +93,9 @@ public class LogicLayerNoSQL implements LogicLayer {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logicLayer.LogicLayer#importFromEvolution(java.lang.String)
 	 */
 	@Override
@@ -71,7 +104,9 @@ public class LogicLayerNoSQL implements LogicLayer {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logicLayer.LogicLayer#importFromTXT(java.lang.String)
 	 */
 	@Override
@@ -80,7 +115,9 @@ public class LogicLayerNoSQL implements LogicLayer {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logicLayer.LogicLayer#importFromGoogleCalendar(java.lang.String)
 	 */
 	@Override
@@ -89,7 +126,9 @@ public class LogicLayerNoSQL implements LogicLayer {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logicLayer.LogicLayer#EventBetweenDate(java.util.Date, java.util.Date)
 	 */
 	@Override
@@ -98,7 +137,9 @@ public class LogicLayerNoSQL implements LogicLayer {
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logicLayer.LogicLayer#EventsByDate()
 	 */
 	@Override
@@ -107,7 +148,9 @@ public class LogicLayerNoSQL implements LogicLayer {
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logicLayer.LogicLayer#EventsByNumberOfParticipants()
 	 */
 	@Override
@@ -116,112 +159,135 @@ public class LogicLayerNoSQL implements LogicLayer {
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logicLayer.LogicLayer#createPerson(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void createPerson(String _name, String _surNam) {
-		// TODO Auto-generated method stub
-
+	public void createPerson(String name, String surname) {
+		Person p = new Person(name, surname);
+		data.createPerson(p);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logicLayer.LogicLayer#getPerson(int)
 	 */
 	@Override
-	public void getPerson(int id) {
-		// TODO Auto-generated method stub
+	public Person getPerson(int id) {
+		return data.getPerson(id);
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logicLayer.LogicLayer#updatePerson(int, dataLayer.Person)
 	 */
 	@Override
 	public void updatePerson(int id, Person p) {
-		// TODO Auto-generated method stub
+		data.updatePerson(id, p);
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logicLayer.LogicLayer#deletePerson(dataLayer.Person)
 	 */
 	@Override
 	public void deletePerson(Person p) {
-		// TODO Auto-generated method stub
+		data.deletePerson(p);
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logicLayer.LogicLayer#deletePerson(int)
 	 */
 	@Override
 	public void deletePerson(int id) {
-		// TODO Auto-generated method stub
+		data.deletePerson(id);
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logicLayer.LogicLayer#getAllPersons()
 	 */
 	@Override
 	public HashMap<Integer, Person> getAllPersons() {
-		// TODO Auto-generated method stub
-		return null;
+		return data.getAllPersons();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logicLayer.LogicLayer#createEvent(dataLayer.Event)
 	 */
 	@Override
-	public void createEvent(Event ev) {
-		// TODO Auto-generated method stub
+	public void createEvent(Date start, Date end) {
+		Event ev = new Event(start, end);
+		data.createEvent(ev);
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logicLayer.LogicLayer#getEvent(dataLayer.Event)
 	 */
 	@Override
-	public void getEvent(Event ev) {
-		// TODO Auto-generated method stub
+	public Event getEvent(int id) {
+		return data.getEvent(id);
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logicLayer.LogicLayer#updateEvent(int, dataLayer.Event)
 	 */
 	@Override
 	public void updateEvent(int id, Event ev) {
-		// TODO Auto-generated method stub
+		data.updateEvent(id, ev);
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logicLayer.LogicLayer#deleteEvent(dataLayer.Event)
 	 */
 	@Override
 	public void deleteEvent(Event ev) {
-		// TODO Auto-generated method stub
+		data.deleteEvent(ev);
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logicLayer.LogicLayer#deleteEvent(int)
 	 */
 	@Override
 	public void deleteEvent(int id) {
-		// TODO Auto-generated method stub
+		data.deleteEvent(id);
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logicLayer.LogicLayer#getAllEvents()
 	 */
 	@Override
 	public HashMap<Integer, Event> getAllEvents() {
-		// TODO Auto-generated method stub
-		return null;
+		return data.getAllEvents();
 	}
 
 }

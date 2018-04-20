@@ -17,12 +17,14 @@ import dataLayer.Person;
 public interface LogicLayer {
  
 	//All exports
+	void saveToBianry(String fileName);
 	void saveToXML(String fileName);
 	void saveToEvolution(String fileName);
 	void saveToTXT(String fileName);
 	void saveToGoogleCalendar(String fileName);
 	
-	//All imports 
+	//All imports
+	void importFromBianry(String fileName);
 	void importFromXML(String fileName);
 	void importFromEvolution(String fileName);
 	void importFromTXT(String fileName);
@@ -35,15 +37,15 @@ public interface LogicLayer {
 	
 	/* CRUD PERSON */
 	public abstract void createPerson(String _name, String _surNam);
-	public abstract void getPerson(int id);
+	public abstract Person getPerson(int id);
 	public abstract void updatePerson(int id, Person p);
 	public abstract void deletePerson(Person p);
 	public abstract void deletePerson(int id);	
 	public abstract HashMap<Integer, Person> getAllPersons();
 
 	/* CRUD EVENT */
-	public abstract void createEvent(Event ev);
-	public abstract void getEvent(Event ev);
+	public abstract void createEvent(Date start, Date end);
+	public abstract Event getEvent(int id);
 	public abstract void updateEvent(int id, Event ev);
 	public abstract void deleteEvent(Event ev);
 	public abstract void deleteEvent(int id);
