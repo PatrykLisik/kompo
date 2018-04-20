@@ -11,6 +11,7 @@ import java.io.ObjectOutputStream;
 import dataLayer.DataService;
 
 /**
+ * Basic binary Saver implementation based on java ObjectOutputStream 
  * @author plisik
  *
  */
