@@ -14,7 +14,7 @@ import dataLayer.Event;
 import dataLayer.Person;
 
 /**
- * Implementation of all operations on data in calendar
+ * Implementation of all operations on data in calendar without SQL queries 
  * 
  * @author plisik
  *

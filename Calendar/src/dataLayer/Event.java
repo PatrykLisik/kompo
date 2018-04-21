@@ -24,13 +24,13 @@ public class Event implements Serializable {
 	Date end;
 	String name;
 	/**
-	 * associatedPersons are storing IDs of Persons associated with event There is
+	 * associatedPersons stores IDs of Persons associated with event There is
 	 * no reason to store duplicated associated persons, so set class is used
 	 * 
 	 */
 	Set<Integer> associatedPersons = new TreeSet<Integer>();
 	/**
-	 * remainders are storing date when calendar should notify user about event
+	 * remainders stores date when calendar should notify user about event
 	 * There is no reason to store duplicated remainders date
 	 * 
 	 */
