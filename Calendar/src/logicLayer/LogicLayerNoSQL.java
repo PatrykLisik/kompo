@@ -153,8 +153,7 @@ public class LogicLayerNoSQL implements LogicLayer {
 	 */
 	@Override
 	public List<Event> EventBetweenDate(Date start, Date end) {
-		// TODO Auto-generated method stub
-		return null;
+		return SortingAndSearchPolicies.eventsBetweenDates(data,start,end);
 	}
 
 	/*
@@ -164,8 +163,7 @@ public class LogicLayerNoSQL implements LogicLayer {
 	 */
 	@Override
 	public List<Event> EventsByDate() {
-		// TODO Auto-generated method stub
-		return null;
+		return SortingAndSearchPolicies.eventsByDate(data);
 	}
 
 	/*
@@ -175,8 +173,7 @@ public class LogicLayerNoSQL implements LogicLayer {
 	 */
 	@Override
 	public List<Event> EventsByNumberOfParticipants() {
-		// TODO Auto-generated method stub
-		return null;
+		return SortingAndSearchPolicies.eventsByNumberOfAssociatedPersons(data);
 	}
 
 	@Override
