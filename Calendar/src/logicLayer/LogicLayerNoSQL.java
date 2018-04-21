@@ -249,8 +249,8 @@ public class LogicLayerNoSQL implements LogicLayer {
 	 * @see logicLayer.LogicLayer#createEvent(dataLayer.Event)
 	 */
 	@Override
-	public void createEvent(Date start, Date end) {
-		Event ev = new Event(start, end);
+	public void createEvent(String name,Date start, Date end) {
+		Event ev = new Event(name,start, end);
 		data.createEvent(ev);
 
 	}

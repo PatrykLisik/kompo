@@ -1,22 +1,52 @@
 package dataLayer;
 
-
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.Vector;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
+/**
+ * Event
+ * 
+ * @author plisik
+ *
+ */
 public class Event implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1005358754582029756L;
+
+	private static final long serialVersionUID = -4070684017733510355L;
 	Date start;
 	Date end;
-	Vector<Integer> associatedPersons = new Vector<Integer>();
+	String name;
+	/**
+	 * associatedPersons are storing IDs of Persons associated with event There is
+	 * no reason to store duplicated associated persons, so set class is used
+	 * 
+	 */
+	Set<Integer> associatedPersons = new TreeSet<Integer>();
+	/**
+	 * remainders are storing date when calendar should notify user about event
+	 * There is no reason to store duplicated remainders date
+	 * 
+	 */
+	Map<Date, String> remainders = new TreeMap<Date, String>();
 
-	public Event(Date start, Date end, Vector<Integer> associatedPersons) {
-		this.start = start;
-		this.end = end;
+	public Map<Date, String> getRemainders() {
+		return remainders;
+	}
+
+	public void setRemainders(Map<Date, String> remainders) {
+		this.remainders = remainders;
+	}
+
+	public void addRemainder(Date date, String descripton) {
+		this.remainders.put(date, descripton);
+	}
+
+	public Event(String name, Date start, Date end, Set<Integer> associatedPersons) {
+		this(name, start, end);
 		this.associatedPersons = associatedPersons;
 	}
 
@@ -24,9 +54,14 @@ public class Event implements Serializable {
 	 * @param start
 	 * @param end
 	 */
-	public Event(Date start, Date end) {
+	public Event(String name, Date start, Date end) {
 		this.start = start;
 		this.end = end;
+		this.name = name;
+
+		// Deafult Remainders
+		this.addRemainder(start, "Event: " + name + "is starting now");
+		this.addRemainder(this.subtractDay(start), "Event: " + name + "is starting now");
 	}
 
 	/**
@@ -69,7 +104,7 @@ public class Event implements Serializable {
 	/**
 	 * @return the associatedPersons
 	 */
-	public Vector<Integer> getAssociatedPersons() {
+	public Set<Integer> getAssociatedPersons() {
 		return associatedPersons;
 	}
 
@@ -77,8 +112,15 @@ public class Event implements Serializable {
 	 * @param associatedPersons
 	 *            the associatedPersons to set
 	 */
-	public void setAssociatedPersons(Vector<Integer> associatedPersons) {
+	public void setAssociatedPersons(Set<Integer> associatedPersons) {
 		this.associatedPersons = associatedPersons;
 	}
 
+	private Date subtractDay(Date date) {
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.DAY_OF_MONTH, -1);
+		return cal.getTime();
+	}
 }

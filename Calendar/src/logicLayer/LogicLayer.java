@@ -44,7 +44,7 @@ public interface LogicLayer {
 	public abstract HashMap<Integer, Person> getAllPersons();
 
 	/* CRUD EVENT */
-	public abstract void createEvent(Date start, Date end);
+	public abstract void createEvent(String name,Date start, Date end);
 	public abstract Event getEvent(int id);
 	public abstract void updateEvent(int id, Event ev);
 	public abstract void deleteEvent(Event ev);
