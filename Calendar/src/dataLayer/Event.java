@@ -9,7 +9,10 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 /**
- * Event
+ * Event is class which represents event in calendar and contains information about
+ * Persons whose are associated with event
+ * Remainders date and descriptions
+ * By default every event has two remainders one day before and on start 
  * 
  * @author plisik
  *
