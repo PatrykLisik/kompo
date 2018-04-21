@@ -4,8 +4,9 @@
 package logicLayer;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import dataLayer.DataService;
 import dataLayer.DataServiceNoSQL;
@@ -178,6 +179,12 @@ public class LogicLayerNoSQL implements LogicLayer {
 		return null;
 	}
 
+	@Override
+	public void DeleteEventsBetweenDates(Date start, Date end) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -239,7 +246,7 @@ public class LogicLayerNoSQL implements LogicLayer {
 	 * @see logicLayer.LogicLayer#getAllPersons()
 	 */
 	@Override
-	public HashMap<Integer, Person> getAllPersons() {
+	public Map<Integer, Person> getAllPersons() {
 		return data.getAllPersons();
 	}
 
@@ -305,8 +312,57 @@ public class LogicLayerNoSQL implements LogicLayer {
 	 * @see logicLayer.LogicLayer#getAllEvents()
 	 */
 	@Override
-	public HashMap<Integer, Event> getAllEvents() {
+	public Map<Integer, Event> getAllEvents() {
 		return data.getAllEvents();
 	}
+
+
+	@Override
+	public void addRemainder(int EventId, Date date, String description) {
+		Event ev=data.getEvent(EventId);
+		ev.addRemainder(date,description);
+		data.updateEvent(EventId,ev);
+		
+	}
+
+	@Override
+	public void removeRemainder(int EventId, Date date) {
+		Event ev=data.getEvent(EventId);
+		Map<Date, String> remainders=this.getAllRemainders(EventId);
+		remainders.remove(date);
+		ev.setRemainders(remainders);
+		data.updateEvent(EventId,ev);
+		
+	}
+
+	@Override
+	public Set<Integer> getAllAssociatedPersons(int eventId) {
+		return data.getEvent(eventId).getAssociatedPersons();
+	}
+
+	@Override
+	public Map<Date, String> getAllRemainders(int eventId) {
+		return data.getEvent(eventId).getRemainders();
+	}
+
+	@Override
+	public void addPersonToEvent(int EventId, int PersonId) {
+		Event event=data.getEvent(EventId);
+		event.addAssociatedPerson(PersonId);
+		data.updateEvent(EventId,event);
+		
+	}
+
+	@Override
+	public void removePersonFromEvent(int EventId, int PersonId) {
+		Event event=data.getEvent(EventId);
+		Set<Integer> persons=event.getAssociatedPersons();
+		persons.remove(PersonId);
+		event.setAssociatedPersons(persons);
+		data.updateEvent(EventId,event);
+		
+	}
+
+
 
 }
