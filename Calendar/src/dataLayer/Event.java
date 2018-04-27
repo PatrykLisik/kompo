@@ -62,9 +62,17 @@ public class Event implements Serializable {
 		this.end = end;
 		this.name = name;
 
-		// Deafult Remainders
-		this.addRemainder(start, "Event: " + name + "is starting now");
-		this.addRemainder(this.subtractDay(start), "Event: " + name + "is starting now");
+		// Default Remainders
+		this.addRemainder(start,"is starting now");
+		this.addRemainder(this.subtractDay(start), "is going to start in one day");
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/**
