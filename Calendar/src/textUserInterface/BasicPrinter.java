@@ -6,6 +6,7 @@ package textUserInterface;
 import logicLayer.LogicLayer;
 
 /**
+ * Base part of console printer, every part of printer should be build on that 
  * @author plisik
  *
  */

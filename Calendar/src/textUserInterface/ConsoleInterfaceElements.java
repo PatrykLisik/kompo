@@ -1,5 +1,10 @@
 package textUserInterface;
 
+/**
+ * Repeatable parts of console interface packed up in one place 
+ * @author plisik
+ *
+ */
 public class ConsoleInterfaceElements {
 
 	public static String sectionBreak() {

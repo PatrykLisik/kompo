@@ -6,6 +6,12 @@ import java.util.Map.Entry;
 import dataLayer.Event;
 import logicLayer.LogicLayer;
 
+/**
+ * Events printer decorator
+ * @basicPrinter is necessary because that part stores logic layer
+ * @author plisik
+ *
+ */
 public class EventsPrinter extends CalendarPrinterDecorator {
 
 	public EventsPrinter(ConsolePrinter printer) {
@@ -13,16 +19,16 @@ public class EventsPrinter extends CalendarPrinterDecorator {
 		// TODO Auto-generated constructor stub
 	}
 
-	static String printRemainder(Date date, String description) {
+	static String printNotification(Date date, String description) {
 		String out = "";
 		out += date + " " + description;
 		return out;
 	}
 
-	static String printRemaindersOfEvent(Event ev, String offset) {
+	static String printNotificationsOfEvent(Event ev, String offset) {
 		String out = "";
-		for (Entry<Date, String> entry : ev.getRemainders().entrySet()) {
-			out += offset + printRemainder(entry.getKey(), entry.getValue()) + '\n';
+		for (Entry<Date, String> entry : ev.getNotifications().entrySet()) {
+			out += offset + printNotification(entry.getKey(), entry.getValue()) + '\n';
 		}
 		return out;
 	}
@@ -39,7 +45,7 @@ public class EventsPrinter extends CalendarPrinterDecorator {
 		String out = "";
 		out += "[" + id + "] " + ev.getName() + "\n";
 		out += "REMAINDERS: \n";
-		out += printRemaindersOfEvent(ev, "	");
+		out += printNotificationsOfEvent(ev, "	");
 		out += "PERSONS: \n";
 		out += printPersonsOfEvent(ev,"	",data);
 		return out;
