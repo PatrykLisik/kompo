@@ -54,10 +54,10 @@ public interface LogicLayer {
 	public abstract Map<Integer, Event> getAllEvents();
 	
 	//Event extension
-	public abstract void addRemainder(int EventId,Date date, String description);
-	public abstract void removeRemainder(int EventId,Date date);
+	public abstract void addNotification(int EventId,Date date, String description);
+	public abstract void removeNotification(int EventId,Date date);
 	public abstract Set<Integer> getAllAssociatedPersons(int eventId);
-	public abstract Map<Date,String> getAllRemainders(int eventId);
+	public abstract Map<Date,String> getAllNotification(int eventId);
 	public abstract void addPersonToEvent(int EventId,int PersonId);
 	public abstract void removePersonFromEvent(int EventId,int PersonId);
 

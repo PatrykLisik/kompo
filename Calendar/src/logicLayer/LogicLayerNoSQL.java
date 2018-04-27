@@ -315,19 +315,19 @@ public class LogicLayerNoSQL implements LogicLayer {
 
 
 	@Override
-	public void addRemainder(int EventId, Date date, String description) {
+	public void addNotification(int EventId, Date date, String description) {
 		Event ev=data.getEvent(EventId);
-		ev.addRemainder(date,description);
+		ev.addNotification(date,description);
 		data.updateEvent(EventId,ev);
 		
 	}
 
 	@Override
-	public void removeRemainder(int EventId, Date date) {
+	public void removeNotification(int EventId, Date date) {
 		Event ev=data.getEvent(EventId);
-		Map<Date, String> remainders=this.getAllRemainders(EventId);
+		Map<Date, String> remainders=this.getAllNotification(EventId);
 		remainders.remove(date);
-		ev.setRemainders(remainders);
+		ev.setNotifications(remainders);
 		data.updateEvent(EventId,ev);
 		
 	}
@@ -338,8 +338,8 @@ public class LogicLayerNoSQL implements LogicLayer {
 	}
 
 	@Override
-	public Map<Date, String> getAllRemainders(int eventId) {
-		return data.getEvent(eventId).getRemainders();
+	public Map<Date, String> getAllNotification(int eventId) {
+		return data.getEvent(eventId).getNotifications();
 	}
 
 	@Override

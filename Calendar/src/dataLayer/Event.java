@@ -34,18 +34,18 @@ public class Event implements Serializable {
 	 * There is no reason to store duplicated remainders date
 	 * 
 	 */
-	Map<Date, String> remainders = new TreeMap<Date, String>();
+	Map<Date, String> notification = new TreeMap<Date, String>();
 
-	public Map<Date, String> getRemainders() {
-		return remainders;
+	public Map<Date, String> getNotifications() {
+		return notification;
 	}
 
-	public void setRemainders(Map<Date, String> remainders) {
-		this.remainders = remainders;
+	public void setNotifications(Map<Date, String> remainders) {
+		this.notification = remainders;
 	}
 
-	public void addRemainder(Date date, String descripton) {
-		this.remainders.put(date, descripton);
+	public void addNotification(Date date, String descripton) {
+		this.notification.put(date, descripton);
 	}
 
 	public Event(String name, Date start, Date end, Set<Integer> associatedPersons) {
@@ -63,8 +63,8 @@ public class Event implements Serializable {
 		this.name = name;
 
 		// Default Remainders
-		this.addRemainder(start,"is starting now");
-		this.addRemainder(this.subtractDay(start), "is going to start in one day");
+		this.addNotification(start,"is starting now");
+		this.addNotification(this.subtractDay(start), "is going to start in one day");
 	}
 
 	public String getName() {
