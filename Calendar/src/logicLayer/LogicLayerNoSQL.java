@@ -11,6 +11,7 @@ import java.util.Set;
 import dataLayer.DataService;
 import dataLayer.DataServiceNoSQL;
 import dataLayer.Event;
+import dataLayer.Event.Notification;
 import dataLayer.Person;
 
 /**
@@ -323,11 +324,11 @@ public class LogicLayerNoSQL implements LogicLayer {
 	}
 
 	@Override
-	public void removeNotification(int EventId, Date date) {
+	public void removeNotification(int EventId, Long NotificationId) {
 		Event ev=data.getEvent(EventId);
-		Map<Date, String> remainders=this.getAllNotification(EventId);
-		remainders.remove(date);
-		ev.setNotifications(remainders);
+		Map<Long,Notification> notifications=this.getAllNotification(EventId);
+		notifications.remove(NotificationId);
+		ev.setNotifications(notifications);
 		data.updateEvent(EventId,ev);
 		
 	}
@@ -338,7 +339,7 @@ public class LogicLayerNoSQL implements LogicLayer {
 	}
 
 	@Override
-	public Map<Date, String> getAllNotification(int eventId) {
+	public Map<Long, Notification> getAllNotification(int eventId) {
 		return data.getEvent(eventId).getNotifications();
 	}
 

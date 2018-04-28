@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Map.Entry;
 
 import dataLayer.Event;
+import dataLayer.Event.Notification;
 import logicLayer.LogicLayer;
 
 /**
@@ -19,15 +20,15 @@ public class EventsPrinter extends CalendarPrinterDecorator {
 		// TODO Auto-generated constructor stub
 	}
 
-	static String printNotification(Date date, String description) {
+	static String printNotification(Long id,Notification n) {
 		String out = "";
-		out += date + " " + description;
+		out += "["+id+"]"+n.getDate()+" "+n.getDescripton();
 		return out;
 	}
 
 	static String printNotificationsOfEvent(Event ev, String offset) {
 		String out = "";
-		for (Entry<Date, String> entry : ev.getNotifications().entrySet()) {
+		for (Entry<Long, Notification> entry : ev.getNotifications().entrySet()) {
 			out += offset + printNotification(entry.getKey(), entry.getValue()) + '\n';
 		}
 		return out;
@@ -44,7 +45,7 @@ public class EventsPrinter extends CalendarPrinterDecorator {
 	static String printEventEntry(int id, Event ev,LogicLayer data) {
 		String out = "";
 		out += "[" + id + "] " + ev.getName() + "\n";
-		out += "REMAINDERS: \n";
+		out += "NOTIFICATIONS: \n";
 		out += printNotificationsOfEvent(ev, "	");
 		out += "PERSONS: \n";
 		out += printPersonsOfEvent(ev,"	",data);
