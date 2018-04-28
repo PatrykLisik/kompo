@@ -30,22 +30,68 @@ public class Event implements Serializable {
 	 */
 	Set<Integer> associatedPersons = new TreeSet<Integer>();
 	/**
-	 * remainders stores date when calendar should notify user about event
+	 * notification stores date when calendar should notify user about event
 	 * There is no reason to store duplicated remainders date
 	 * 
 	 */
-	Map<Date, String> notification = new TreeMap<Date, String>();
+	public static class Notification implements Serializable{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -1858674304681020987L;
+		Date date;
+		String descripton;
+		long id;
+		static long NotifiactionCounter=0;
+		public Notification(Date date, String descripton) {
+			super();
+			this.date = date;
+			this.descripton = descripton;
+			this.id=NotifiactionCounter;
+			NotifiactionCounter++;
 
-	public Map<Date, String> getNotifications() {
+		}
+
+		/**
+		 * @return the id
+		 */
+		public long getId() {
+			return id;
+		}
+
+		public Date getDate() {
+			return date;
+		}
+
+		public void setDate(Date date) {
+			this.date = date;
+		}
+
+		public String getDescripton() {
+			return descripton;
+		}
+
+		public void setDescripton(String descripton) {
+			this.descripton = descripton;
+		}
+
+	
+		
+		
+	}
+	Map<Long,Notification> notification = new TreeMap<Long,Notification>();
+
+	public Map<Long, Notification> getNotifications() {
 		return notification;
 	}
 
-	public void setNotifications(Map<Date, String> remainders) {
+	public void setNotifications(Map<Long, Notification> remainders) {
 		this.notification = remainders;
 	}
 
 	public void addNotification(Date date, String descripton) {
-		this.notification.put(date, descripton);
+		Notification n=new Notification(date, descripton);
+		this.notification.put(n.getId(),n);
 	}
 
 	public Event(String name, Date start, Date end, Set<Integer> associatedPersons) {
