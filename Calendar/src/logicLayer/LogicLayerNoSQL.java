@@ -28,8 +28,9 @@ public class LogicLayerNoSQL implements LogicLayer {
 	 * Generic method to save 
 	 * @param fileName
 	 * @param saver
+	 * @throws LogicLayerException 
 	 */
-	private void save(String fileName, Saver saver) {
+	private void save(String fileName, Saver saver) throws LogicLayerException {
 		saver.save(fileName,data);
 	}
 
@@ -45,7 +46,7 @@ public class LogicLayerNoSQL implements LogicLayer {
 	}
 
 	@Override
-	public void saveToBianry(String fileName) {
+	public void saveToBianry(String fileName) throws LogicLayerException {
 		this.save(fileName, new BinarySaver());
 
 	}
@@ -56,7 +57,7 @@ public class LogicLayerNoSQL implements LogicLayer {
 	 * @see logicLayer.LogicLayer#saveToXML(java.lang.String)
 	 */
 	@Override
-	public void saveToXML(String fileName) {
+	public void saveToXML(String fileName) throws LogicLayerException {
 		this.save(fileName, new XMLSaver());
 
 	}

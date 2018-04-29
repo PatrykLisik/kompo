@@ -20,8 +20,8 @@ import dataLayer.Event.Notification;
 public interface LogicLayer extends NotifiactionSource{
  
 	//All exports
-	void saveToBianry(String fileName);
-	void saveToXML(String fileName);
+	void saveToBianry(String fileName) throws LogicLayerException;
+	void saveToXML(String fileName) throws LogicLayerException;
 	void saveToEvolution(String fileName);
 	void saveToTXT(String fileName);
 	void saveToGoogleCalendar(String fileName);

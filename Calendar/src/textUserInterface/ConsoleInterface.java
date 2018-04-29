@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import logicLayer.EventNotifiactionPublisher;
 import logicLayer.EventNotifiactionPublisher.NotificationReciver;
 import logicLayer.LogicLayer;
+import logicLayer.LogicLayerException;
 import logicLayer.LogicLayerNoSQL;
 
 /**
@@ -80,7 +81,12 @@ public class ConsoleInterface implements NotificationReciver {
 			public void run() {
 				System.out.print("File name: ");
 				String fileName = ConsoleInterfaceElements.getUserInput();
-				ll.saveToXML(fileName);
+				try {
+					ll.saveToXML(fileName);
+				} catch (LogicLayerException e) {
+					System.out.println("Cannot save " + e.getMessage());
+					return;
+				}
 				System.out.println("SAVED to XML");
 
 			}
@@ -93,7 +99,11 @@ public class ConsoleInterface implements NotificationReciver {
 			public void run() {
 				System.out.print("File name: ");
 				String fileName = ConsoleInterfaceElements.getUserInput();
-				ll.saveToBianry(fileName);
+				try {
+					ll.saveToBianry(fileName);
+				} catch (LogicLayerException e) {
+					System.out.println("Cannot save" + e.getMessage());
+				}
 				System.out.println("Saved to bianry");
 
 			}
