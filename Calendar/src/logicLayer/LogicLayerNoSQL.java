@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import dataLayer.DataService;
 import dataLayer.DataServiceNoSQL;
@@ -37,8 +38,9 @@ public class LogicLayerNoSQL implements LogicLayer {
 	 * 
 	 * @param fileName
 	 * @param saver
+	 * @throws LogicLayerException 
 	 */
-	private void importData(String fileName, Importer importer) {
+	private void importData(String fileName, Importer importer) throws LogicLayerException {
 		data = importer.importData(fileName);
 	}
 
@@ -98,7 +100,7 @@ public class LogicLayerNoSQL implements LogicLayer {
 	 * @see logicLayer.LogicLayer#importFromBianry(java.lang.String)
 	 */
 	@Override
-	public void importFromBianry(String fileName) {
+	public void importFromBianry(String fileName) throws LogicLayerException {
 		Importer imp = new BinaryImporter();
 		data = imp.importData(fileName);
 	}
@@ -109,7 +111,7 @@ public class LogicLayerNoSQL implements LogicLayer {
 	 * @see logicLayer.LogicLayer#importFromXML(java.lang.String)
 	 */
 	@Override
-	public void importFromXML(String fileName) {
+	public void importFromXML(String fileName) throws LogicLayerException {
 		this.importData(fileName,new XMLImporter());
 
 	}
@@ -359,6 +361,22 @@ public class LogicLayerNoSQL implements LogicLayer {
 		event.setAssociatedPersons(persons);
 		data.updateEvent(EventId,event);
 		
+	}
+
+	@Override
+	public List<Notification> getAllNotifications() {
+		//the following example shows that loops in java are redundant and should be removed 
+		List<Event> eventList=getAllEvents().values().stream().collect( Collectors.toList());
+		List<Notification> ans=eventList.stream()
+				.map(event->
+						event.getNotifications(). //gets map<integer,Notification>
+						values().stream(). // stream of Notifications
+						collect( Collectors.toList())
+					) //conversion to List of List of Notification
+				.flatMap(notification->notification.stream()) //convert from list of list to list
+				.collect( Collectors.toList());
+		
+		return ans;
 	}
 
 

@@ -22,13 +22,13 @@ public class XMLImporter implements Importer {
 	 * @see logicLayer.Importer#importData(java.lang.String)
 	 */
 	@Override
-	public DataService importData(String fileName) {
+	public DataService importData(String fileName) throws LogicLayerException {
 		XStream xstream = new XStream(new StaxDriver());
 		FileInputStream fileIn = null;
 		try {
 			fileIn = new FileInputStream(fileName);
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			throw new LogicLayerException("File not found");
 		}
 		DataService data = (DataService)xstream.fromXML(fileIn);
 		return data;

@@ -12,6 +12,6 @@ import dataLayer.DataService;
  *
  */
 public interface Importer {
-	public abstract DataService importData(String fileName); 
+	public abstract DataService importData(String fileName) throws LogicLayerException; 
 
 }

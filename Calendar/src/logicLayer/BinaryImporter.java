@@ -21,7 +21,7 @@ public class BinaryImporter implements Importer {
 	 * @see logicLayer.Importer#importData(java.lang.String)
 	 */
 	@Override
-	public DataService importData(String fileName) {
+	public DataService importData(String fileName) throws LogicLayerException {
 		DataService data = null;
 		FileInputStream fileIn = null;
 		ObjectInputStream in = null;
@@ -30,12 +30,27 @@ public class BinaryImporter implements Importer {
 			in = new ObjectInputStream(fileIn);
 			data = (DataService) in.readObject();
 		} catch (IOException i) {
-			i.printStackTrace();
+			throw new LogicLayerException("File not found");
+			//i.printStackTrace();
 		} catch (ClassNotFoundException c) {
-			System.out.println("DataService class not found");
-			c.printStackTrace();
+			throw new LogicLayerException("DataService class not found");
+			//c.printStackTrace();
+		}finally {
+			if(fileIn!=null)
+				try {
+					fileIn.close();
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}
+			
+			if(in!=null)
+				try {
+					in.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 		}
-		System.out.println("DataService restore");
 		return data;
 	}
 

@@ -10,13 +10,14 @@ import java.util.Set;
 
 import dataLayer.Event;
 import dataLayer.Person;
+import logicLayer.EventNotifiactionPublisher.NotifiactionSource;
 import dataLayer.Event.Notification;
 
 /**
  * @author plisik
  *
  */
-public interface LogicLayer {
+public interface LogicLayer extends NotifiactionSource{
  
 	//All exports
 	void saveToBianry(String fileName);
@@ -26,11 +27,11 @@ public interface LogicLayer {
 	void saveToGoogleCalendar(String fileName);
 	
 	//All imports
-	void importFromBianry(String fileName);
-	void importFromXML(String fileName);
-	void importFromEvolution(String fileName);
-	void importFromTXT(String fileName);
-	void importFromGoogleCalendar(String fileName);
+	void importFromBianry(String fileName) throws LogicLayerException;
+	void importFromXML(String fileName) throws LogicLayerException;
+	void importFromEvolution(String fileName) throws LogicLayerException;
+	void importFromTXT(String fileName) throws LogicLayerException;
+	void importFromGoogleCalendar(String fileName) throws LogicLayerException;
 	 
 	//Operations on events
 	List<Event> EventBetweenDate(Date start, Date end);
