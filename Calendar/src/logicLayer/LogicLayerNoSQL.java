@@ -46,7 +46,7 @@ public class LogicLayerNoSQL implements LogicLayer {
 
 	@Override
 	public void saveToBianry(String fileName) {
-		this.save(fileName, new BianrySaver());
+		this.save(fileName, new BinarySaver());
 
 	}
 

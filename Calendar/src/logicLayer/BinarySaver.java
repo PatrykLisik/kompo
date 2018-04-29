@@ -15,7 +15,7 @@ import dataLayer.DataService;
  * @author plisik
  *
  */
-public class BianrySaver implements Saver {
+public class BinarySaver implements Saver {
 
 	/*
 	 * (non-Javadoc)
@@ -23,7 +23,7 @@ public class BianrySaver implements Saver {
 	 * @see logicLayer.Saver#save(java.lang.String, dataLayer.DataService)
 	 */
 	@Override
-	public void save(String filename, DataService data) {
+	public void save(String filename, DataService data) throws LogicLayerException {
 		FileOutputStream fileOut = null;
 		ObjectOutputStream out = null;
 		try {
@@ -32,22 +32,19 @@ public class BianrySaver implements Saver {
 			out.writeObject(data);
 
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new LogicLayerException("Unable to create file");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new LogicLayerException(e.getMessage());
 		} catch (Exception e) {
-			System.out.println("Unexpected exception" + e.getMessage());
+			throw new LogicLayerException("Unexpected exception" + e.getMessage());
 		} finally {
 			try {
 				out.close();
 				fileOut.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (Exception e) {
-				System.out.println("Unexpected exception" + e.getMessage());
+				throw new LogicLayerException("Unexpected exception" + e.getMessage());
 			}
 
 		}
