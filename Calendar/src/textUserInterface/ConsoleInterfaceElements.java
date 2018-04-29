@@ -3,6 +3,10 @@ package textUserInterface;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Repeatable parts of console interface packed up in one place
@@ -50,6 +54,27 @@ public class ConsoleInterfaceElements {
 			break;
 		}
 		return ans;
+	}
+
+	static Date getDateFromUser() {
+		String target = "27-09-1991 20:29:30";
+		String format="dd-MM-yyyy HH:mm:ss";
+		DateFormat df = new SimpleDateFormat(format);
+		Date result;
+		System.out.println("Give date in format "+format);
+		System.out.println("Example "+target);
+		while (true) {
+
+			target = getUserInput();
+			try {
+				result = df.parse(target);
+			} catch (ParseException e) {
+				System.out.println("Incorect date");
+				continue;
+			}
+			break;
+		}
+		return result;
 	}
 
 }
