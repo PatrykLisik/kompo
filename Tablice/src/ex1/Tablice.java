@@ -26,7 +26,6 @@ public class Tablice {
 	public static void main(String[] args) {
 		int[] arry = arrayInit(99999900, 50000);
 		System.out.println(Arrays.toString(arry));
-		int[] arryCp = arry;
 		int[] arryCp2 = arry;
 		Date before1 = new Date();
 		//arry=bubleSort(arryCp);

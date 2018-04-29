@@ -18,7 +18,6 @@ public class LogicLayerException extends Exception {
 	 * 
 	 */
 	public LogicLayerException() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -26,7 +25,6 @@ public class LogicLayerException extends Exception {
 	 */
 	public LogicLayerException(String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -34,7 +32,6 @@ public class LogicLayerException extends Exception {
 	 */
 	public LogicLayerException(Throwable cause) {
 		super(cause);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -43,7 +40,6 @@ public class LogicLayerException extends Exception {
 	 */
 	public LogicLayerException(String message, Throwable cause) {
 		super(message, cause);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -54,7 +50,6 @@ public class LogicLayerException extends Exception {
 	 */
 	public LogicLayerException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
-		// TODO Auto-generated constructor stub
 	}
 
 }

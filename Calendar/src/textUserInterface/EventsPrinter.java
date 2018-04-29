@@ -16,7 +16,6 @@ public class EventsPrinter extends CalendarPrinterDecorator {
 
 	public EventsPrinter(ConsolePrinter printer) {
 		super(printer);
-		// TODO Auto-generated constructor stub
 	}
 
 	static String printNotification(Long id,Notification n) {

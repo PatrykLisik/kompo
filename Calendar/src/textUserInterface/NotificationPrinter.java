@@ -11,7 +11,6 @@ public class NotificationPrinter extends CalendarPrinterDecorator {
 	String notification="";
 	public NotificationPrinter(ConsolePrinter printer) {
 		super(printer);
-		// TODO Auto-generated constructor stub
 	}
 	public NotificationPrinter setNotification(String notification) {
 		this.notification = notification;
