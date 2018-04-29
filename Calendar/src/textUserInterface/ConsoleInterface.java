@@ -22,6 +22,7 @@ public class ConsoleInterface implements NotificationReciver {
 
 	/**
 	 * Class that represents TUI Menu
+	 * 
 	 * @author plisik
 	 *
 	 */
@@ -47,7 +48,8 @@ public class ConsoleInterface implements NotificationReciver {
 		}
 
 		/**
-		 * Return which action was chosen 
+		 * Return which action was chosen
+		 * 
 		 * @return
 		 */
 		String getMenuOption() {
@@ -57,7 +59,7 @@ public class ConsoleInterface implements NotificationReciver {
 
 				System.out.print("Menu option: ");
 				ans = ConsoleInterfaceElements.getIntegerFromUser();
-				if (ans < menuEntries.size() + 1 && ans > 1) {
+				if (ans < menuEntries.size() + 1 && ans > 0) {
 					break;
 				} else {
 					System.out.println("Incorect number range");
@@ -92,7 +94,7 @@ public class ConsoleInterface implements NotificationReciver {
 			}
 
 		});
-		
+
 		actions.put("Save to binary", new Runnable() {
 
 			@Override
@@ -139,98 +141,99 @@ public class ConsoleInterface implements NotificationReciver {
 				} catch (Exception e) {
 					System.out.print("Error occuerd: " + e.getMessage());
 					return;
-					
+
 				}
 				System.out.println("Imported from binary");
 
 			}
 
 		});
-	
+
 		actions.put("Show persons", new Runnable() {
 
 			@Override
 			public void run() {
-				ConsolePrinter persons=new PersonPrinter(printer);
+				ConsolePrinter persons = new PersonPrinter(printer);
 				System.out.print(persons.show());
-				
+
 			}
-			
+
 		});
 		actions.put("Add persons to view", new Runnable() {
 
 			@Override
 			public void run() {
-				printer=new PersonPrinter(printer);
-				
+				printer = new PersonPrinter(printer);
+
 			}
-			
+
 		});
 		actions.put("Show events", new Runnable() {
 
 			@Override
 			public void run() {
-				ConsolePrinter events=new EventsPrinter(printer);
+				ConsolePrinter events = new EventsPrinter(printer);
 				System.out.print(events.show());
-				
+
 			}
-			
+
 		});
 		actions.put("Add events to view", new Runnable() {
 
+			@Override
+			public void run() {
+				printer = new EventsPrinter(printer);
+
+			}
+
+		});
+		actions.put("Add person", new Runnable() {
 
 			@Override
 			public void run() {
-				 printer=new EventsPrinter(printer);
-				
-			}
-			
-		});
-		actions.put("Add person", new Runnable(){
+				ConsoleInterfaceElements.innerBreak();
+				System.out.println("Person Creator");
+				System.out.println("Name: ");
+				String name = ConsoleInterfaceElements.getUserInput();
+				System.out.println("Surname: ");
+				String surname = ConsoleInterfaceElements.getUserInput();
+				ll.createPerson(name, surname);
 
-		@Override
-		public void run() {
-			ConsoleInterfaceElements.innerBreak();
-			System.out.println("Person Creator");
-			System.out.println("Name: ");
-			String name=ConsoleInterfaceElements.getUserInput();
-			System.out.println("Surname: ");
-			String surname=ConsoleInterfaceElements.getUserInput();
-			ll.createPerson(name, surname);
-			
-		}
-		
-	});
-		
+			}
+
+		});
+
 		actions.put("Add event", new Runnable() {
 
 			@Override
 			public void run() {
-				notifiactionSource.update();
+				
 				ConsoleInterfaceElements.innerBreak();
 				System.out.println("Event Creator");
-				//TODO event creator
-				ll.createEvent("adad", new Date(), new Date());
-				
-				
-				
+				System.out.print("Description ");
+				String desc = ConsoleInterfaceElements.getUserInput();
+				System.out.print("Start date ");
+				Date start = ConsoleInterfaceElements.getDateFromUser();
+				System.out.print("End date ");
+				Date end = ConsoleInterfaceElements.getDateFromUser();
+				ll.createEvent(desc, start, end);
+				notifiactionSource.update();
 			}
-			
+
 		});
 	}
 
 	public void run() {
 		List<String> entries = actions.keySet().stream().collect(Collectors.toList());
 		ConsoleMenu menu = new ConsoleMenu(entries);
-		ll.createEvent("adadada", new Date(), new Date());
 		notifiactionSource.update();
-		while(true) {
+		while (true) {
 			System.out.print(printer.show());
 			String option = menu.getMenuOption();
 			actions.get(option).run();
 			ConsoleInterfaceElements.getUserInput();
 		}
-		
+
 	}
 
 	@Override
