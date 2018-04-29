@@ -9,6 +9,6 @@ import dataLayer.DataService;
  *
  */
 public interface Saver {
-	public void save(String filename,DataService data);
+	public void save(String filename,DataService data) throws LogicLayerException;
 
 }
