@@ -1,6 +1,5 @@
 package textUserInterface;
 
-import java.util.Date;
 import java.util.Map.Entry;
 
 import dataLayer.Event;
