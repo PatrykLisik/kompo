@@ -8,12 +8,17 @@ import javax.swing.SwingConstants;
 import java.awt.Insets;
 import javax.swing.BoxLayout;
 import java.awt.SystemColor;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.border.MatteBorder;
+import javax.swing.JList;
 
-public class DayView extends JPanel {
+public class DayView extends JPanel implements MouseListener{
 	private JLabel lblDaynum;
+	private JList taskList;
 
 	/**
 	 * Create the panel.
@@ -21,6 +26,7 @@ public class DayView extends JPanel {
 	public DayView() {
 		setBorder(new LineBorder(new Color(180, 180, 180), 2));
 		setBackground(SystemColor.inactiveCaption);
+		addMouseListener(this);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0};
@@ -37,19 +43,45 @@ public class DayView extends JPanel {
 		gbc_lblDaynum.gridy = 0;
 		add(lblDaynum, gbc_lblDaynum);
 		
-		JPanel taskListPanel = new JPanel();
-		taskListPanel.setBackground(SystemColor.inactiveCaption);
-		GridBagConstraints gbc_taskListPanel = new GridBagConstraints();
-		gbc_taskListPanel.fill = GridBagConstraints.BOTH;
-		gbc_taskListPanel.gridx = 0;
-		gbc_taskListPanel.gridy = 1;
-		add(taskListPanel, gbc_taskListPanel);
-		taskListPanel.setLayout(new BoxLayout(taskListPanel, BoxLayout.Y_AXIS));
+		taskList = new JList();
+		taskList.setBackground(SystemColor.inactiveCaption);
+		GridBagConstraints gbc_taskList = new GridBagConstraints();
+		gbc_taskList.fill = GridBagConstraints.BOTH;
+		gbc_taskList.gridx = 0;
+		gbc_taskList.gridy = 1;
+		add(taskList, gbc_taskList);
 
 	}
 
 	public void setDayNum(int dayNumber) {
 		lblDaynum.setText(Integer.toString(dayNumber));
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		this.setBackground(SystemColor.activeCaption);	
+		taskList.setBackground(SystemColor.activeCaption);
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		setBackground(SystemColor.inactiveCaption);		
+		taskList.setBackground(SystemColor.inactiveCaption);
 	}
 
 }

@@ -3,6 +3,12 @@ package gui;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.UIManager;
+
+import gui.util.StateContainer;
+import gui.widget.Calendar;
+import java.awt.BorderLayout;
+import javax.swing.BoxLayout;
 
 public class MainWindow {
 
@@ -15,8 +21,11 @@ public class MainWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					UIManager.setLookAndFeel(
+				            UIManager.getSystemLookAndFeelClassName());
 					MainWindow window = new MainWindow();
 					window.frame.setVisible(true);
+					window.frame.setTitle("Aplikacja kalendarz");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -38,6 +47,11 @@ public class MainWindow {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(new BorderLayout(0, 0));
+		
+		Calendar calendar = new Calendar();
+		calendar.setStateContainer(new StateContainer());
+		frame.getContentPane().add(calendar);
 	}
 
 }

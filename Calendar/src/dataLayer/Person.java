@@ -40,4 +40,9 @@ public class Person implements Serializable{
 		return this.name.equals(p.getName()) && this.surname.equals(p.getSurname());
 	}
 
+	@Override
+	public String toString() {
+		return name + " " + surname;
+	}
+
 }

@@ -24,9 +24,10 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.JLabel;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 
-public class Calendar extends JFrame {
+import gui.util.StateContainer;
 
-	private JPanel contentPane;
+public class Calendar extends JPanel {
+
 	private JTextField txtMiesiac;
 	private MonthView monthView;
 	private JPanel calendar;
@@ -34,22 +35,19 @@ public class Calendar extends JFrame {
 	private JPanel contacts;
 	private ContactsView contactsView;
 	private JSpinner spinner;
+	private StateContainer stateContainer;
 
 	/**
 	 * Create the frame.
 	 */
 	public Calendar() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
+		setBorder(new EmptyBorder(5, 5, 5, 5));
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[] {90, 0};
 		gbl_contentPane.rowHeights = new int[] {20, 0, 0};
 		gbl_contentPane.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		contentPane.setLayout(gbl_contentPane);
+		setLayout(gbl_contentPane);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBackground(UIManager.getColor("Panel.background"));
@@ -58,7 +56,7 @@ public class Calendar extends JFrame {
 		gbc_tabbedPane.fill = GridBagConstraints.BOTH;
 		gbc_tabbedPane.gridx = 0;
 		gbc_tabbedPane.gridy = 0;
-		contentPane.add(tabbedPane, gbc_tabbedPane);
+		add(tabbedPane, gbc_tabbedPane);
 		
 		calendar = new JPanel();
 		calendar.setBackground(UIManager.getColor("Panel.background"));
@@ -134,4 +132,8 @@ public class Calendar extends JFrame {
 		contacts.add(contactsView, gbc_contactsView);
 	}
 
+	public void setStateContainer(StateContainer state) {
+		this.stateContainer=state;
+		contactsView.setStateContainer(state);
+	}
 }
