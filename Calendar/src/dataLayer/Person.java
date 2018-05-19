@@ -28,7 +28,7 @@ public class Person implements Serializable{
 		this.surname = surName;
 	}
 
-	Person() {
+	public Person() {
 		name = "No Name";
 		surname = "No Surname";
 	}
