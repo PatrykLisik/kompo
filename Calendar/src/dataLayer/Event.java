@@ -9,10 +9,10 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 /**
- * Event is class which represents event in calendar and contains information about
- * Persons whose are associated with event
- * Remainders date and descriptions
- * By default every event has two remainders one day before and on start 
+ * Event is class which represents event in calendar and contains information
+ * about Persons whose are associated with event Remainders date and
+ * descriptions By default every event has two remainders one day before and on
+ * start
  * 
  * @author plisik
  *
@@ -24,17 +24,18 @@ public class Event implements Serializable {
 	Date end;
 	String name;
 	/**
-	 * associatedPersons stores IDs of Persons associated with event There is
-	 * no reason to store duplicated associated persons, so set class is used
+	 * associatedPersons stores IDs of Persons associated with event There is no
+	 * reason to store duplicated associated persons, so set class is used
 	 * 
 	 */
 	Set<Integer> associatedPersons = new TreeSet<Integer>();
+
 	/**
-	 * notification stores date when calendar should notify user about event
-	 * There is no reason to store duplicated remainders date
+	 * notification stores date when calendar should notify user about event There
+	 * is no reason to store duplicated remainders date
 	 * 
 	 */
-	public static class Notification implements Serializable{
+	public static class Notification implements Serializable {
 		/**
 		 * 
 		 */
@@ -42,12 +43,13 @@ public class Event implements Serializable {
 		Date date;
 		String descripton;
 		long id;
-		static long NotifiactionCounter=0;
+		static long NotifiactionCounter = 0;
+
 		public Notification(Date date, String descripton) {
 			super();
 			this.date = date;
 			this.descripton = descripton;
-			this.id=NotifiactionCounter;
+			this.id = NotifiactionCounter;
 			NotifiactionCounter++;
 
 		}
@@ -75,11 +77,9 @@ public class Event implements Serializable {
 			this.descripton = descripton;
 		}
 
-	
-		
-		
 	}
-	Map<Long,Notification> notification = new TreeMap<Long,Notification>();
+
+	Map<Long, Notification> notification = new TreeMap<Long, Notification>();
 
 	public Map<Long, Notification> getNotifications() {
 		return notification;
@@ -90,8 +90,8 @@ public class Event implements Serializable {
 	}
 
 	public void addNotification(Date date, String descripton) {
-		Notification n=new Notification(date, descripton);
-		this.notification.put(n.getId(),n);
+		Notification n = new Notification(date, descripton);
+		this.notification.put(n.getId(), n);
 	}
 
 	public Event(String name, Date start, Date end, Set<Integer> associatedPersons) {
@@ -109,7 +109,7 @@ public class Event implements Serializable {
 		this.name = name;
 
 		// Default Remainders
-		this.addNotification(start,"is starting now");
+		this.addNotification(start, "is starting now");
 		this.addNotification(this.subtractDay(start), "is going to start in one day");
 	}
 
