@@ -19,10 +19,10 @@ public class DataServiceNoSQL implements DataService {
 	DataContext data = new DataContext();
 
 	// number of person that will created next
-	int personCounter = 0;
+	protected int personCounter = 0;
 
 	// number of event that will be created next
-	int eventCounter = 0;
+	protected int eventCounter = 0;
 
 	@Override
 	public DataContext getDataContext() {
