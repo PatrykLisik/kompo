@@ -1,2 +1,101 @@
 /.metadata/
 /.recommenders/
+
+#Calendar
+### Eclipse ###
+
+Calendar/.metadata
+Calendar/bin/
+Calendar/tmp/
+Calendar/*.tmp
+Calendar/*.bak
+Calendar/*.swp
+Calendar/*~.nib
+Calendar/local.properties
+Calendar/.settings/
+Calendar/.loadpath
+Calendar/.recommenders
+
+# External tool builders
+Calendar/.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+Calendar/*.launch
+
+# PyDev specific (Python IDE for Eclipse)
+Calendar/*.pydevproject
+
+# CDT-specific (C/C++ Development Tooling)
+Calendar/.cproject
+
+# Java annotation processor (APT)
+Calendar/.factorypath
+
+# PDT-specific (PHP Development Tools)
+Calendar/.buildpath
+
+# sbteclipse plugin
+Calendar/.target
+
+# Tern plugin
+Calendar/.tern-project
+
+# TeXlipse plugin
+Calendar/.texlipse
+
+# STS (Spring Tool Suite)
+Calendar/.springBeans
+
+# Code Recommenders
+Calendar/.recommenders/
+
+# Scala IDE specific (Scala & Java development for Eclipse)
+Calendar/.cache-main
+Calendar/.scala_dependencies
+Calendar/.worksheet
+
+### Eclipse Patch ###
+# Eclipse Core
+Calendar/.project
+
+# JDT-specific (Eclipse Java Development Tools)
+Calendar/.classpath
+
+# Annotation Processing
+Calendar/.apt_generated
+
+### Java ###
+# Compiled class file
+Calendar/*.class
+
+# Log file
+Calendar/*.log
+
+# BlueJ files
+Calendar/*.ctxt
+
+# Mobile Tools for Java (J2ME)
+Calendar/.mtj.tmp/
+
+# Package Files #
+Calendar/*.jar
+Calendar/*.war
+Calendar/*.ear
+Calendar/*.zip
+Calendar/*.tar.gz
+Calendar/*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+### Maven ###
+Calendar/target/
+Calendar/pom.xml.tag
+Calendar/pom.xml.releaseBackup
+Calendar/pom.xml.versionsBackup
+Calendar/pom.xml.next
+Calendar/release.properties
+Calendar/dependency-reduced-pom.xml
+Calendar/buildNumber.properties
+Calendar/.mvn/timing.properties
+#End Calendar
