@@ -11,6 +11,11 @@ import javax.swing.JButton;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.time.Month;
+
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JTabbedPane;
@@ -20,13 +25,16 @@ import java.awt.Color;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JLabel;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
 
+import gui.popup.ContactCreator;
 import gui.util.StateContainer;
 
-public class Calendar extends JPanel {
+public class Calendar extends JPanel implements ActionListener{
 
 	private JTextField txtMiesiac;
 	private MonthView monthView;
@@ -36,11 +44,16 @@ public class Calendar extends JPanel {
 	private ContactsView contactsView;
 	private JSpinner spinner;
 	private StateContainer stateContainer;
+	private static final String NEXT_MONTH = "NM";
+	private static final String PREV_MONTH = "PM";
+	private java.util.Calendar date;
 
 	/**
 	 * Create the frame.
 	 */
 	public Calendar() {
+		date = java.util.Calendar.getInstance();
+		
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[] {90, 0};
@@ -70,6 +83,8 @@ public class Calendar extends JPanel {
 		calendar.setLayout(gbl_calendar);
 		
 		JButton btnNewButton = new JButton("<-");
+		btnNewButton.setActionCommand(PREV_MONTH);
+		btnNewButton.addActionListener(this);
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.fill = GridBagConstraints.BOTH;
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
@@ -84,9 +99,10 @@ public class Calendar extends JPanel {
 		gbc_txtMiesiac.insets = new Insets(0, 0, 5, 5);
 		gbc_txtMiesiac.gridx = 1;
 		gbc_txtMiesiac.gridy = 0;
+		String monthName = new SimpleDateFormat("MMM").format(date.getTime());
 		calendar.add(txtMiesiac, gbc_txtMiesiac);
 		txtMiesiac.setHorizontalAlignment(SwingConstants.CENTER);
-		txtMiesiac.setText("Miesiac");
+		txtMiesiac.setText(monthName);
 		txtMiesiac.setColumns(10);
 		
 		spinner = new JSpinner();
@@ -100,6 +116,8 @@ public class Calendar extends JPanel {
 		calendar.add(spinner, gbc_spinner);
 		
 		JButton btnNewButton_1 = new JButton("->");
+		btnNewButton_1.setActionCommand(NEXT_MONTH);
+		btnNewButton_1.addActionListener(this);
 		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
 		gbc_btnNewButton_1.fill = GridBagConstraints.BOTH;
 		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 0);
@@ -135,5 +153,26 @@ public class Calendar extends JPanel {
 	public void setStateContainer(StateContainer state) {
 		this.stateContainer=state;
 		contactsView.setStateContainer(state);
+	}
+	
+	public void onNextMonthPress(int amount) {
+		date.add(java.util.Calendar.MONTH, amount);
+		String nextMonth = new SimpleDateFormat("MMMMMMMMMM").format(date.getTime());
+		txtMiesiac.setText(nextMonth);		
+	}
+	
+	public void onPrevMonthPress() {
+		date.add(java.util.Calendar.MONTH, -1);
+		String prevMonth = new SimpleDateFormat("MMMMMMMMMM").format(date.getTime());
+		txtMiesiac.setText(prevMonth);		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		switch (e.getActionCommand()){
+		case NEXT_MONTH: onNextMonthPress(1);break;
+		case PREV_MONTH: onNextMonthPress(-1);break;
+		}
+		
 	}
 }
