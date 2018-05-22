@@ -23,6 +23,9 @@ import javax.swing.SwingConstants;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import java.awt.Color;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
@@ -36,7 +39,7 @@ import javax.swing.JLabel;
 import gui.popup.ContactCreator;
 import gui.util.StateContainer;
 
-public class Calendar extends JPanel implements ActionListener{
+public class Calendar extends JPanel implements ActionListener, ChangeListener{
 
 	private JTextField txtMiesiac;
 	private MonthView monthView;
@@ -108,6 +111,7 @@ public class Calendar extends JPanel implements ActionListener{
 		spinner = new JSpinner();
 		spinner.setModel(new SpinnerDateModel(new Date(1526162400000L), null, null, java.util.Calendar.YEAR));
 		spinner.setEditor(new JSpinner.DateEditor(spinner, "yyyy"));
+		spinner.addChangeListener(this);
 		GridBagConstraints gbc_spinner = new GridBagConstraints();
 		gbc_spinner.fill = GridBagConstraints.BOTH;
 		gbc_spinner.insets = new Insets(0, 0, 5, 5);
@@ -175,5 +179,12 @@ public class Calendar extends JPanel implements ActionListener{
 		java.util.Calendar date = stateContainer.getDate();
 		String nextMonth = new SimpleDateFormat("MMMMMMMMMM").format(date.getTime());
 		txtMiesiac.setText(nextMonth);	
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		if(e.getSource() == spinner) {
+			stateContainer.changeYearTo((Date) spinner.getValue());
+		}
 	}
 }

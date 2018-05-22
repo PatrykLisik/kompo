@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import dataLayer.Person;
@@ -63,6 +65,14 @@ public class StateContainer {
 
 	public void setDate(Calendar instance) {
 		date= instance;
+		triggerDateChanged();	
+	}
+
+	public void changeYearTo(Date value) {
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(value);
+		int year = calendar.get(Calendar.YEAR);
+		date.set(java.util.Calendar.YEAR, year);		
 		triggerDateChanged();	
 	}
 }

@@ -27,9 +27,9 @@ public class MonthView extends JPanel implements ActionListener{
 	public MonthView() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] {0, 0, 0, 0, 0, 0, 0, 2};
-		gridBagLayout.rowHeights = new int[] {0, 0, 0, 0, 0, 0, 2};
+		gridBagLayout.rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0, 2};
 		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		JLabel lblMon = new JLabel("Pon");
