@@ -50,7 +50,9 @@ public class MainWindow {
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		Calendar calendar = new Calendar();
-		calendar.setStateContainer(new StateContainer());
+		StateContainer container = new StateContainer();
+		calendar.setStateContainer(container);
+		container.setDate(java.util.Calendar.getInstance());
 		frame.getContentPane().add(calendar);
 	}
 

@@ -5,15 +5,21 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JSeparator;
+
+import gui.util.StateContainer;
+
 import javax.swing.JCheckBox;
 
-public class MonthView extends JPanel {
+public class MonthView extends JPanel implements ActionListener{
 	
 	private List<DayView> days= new ArrayList<>();
+	private StateContainer stateContainer;
 
 	/**
 	 * Create the panel.
@@ -75,28 +81,58 @@ public class MonthView extends JPanel {
 		gbc_lblNiedz.gridy = 0;
 		add(lblNiedz, gbc_lblNiedz);
 		
-		createDays();
+		java.util.Calendar date = java.util.Calendar.getInstance();
+		createDays(date);
 	}
 
-	private void createDays() {
-		
-		for(int col=1;col<=7;col++) {
-			for(int row=0;row<5;row++) {
-				
-				DayView day = new DayView();
-				int dayNumber= row*7+col;
-				day.setDayNum(dayNumber);
-				days.add(day);
-				
-				GridBagConstraints gridConstraint = new GridBagConstraints();
-				gridConstraint.insets = new Insets(0, 0, 5, 5);
-				gridConstraint.gridx = col-1;
-				gridConstraint.gridy = row+1;
-				gridConstraint.fill=GridBagConstraints.BOTH;
-				add(day, gridConstraint);
-				
+	private void createDays(java.util.Calendar date) {
+			
+		for(DayView comp: days) {
+			remove(comp);
+		}
+		days.clear();
+		date.set(java.util.Calendar.DAY_OF_MONTH,1);
+		int firstDayWeekNum = date.get(java.util.Calendar.DAY_OF_WEEK)-1;
+		if(firstDayWeekNum == 0) {
+			firstDayWeekNum=7;
+		}
+		int daysInMounth = date.getActualMaximum(java.util.Calendar.DAY_OF_MONTH);
+		int counter = 0;
+		for(int row=0;row<6;row++) {	
+			for(int col=1;col<=7;col++) {
+				int posNumber= row*7+col;
+				if(posNumber>=firstDayWeekNum && posNumber< daysInMounth+firstDayWeekNum) {
+					DayView day = new DayView();
+					
+					day.setDayNum(++counter);
+					days.add(day);				
+					
+					GridBagConstraints gridConstraint = new GridBagConstraints();
+					gridConstraint.insets = new Insets(0, 0, 5, 5);
+					gridConstraint.gridx = col-1;
+					gridConstraint.gridy = row+1;
+					gridConstraint.fill=GridBagConstraints.BOTH;
+					add(day, gridConstraint);
+				}
 			}
 		}
+	}
+
+	public void setStateContainer(StateContainer state) {
+		if(stateContainer!=null) {
+			stateContainer.unregisterDateChaned(this);
+		}
+		this.stateContainer=state;
+		stateContainer.addDateChangedListener(this);	
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		switch(e.getActionCommand()) {
+			case StateContainer.DATE_CHANGED_COMMAND: createDays(stateContainer.getDate());
+		}
+		this.repaint();
+		this.revalidate();
 	}
 
 }

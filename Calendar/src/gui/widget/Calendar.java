@@ -1,6 +1,8 @@
 package gui.widget;
 
+
 import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -46,14 +48,12 @@ public class Calendar extends JPanel implements ActionListener{
 	private StateContainer stateContainer;
 	private static final String NEXT_MONTH = "NM";
 	private static final String PREV_MONTH = "PM";
-	private java.util.Calendar date;
 
 	/**
 	 * Create the frame.
 	 */
 	public Calendar() {
-		date = java.util.Calendar.getInstance();
-		
+		java.util.Calendar date = java.util.Calendar.getInstance();
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[] {90, 0};
@@ -133,6 +133,7 @@ public class Calendar extends JPanel implements ActionListener{
 		gbc_monthView.gridy = 1;
 		calendar.add(monthView, gbc_monthView);
 		
+		
 		contacts = new JPanel();
 		tabbedPane.addTab("Kontakty", null, contacts, null);
 		GridBagLayout gbl_contacts = new GridBagLayout();
@@ -151,28 +152,28 @@ public class Calendar extends JPanel implements ActionListener{
 	}
 
 	public void setStateContainer(StateContainer state) {
+		if(stateContainer!=null) {
+			stateContainer.unregisterDateChaned(this);
+		}
 		this.stateContainer=state;
+		stateContainer.addDateChangedListener(this);
 		contactsView.setStateContainer(state);
+		monthView.setStateContainer(state);
 	}
 	
-	public void onNextMonthPress(int amount) {
-		date.add(java.util.Calendar.MONTH, amount);
-		String nextMonth = new SimpleDateFormat("MMMMMMMMMM").format(date.getTime());
-		txtMiesiac.setText(nextMonth);		
-	}
-	
-	public void onPrevMonthPress() {
-		date.add(java.util.Calendar.MONTH, -1);
-		String prevMonth = new SimpleDateFormat("MMMMMMMMMM").format(date.getTime());
-		txtMiesiac.setText(prevMonth);		
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()){
-		case NEXT_MONTH: onNextMonthPress(1);break;
-		case PREV_MONTH: onNextMonthPress(-1);break;
+			case NEXT_MONTH: stateContainer.changeMonth(1);break;
+			case PREV_MONTH: stateContainer.changeMonth(-1);break;
+			case StateContainer.DATE_CHANGED_COMMAND: reloadView();break;
 		}
 		
+	}
+
+	private void reloadView() {
+		java.util.Calendar date = stateContainer.getDate();
+		String nextMonth = new SimpleDateFormat("MMMMMMMMMM").format(date.getTime());
+		txtMiesiac.setText(nextMonth);	
 	}
 }
