@@ -22,16 +22,11 @@ public interface LogicLayer extends NotifiactionSource{
 	//All exports
 	void saveToBianry(String fileName) throws LogicLayerException;
 	void saveToXML(String fileName) throws LogicLayerException;
-	void saveToEvolution(String fileName);
-	void saveToTXT(String fileName);
-	void saveToGoogleCalendar(String fileName);
+	void saveToODT(String fileName) throws LogicLayerException;
 	
 	//All imports
 	void importFromBianry(String fileName) throws LogicLayerException;
 	void importFromXML(String fileName) throws LogicLayerException;
-	void importFromEvolution(String fileName) throws LogicLayerException;
-	void importFromTXT(String fileName) throws LogicLayerException;
-	void importFromGoogleCalendar(String fileName) throws LogicLayerException;
 	 
 	//Operations on events
 	List<Event> EventBetweenDate(Date start, Date end);

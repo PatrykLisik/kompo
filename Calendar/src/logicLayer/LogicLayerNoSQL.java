@@ -61,45 +61,14 @@ public class LogicLayerNoSQL implements LogicLayer {
 		this.save(fileName, new XMLSaver());
 
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see logicLayer.LogicLayer#saveToEvolution(java.lang.String)
-	 */
+	
 	@Override
-	public void saveToEvolution(String fileName) {
-		// TODO Auto-generated method stub
-
+	public void saveToODT(String fileName) throws LogicLayerException {
+		this.save(fileName,new OpenOfficeSaver());
+		
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see logicLayer.LogicLayer#saveToTXT(java.lang.String)
-	 */
-	@Override
-	public void saveToTXT(String fileName) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see logicLayer.LogicLayer#saveToGoogleCalendar(java.lang.String)
-	 */
-	@Override
-	public void saveToGoogleCalendar(String fileName) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see logicLayer.LogicLayer#importFromBianry(java.lang.String)
-	 */
+	
 	@Override
 	public void importFromBianry(String fileName) throws LogicLayerException {
 		Importer imp = new BinaryImporter();
@@ -117,38 +86,6 @@ public class LogicLayerNoSQL implements LogicLayer {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see logicLayer.LogicLayer#importFromEvolution(java.lang.String)
-	 */
-	@Override
-	public void importFromEvolution(String fileName) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see logicLayer.LogicLayer#importFromTXT(java.lang.String)
-	 */
-	@Override
-	public void importFromTXT(String fileName) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see logicLayer.LogicLayer#importFromGoogleCalendar(java.lang.String)
-	 */
-	@Override
-	public void importFromGoogleCalendar(String fileName) {
-		// TODO Auto-generated method stub
-
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -379,6 +316,8 @@ public class LogicLayerNoSQL implements LogicLayer {
 		
 		return ans;
 	}
+
+
 
 
 

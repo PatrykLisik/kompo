@@ -20,6 +20,21 @@
 			<artifactId>xstream</artifactId>
 			<version>1.4.10</version>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.odftoolkit/odfdom-java -->
+		<dependency>
+			<groupId>org.odftoolkit</groupId>
+			<artifactId>odfdom-java</artifactId>
+			<version>0.8.7</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.massisframework/j-text-utils -->
+		<dependency>
+			<groupId>com.massisframework</groupId>
+			<artifactId>j-text-utils</artifactId>
+			<version>0.3.4</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
