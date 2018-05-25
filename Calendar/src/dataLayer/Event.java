@@ -40,6 +40,7 @@ public class Event implements Serializable {
 		 * 
 		 */
 		private static final long serialVersionUID = -1858674304681020987L;
+
 		Date date;
 		String descripton;
 		long id;
@@ -52,6 +53,16 @@ public class Event implements Serializable {
 			this.id = NotifiactionCounter;
 			NotifiactionCounter++;
 
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return "Notification [date=" + date + ", descripton=" + descripton + ", id=" + id + "]";
 		}
 
 		/**
@@ -179,5 +190,16 @@ public class Event implements Serializable {
 		cal.setTime(date);
 		cal.add(Calendar.DAY_OF_MONTH, -1);
 		return cal.getTime();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Event [start=" + start + ", end=" + end + ", name=" + name + ", associatedPersons=" + associatedPersons
+				+ ", notification=" + notification + "]";
 	}
 }
