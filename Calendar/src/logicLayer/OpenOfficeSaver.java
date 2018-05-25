@@ -3,8 +3,11 @@
  */
 package logicLayer;
 
+import java.util.Arrays;
+
 import javax.swing.table.TableModel;
 
+import org.apache.commons.collections.MapUtils;
 import org.odftoolkit.odfdom.doc.OdfTextDocument;
 
 import dataLayer.DataService;
@@ -16,24 +19,52 @@ import dnl.utils.text.table.TextTable;
  */
 public class OpenOfficeSaver implements Saver {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logicLayer.Saver#save(java.lang.String, dataLayer.DataService)
 	 */
+
+	String DataServiceToString(DataService data) {
+		String out = "";
+		out += "\nPERSONS \n";
+		out += data.getAllPersons().toString();
+		out += "\nEvents \n";
+		out += data.getAllEvents();
+		return out;
+	}
+
+
+
+	private String personsString(DataService data) {
+		String out="";
+		out += "\nPERSONS \n";
+		out +=Arrays.toString(data.getAllPersons().entrySet().toArray());
+		return out;
+	}
+	
+	private String eventsString(DataService data) {
+		String out="";
+		out += "\nPERSONS \n";
+		out +=Arrays.toString(data.getAllEvents().entrySet().toArray());
+		return out;
+	}
+
 	@Override
 	public void save(String filename, DataService data) throws LogicLayerException {
-		TextTable tt= new TextTable((TableModel) data.getAllPersons());
-		String out=tt.toString();
-		
+
 		OdfTextDocument odt;
 		try {
 			odt = OdfTextDocument.newTextDocument();
-			odt.addText(out);
+			odt.addText("Persons");
+			odt.addText(personsString(data));
+			odt.addText("Events");
+			odt.addText(eventsString(data));
 			odt.save(filename);
 		} catch (Exception e) {
 			throw new LogicLayerException(e.getMessage());
-			
+
 		}
-		
 
 	}
 
