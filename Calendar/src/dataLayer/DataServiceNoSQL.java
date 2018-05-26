@@ -108,35 +108,4 @@ public class DataServiceNoSQL implements DataService {
 		return new HashMap<Integer, Event>(data.Events);
 	}
 
-	@Override
-	public void addPersonsToEvent(int eventId, Person... persons) {
-		for (Person p : persons) {
-			int personId = -1;
-			for (HashMap.Entry<Integer, Person> entry : data.Persons.entrySet()) {
-				if (p.equals(entry.getValue())) {
-					personId = entry.getKey();
-				}
-			}
-			if (personId == -1) {
-				// TODO exception person not listed in data
-			}
-			data.Events.get(eventId).addAssociatedPerson(personId);
-		}
-	}
-
-	@Override
-	public void addPersonsToEvent(int eventId, int... personIDs) {
-		if (!data.Events.containsKey(eventId)) {
-			// TODO exception event don't exist
-		}
-		for (int id : personIDs) {
-			if (data.Persons.containsKey(id)) {
-				data.Events.get(id).addAssociatedPerson(id);
-			} else {
-				// TODO exception person not listed
-			}
-		}
-
-	}
-
 }

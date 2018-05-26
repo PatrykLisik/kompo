@@ -21,8 +21,6 @@ public interface DataService extends Serializable{
 	public abstract void updateEvent(int id, Event ev);
 	public abstract void deleteEvent(Event ev);
 	public abstract void deleteEvent(int id);
-	public abstract void addPersonsToEvent(int eventId,Person... persons);
-	public abstract void addPersonsToEvent(int eventId,int... personIDs);
 	public abstract HashMap<Integer, Event> getAllEvents();
 
 }
