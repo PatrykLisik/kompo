@@ -1,7 +1,6 @@
 package dataLayer;
 
 import java.util.Properties;
-import java.util.Vector;
 import dataLayer.Event.Notification;
 
 import java.sql.*;
@@ -13,9 +12,8 @@ public class DataServiceSQL extends DataServiceNoSQL {
 	private static final String USERNAME = "calendar";
 	private static final String DATABASE_URL = "jdbc:mysql://localhost/calendar_data?verifyServerCertificate=false&useSSL=true&autoReconnect=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 	private static final String PASSWORD = "Calendar1!";
-	Connection conn = null;
-	Statement Gstmt = null;
-	Vector<String> querryBuffer = new Vector<String>();
+	private Connection conn = null;
+	private Statement Gstmt = null;
 	private Properties properties = null;
 
 	public DataServiceSQL() {
@@ -46,7 +44,6 @@ public class DataServiceSQL extends DataServiceNoSQL {
 			stmt.setTimestamp(3, new java.sql.Timestamp(n.getDate().getTime()));
 			this.Gstmt.addBatch(getSQL(stmt));
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -59,7 +56,6 @@ public class DataServiceSQL extends DataServiceNoSQL {
 			stmt.setInt(2, eventId);
 			this.Gstmt.addBatch(getSQL(stmt));
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -171,7 +167,6 @@ public class DataServiceSQL extends DataServiceNoSQL {
 			stmt.setString(2, p.getSurname());
 			this.Gstmt.addBatch(getSQL(stmt));
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		super.deletePerson(p);
@@ -198,7 +193,6 @@ public class DataServiceSQL extends DataServiceNoSQL {
 			stmt.setInt(1, eventId);
 			this.Gstmt.addBatch(getSQL(stmt));
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -273,7 +267,6 @@ public class DataServiceSQL extends DataServiceNoSQL {
 			stmt.setInt(3, id);
 			this.Gstmt.addBatch(getSQL(stmt));
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		super.updatePerson(id, p);
