@@ -37,7 +37,17 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.JLabel;
 
 import gui.popup.ContactCreator;
+import gui.popup.EventCreator;
 import gui.util.StateContainer;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JMenu;
+import javax.swing.JToolBar;
+import javax.swing.JPopupMenu;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Calendar extends JPanel implements ActionListener, ChangeListener{
 
@@ -51,6 +61,10 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 	private StateContainer stateContainer;
 	private static final String NEXT_MONTH = "NM";
 	private static final String PREV_MONTH = "PM";
+	private static final String ADD_EVENT = "AE";
+	private JMenuBar menuBar;
+	private JMenu mnOptions;
+	private JMenuItem mntmDodaj;
 
 	/**
 	 * Create the frame.
@@ -58,21 +72,23 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 	public Calendar() {
 		java.util.Calendar date = java.util.Calendar.getInstance();
 		setBorder(new EmptyBorder(5, 5, 5, 5));
-		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[] {90, 0};
-		gbl_contentPane.rowHeights = new int[] {20, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		setLayout(gbl_contentPane);
+		String monthName = new SimpleDateFormat("MMM").format(date.getTime());
+		setLayout(new BorderLayout(0, 0));
+		
+		menuBar = new JMenuBar();
+		add(menuBar, BorderLayout.NORTH);
+		
+		mnOptions = new JMenu("Opcje");
+		menuBar.add(mnOptions);
+		
+		mntmDodaj = new JMenuItem("dodaj wydarzenie");
+		mntmDodaj.addActionListener(this);
+		mntmDodaj.setActionCommand(ADD_EVENT);
+		mnOptions.add(mntmDodaj);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBackground(UIManager.getColor("Panel.background"));
-		GridBagConstraints gbc_tabbedPane = new GridBagConstraints();
-		gbc_tabbedPane.gridheight = 2;
-		gbc_tabbedPane.fill = GridBagConstraints.BOTH;
-		gbc_tabbedPane.gridx = 0;
-		gbc_tabbedPane.gridy = 0;
-		add(tabbedPane, gbc_tabbedPane);
+		add(tabbedPane);
 		
 		calendar = new JPanel();
 		calendar.setBackground(UIManager.getColor("Panel.background"));
@@ -80,19 +96,20 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 		tabbedPane.setBackgroundAt(0, UIManager.getColor("Panel.background"));
 		GridBagLayout gbl_calendar = new GridBagLayout();
 		gbl_calendar.columnWidths = new int[] {90, 186, 63, 90, 0};
-		gbl_calendar.rowHeights = new int[]{20, 49, 0};
+		gbl_calendar.rowHeights = new int[]{20, 0, 0, 49, 0};
 		gbl_calendar.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_calendar.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gbl_calendar.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		calendar.setLayout(gbl_calendar);
 		
 		JButton btnNewButton = new JButton("<-");
 		btnNewButton.setActionCommand(PREV_MONTH);
 		btnNewButton.addActionListener(this);
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.fill = GridBagConstraints.BOTH;
+		gbc_btnNewButton.anchor = GridBagConstraints.NORTH;
+		gbc_btnNewButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton.gridx = 0;
-		gbc_btnNewButton.gridy = 0;
+		gbc_btnNewButton.gridy = 1;
 		calendar.add(btnNewButton, gbc_btnNewButton);
 		
 		txtMiesiac = new JTextField();
@@ -101,8 +118,7 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 		gbc_txtMiesiac.fill = GridBagConstraints.BOTH;
 		gbc_txtMiesiac.insets = new Insets(0, 0, 5, 5);
 		gbc_txtMiesiac.gridx = 1;
-		gbc_txtMiesiac.gridy = 0;
-		String monthName = new SimpleDateFormat("MMM").format(date.getTime());
+		gbc_txtMiesiac.gridy = 1;
 		calendar.add(txtMiesiac, gbc_txtMiesiac);
 		txtMiesiac.setHorizontalAlignment(SwingConstants.CENTER);
 		txtMiesiac.setText(monthName);
@@ -116,7 +132,7 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 		gbc_spinner.fill = GridBagConstraints.BOTH;
 		gbc_spinner.insets = new Insets(0, 0, 5, 5);
 		gbc_spinner.gridx = 2;
-		gbc_spinner.gridy = 0;
+		gbc_spinner.gridy = 1;
 		calendar.add(spinner, gbc_spinner);
 		
 		JButton btnNewButton_1 = new JButton("->");
@@ -126,15 +142,16 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 		gbc_btnNewButton_1.fill = GridBagConstraints.BOTH;
 		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 0);
 		gbc_btnNewButton_1.gridx = 3;
-		gbc_btnNewButton_1.gridy = 0;
+		gbc_btnNewButton_1.gridy = 1;
 		calendar.add(btnNewButton_1, gbc_btnNewButton_1);
 		
 		monthView = new MonthView();
 		GridBagConstraints gbc_monthView = new GridBagConstraints();
+		gbc_monthView.gridheight = 2;
 		gbc_monthView.fill = GridBagConstraints.BOTH;
 		gbc_monthView.gridwidth = 4;
 		gbc_monthView.gridx = 0;
-		gbc_monthView.gridy = 1;
+		gbc_monthView.gridy = 2;
 		calendar.add(monthView, gbc_monthView);
 		
 		
@@ -165,16 +182,6 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 		monthView.setStateContainer(state);
 	}
 	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		switch (e.getActionCommand()){
-			case NEXT_MONTH: stateContainer.changeMonth(1);break;
-			case PREV_MONTH: stateContainer.changeMonth(-1);break;
-			case StateContainer.DATE_CHANGED_COMMAND: reloadView();break;
-		}
-		
-	}
-
 	private void reloadView() {
 		java.util.Calendar date = stateContainer.getDate();
 		String nextMonth = new SimpleDateFormat("MMMMMMMMMM").format(date.getTime());
@@ -185,6 +192,44 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 	public void stateChanged(ChangeEvent e) {
 		if(e.getSource() == spinner) {
 			stateContainer.changeYearTo((Date) spinner.getValue());
+		}
+	}
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
+	}
+	
+	public void onAddEvent() {
+		System.out.println("event");
+		EventCreator eventCreator = new EventCreator();
+		eventCreator.setVisible(true);
+		System.out.println("pokaz sie");
+		if(eventCreator.getReturnCommand() != null && 
+				eventCreator.getReturnCommand().equals(EventCreator.OK_OPTION)) {
+			stateContainer.getLogic().createEvent(eventCreator.getName(),eventCreator.getStartDate(), eventCreator.getEndDate());
+		}
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		switch (e.getActionCommand()){
+			case NEXT_MONTH: stateContainer.changeMonth(1);break;
+			case PREV_MONTH: stateContainer.changeMonth(-1);break;
+			case StateContainer.DATE_CHANGED_COMMAND: reloadView();break;
+			case ADD_EVENT: onAddEvent();break;	
 		}
 	}
 }
