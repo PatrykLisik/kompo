@@ -26,12 +26,17 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import dataLayer.Event;
+import dataLayer.Person;
+
 import java.awt.Color;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
+import java.util.Map.Entry;
 
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JLabel;
@@ -213,10 +218,8 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 	}
 	
 	public void onAddEvent() {
-		System.out.println("event");
 		EventCreator eventCreator = new EventCreator();
 		eventCreator.setVisible(true);
-		System.out.println("pokaz sie");
 		if(eventCreator.getReturnCommand() != null && 
 				eventCreator.getReturnCommand().equals(EventCreator.OK_OPTION)) {
 			stateContainer.getLogic().createEvent(eventCreator.getName(),eventCreator.getStartDate(), eventCreator.getEndDate());

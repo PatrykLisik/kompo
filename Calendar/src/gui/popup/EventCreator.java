@@ -24,7 +24,6 @@ public class EventCreator extends JDialog implements ActionListener{
 	private String returnCommand;
 	private JDateChooser startDateChooser;
 	private JDateChooser endDateChooser;
-	private final JPanel contentPanel = new JPanel();
 	public static final String CANCEL_OPTION = "Cancel";
 	public static final String OK_OPTION = "OK";
 	
@@ -34,8 +33,6 @@ public class EventCreator extends JDialog implements ActionListener{
 		setTitle("Dodawanie wydarzenia");
 		setBounds(100, 100, 467, 314);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.NORTH);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 215, 0, 0};
 		gridBagLayout.rowHeights = new int[]{45, 0, 35, 31, 0, 0, 0, 0, 0};
