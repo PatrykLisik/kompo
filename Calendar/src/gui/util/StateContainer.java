@@ -16,9 +16,11 @@ import logicLayer.LogicLayerNoSQL;
 public class StateContainer {
 	
 	public static final String DATE_CHANGED_COMMAND = "DATE_CHANGED";
+	public static final String EVENT_CHANGED_COMMAND = "EVENT_CHANGED";
 	private LogicLayer logicLayer;
 	private java.util.Calendar date;
 	private List<ActionListener> dateChangeListener = new ArrayList<>();
+	private List<ActionListener> eventChangeListener = new ArrayList<>();
 
 	public StateContainer(LogicLayer logicLayer) {
 		super();
@@ -74,5 +76,21 @@ public class StateContainer {
 		int year = calendar.get(Calendar.YEAR);
 		date.set(java.util.Calendar.YEAR, year);		
 		triggerDateChanged();	
+	}
+
+	public void changeEvents() {
+		triggerEventChanged();		
+	}
+	
+	public void addEventChangedListener(ActionListener listener) {
+		this.eventChangeListener.add(listener);
+	}
+
+	private void triggerEventChanged() {
+		ActionEvent event = new ActionEvent(this, 0, EVENT_CHANGED_COMMAND);
+		for(ActionListener l:this.eventChangeListener) {
+			l.actionPerformed(event);
+		}
+		
 	}
 }

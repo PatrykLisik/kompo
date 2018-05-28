@@ -9,11 +9,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.JSeparator;
 
+import dataLayer.DataService;
+import dataLayer.Person;
+import dataLayer.Event;
 import gui.util.StateContainer;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JCheckBox;
 
 public class MonthView extends JPanel implements ActionListener{
@@ -105,6 +111,9 @@ public class MonthView extends JPanel implements ActionListener{
 					DayView day = new DayView();
 					
 					day.setDayNum(++counter);
+					java.util.Calendar dateClone = (java.util.Calendar) date.clone();
+					dateClone.set(java.util.Calendar.DAY_OF_MONTH, counter);
+					day.setRepresentedDate(dateClone);
 					days.add(day);				
 					
 					GridBagConstraints gridConstraint = new GridBagConstraints();
@@ -121,15 +130,36 @@ public class MonthView extends JPanel implements ActionListener{
 	public void setStateContainer(StateContainer state) {
 		if(stateContainer!=null) {
 			stateContainer.unregisterDateChaned(this);
+			//TODO unregister EventChnagedListener
 		}
 		this.stateContainer=state;
-		stateContainer.addDateChangedListener(this);	
+		stateContainer.addDateChangedListener(this);
+		stateContainer.addEventChangedListener(this);
 	}
+	
+
+	
+	private void updateEvents() {
+		for(DayView day: days) {
+			java.util.Calendar date = day.getRepresentedDate();		
+			List<Event> events = stateContainer.getLogic().EventsOn(date.getTime());
+			day.eventsList.removeAll();
+			for(Event e:events) {
+				EventView ev = new EventView();
+				ev.setStateContainer(this.stateContainer);
+				ev.setRepresentedEvent(e);
+				ev.setName(e.getName());
+				day.eventsList.add(ev);
+			}
+		}
+	}
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-			case StateContainer.DATE_CHANGED_COMMAND: createDays(stateContainer.getDate());
+			case StateContainer.DATE_CHANGED_COMMAND: createDays(stateContainer.getDate());break;
+			case StateContainer.EVENT_CHANGED_COMMAND: updateEvents();
 		}
 		this.repaint();
 		this.revalidate();

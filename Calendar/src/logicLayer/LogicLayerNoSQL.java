@@ -106,6 +106,12 @@ public class LogicLayerNoSQL implements LogicLayer {
 	public List<Event> EventsByDate() {
 		return SortingAndSearchPolicies.eventsByDate(data);
 	}
+	
+	
+	@Override
+	public List<Event> EventsOn(Date start) {
+		return SortingAndSearchPolicies.eventsOn(data, start);
+	}
 
 	/*
 	 * (non-Javadoc)

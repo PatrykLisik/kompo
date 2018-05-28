@@ -31,6 +31,7 @@ public interface LogicLayer extends NotifiactionSource{
 	//Operations on events
 	List<Event> EventBetweenDate(Date start, Date end);
 	List<Event> EventsByDate();
+	List<Event> EventsOn(Date start);
 	List<Event> EventsByNumberOfParticipants();
 	void DeleteEventsBetweenDates(Date start, Date end);
 	
@@ -57,7 +58,5 @@ public interface LogicLayer extends NotifiactionSource{
 	public abstract Map<Long, Notification>  getAllNotification(int eventId);
 	public abstract void addPersonToEvent(int eventId,int personId);
 	public abstract void removePersonFromEvent(int eventId,int PersonId);
-
-	
-	
+		
 }
