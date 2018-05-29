@@ -6,8 +6,8 @@ use calendar_data
 CREATE TABLE events(
     id int,
     name varchar(30),
-    start date,
-    end date
+    start DATETIME,
+    end DATETIME
 
 );
 ALTER TABLE events
