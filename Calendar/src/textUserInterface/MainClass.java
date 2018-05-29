@@ -3,15 +3,22 @@
  */
 package textUserInterface;
 
+import logicLayer.LogicLayer;
+import logicLayer.LogicLayerException;
+import logicLayer.LogicLayerImpl;
+
 /**
  * @author plisik
  *
  */
 public class MainClass {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws LogicLayerException {
 
-		ConsoleInterface ci = new ConsoleInterface();
-		ci.run();
+		LogicLayer ll=new LogicLayerImpl();
+		
+		ll.createPerson("aaa", "adada");
+		ll.saveToODT("plik.odt");
+		System.out.println("END");
 
 	}
 

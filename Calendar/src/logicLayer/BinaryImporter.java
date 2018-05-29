@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import dataLayer.DataService;
 
 /**
+ * Binary serializer - save  
  * @author plisik
  *
  */

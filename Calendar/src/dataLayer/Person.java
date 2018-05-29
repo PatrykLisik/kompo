@@ -2,6 +2,11 @@ package dataLayer;
 
 import java.io.Serializable;
 
+/**
+ * Class that represents person 
+ * @author plisik
+ *
+ */
 @SuppressWarnings("serial")
 public class Person implements Serializable{
 	String name;

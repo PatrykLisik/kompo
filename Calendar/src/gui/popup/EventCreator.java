@@ -12,119 +12,155 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import com.toedter.calendar.JDateChooser;
+
+import dataLayer.Event;
+
 import java.awt.Label;
 import java.awt.Dialog.ModalityType;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import java.awt.GridLayout;
+import javax.swing.JLabel;
 
 public class EventCreator extends JDialog implements ActionListener{
 	private JTextField eventNameField;
 	private String returnCommand;
 	private JDateChooser startDateChooser;
 	private JDateChooser endDateChooser;
+	private JButton okButton;
 	public static final String CANCEL_OPTION = "Cancel";
 	public static final String OK_OPTION = "OK";
+	private GridBagConstraints gbc_eventNameLbl;
+	private GridBagConstraints gbc_eventStartLbl;
+	private GridBagConstraints gbc_windowTitleLbl;
+	private GridBagConstraints gbc_eventEndLbl;
 	
+	public EventCreator(Event data, String windowTitle) {
+		this();
+		this.eventNameField.setText(data.getName());
+		this.startDateChooser.setDate(data.getStart());
+		this.endDateChooser.setDate(data.getEnd());
+		setTitle(windowTitle);
+	}
 	
 	public EventCreator() {
 		this.setModalityType(ModalityType.APPLICATION_MODAL);
 		setTitle("Dodawanie wydarzenia");
-		setBounds(100, 100, 467, 314);
-		getContentPane().setLayout(new BorderLayout());
+		setBounds(100, 100, 467, 197);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 215, 0, 0};
-		gridBagLayout.rowHeights = new int[]{45, 0, 35, 31, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[]{0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{Double.MIN_VALUE, 1.0, 1.0};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0};
 		getContentPane().setLayout(gridBagLayout);
 		
-		Label label_3 = new Label("WYDARZENIE");
-		GridBagConstraints gbc_label_3 = new GridBagConstraints();
-		gbc_label_3.gridwidth = 4;
-		gbc_label_3.insets = new Insets(0, 0, 5, 0);
-		gbc_label_3.gridx = 0;
-		gbc_label_3.gridy = 0;
-		getContentPane().add(label_3, gbc_label_3);
+		Label windowTitleLbl = new Label("WYDARZENIE");
+		gbc_windowTitleLbl = new GridBagConstraints();
+		gbc_windowTitleLbl.gridwidth = 3;
+		gbc_windowTitleLbl.insets = new Insets(0, 0, 5, 0);
+		gbc_windowTitleLbl.gridx = 0;
+		gbc_windowTitleLbl.gridy = 0;
+		getContentPane().add(windowTitleLbl, gbc_windowTitleLbl);
 		
-		Label label = new Label("Nazwa wydarzenia");
-		GridBagConstraints gbc_label = new GridBagConstraints();
-		gbc_label.fill = GridBagConstraints.HORIZONTAL;
-		gbc_label.insets = new Insets(0, 0, 5, 5);
-		gbc_label.gridx = 1;
-		gbc_label.gridy = 2;
-		getContentPane().add(label, gbc_label);
+		
+		Label eventNameLbl = new Label("Nazwa wydarzenia");
+		gbc_eventNameLbl = new GridBagConstraints();
+		gbc_eventNameLbl.insets = new Insets(0, 0, 5, 5);
+		gbc_eventNameLbl.fill = GridBagConstraints.HORIZONTAL;
+		gbc_eventNameLbl.gridx = 0;
+		gbc_eventNameLbl.gridy = 1;
+		getContentPane().add(eventNameLbl, gbc_eventNameLbl);
+		
 		
 		eventNameField = new JTextField();
-		eventNameField.setName("");
-		GridBagConstraints gbc_eventNameField = new GridBagConstraints();
-		gbc_eventNameField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_eventNameField.insets = new Insets(0, 0, 5, 5);
-		gbc_eventNameField.gridx = 2;
-		gbc_eventNameField.gridy = 2;
-		getContentPane().add(eventNameField, gbc_eventNameField);
+		eventNameField.setName("Event Name");
+		GridBagConstraints gbc_eventNameField_1 = new GridBagConstraints();
+		gbc_eventNameField_1.gridwidth = 2;
+		gbc_eventNameField_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_eventNameField_1.insets = new Insets(0, 0, 5, 0);
+		gbc_eventNameField_1.gridx = 1;
+		gbc_eventNameField_1.gridy = 1;
+		getContentPane().add(eventNameField, gbc_eventNameField_1);
 		eventNameField.setColumns(10);
 		
-		Label label_1 = new Label("Data rozpocz\u0119cia");
-		GridBagConstraints gbc_label_1 = new GridBagConstraints();
-		gbc_label_1.insets = new Insets(0, 0, 5, 5);
-		gbc_label_1.gridx = 1;
-		gbc_label_1.gridy = 3;
-		getContentPane().add(label_1, gbc_label_1);
-		
+		Label eventStartLbl = new Label("Data rozpocz\u0119cia");
+		gbc_eventStartLbl = new GridBagConstraints();
+		gbc_eventStartLbl.fill = GridBagConstraints.HORIZONTAL;
+		gbc_eventStartLbl.insets = new Insets(0, 0, 5, 5);
+		gbc_eventStartLbl.gridx = 0;
+		gbc_eventStartLbl.gridy = 2;
+		getContentPane().add(eventStartLbl, gbc_eventStartLbl);
 		
 		startDateChooser = new JDateChooser();
-		GridBagConstraints gbc_startDateChooser = new GridBagConstraints();
-		gbc_startDateChooser.insets = new Insets(0, 0, 5, 5);
-		gbc_startDateChooser.fill = GridBagConstraints.BOTH;
-		gbc_startDateChooser.gridx = 2;
-		gbc_startDateChooser.gridy = 3;
-		getContentPane().add(startDateChooser, gbc_startDateChooser);
+		GridBagConstraints gbc_startDateChooser_1 = new GridBagConstraints();
+		gbc_startDateChooser_1.gridwidth = 2;
+		gbc_startDateChooser_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_startDateChooser_1.insets = new Insets(0, 0, 5, 0);
+		gbc_startDateChooser_1.gridx = 1;
+		gbc_startDateChooser_1.gridy = 2;
+		getContentPane().add(startDateChooser, gbc_startDateChooser_1);
 		
-		Label label_2 = new Label("Data zako\u0144czenia");
-		GridBagConstraints gbc_label_2 = new GridBagConstraints();
-		gbc_label_2.insets = new Insets(0, 0, 5, 5);
-		gbc_label_2.gridx = 1;
-		gbc_label_2.gridy = 4;
-		getContentPane().add(label_2, gbc_label_2);
-		
-		endDateChooser = new JDateChooser();
-		GridBagConstraints gbc_endDateChooser = new GridBagConstraints();
-		gbc_endDateChooser.insets = new Insets(0, 0, 5, 5);
-		gbc_endDateChooser.fill = GridBagConstraints.BOTH;
-		gbc_endDateChooser.gridx = 2;
-		gbc_endDateChooser.gridy = 4;
-		getContentPane().add(endDateChooser, gbc_endDateChooser);
+		Label eventEndLbl = new Label("Data zako\u0144czenia");
+		gbc_eventEndLbl = new GridBagConstraints();
+		gbc_eventEndLbl.fill = GridBagConstraints.HORIZONTAL;
+		gbc_eventEndLbl.insets = new Insets(0, 0, 5, 5);
+		gbc_eventEndLbl.gridx = 0;
+		gbc_eventEndLbl.gridy = 3;
+		getContentPane().add(eventEndLbl, gbc_eventEndLbl);
 		
 		JButton cancelButton = new JButton("Anuluj");
 		cancelButton.addActionListener(this);
-		cancelButton.setActionCommand(CANCEL_OPTION);
-		GridBagConstraints gbc_cancelButton = new GridBagConstraints();
-		gbc_cancelButton.anchor = GridBagConstraints.EAST;
-		gbc_cancelButton.insets = new Insets(0, 0, 5, 5);
-		gbc_cancelButton.gridx = 2;
-		gbc_cancelButton.gridy = 6;
-		getContentPane().add(cancelButton, gbc_cancelButton);
 		
-		JButton okButton = new JButton("OK");
+		endDateChooser = new JDateChooser();
+		GridBagConstraints gbc_endDateChooser_1 = new GridBagConstraints();
+		gbc_endDateChooser_1.gridwidth = 2;
+		gbc_endDateChooser_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_endDateChooser_1.insets = new Insets(0, 0, 5, 0);
+		gbc_endDateChooser_1.gridx = 1;
+		gbc_endDateChooser_1.gridy = 3;
+		getContentPane().add(endDateChooser, gbc_endDateChooser_1);
+		
+
+
+		
+		okButton = new JButton("OK");
 		okButton.addActionListener(this);
 		okButton.setActionCommand(OK_OPTION);
-		GridBagConstraints gbc_okButton = new GridBagConstraints();
-		gbc_okButton.anchor = GridBagConstraints.WEST;
-		gbc_okButton.insets = new Insets(0, 0, 5, 0);
-		gbc_okButton.gridx = 3;
-		gbc_okButton.gridy = 6;
-		getContentPane().add(okButton, gbc_okButton);
+		GridBagConstraints gbc_okButton_1_1 = new GridBagConstraints();
+		gbc_okButton_1_1.insets = new Insets(0, 0, 0, 5);
+		gbc_okButton_1_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_okButton_1_1.gridx = 1;
+		gbc_okButton_1_1.gridy = 5;
+		getContentPane().add(okButton, gbc_okButton_1_1);
+		cancelButton.setActionCommand(CANCEL_OPTION);
+		GridBagConstraints gbc_cancelButton_1 = new GridBagConstraints();
+		gbc_cancelButton_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_cancelButton_1.gridx = 2;
+		gbc_cancelButton_1.gridy = 5;
+		getContentPane().add(cancelButton, gbc_cancelButton_1);
+		
 	}
 	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		this.returnCommand = e.getActionCommand();
-		this.dispose();
+		if(e.getActionCommand() == CANCEL_OPTION || validateFields()) {
+			this.returnCommand = e.getActionCommand();
+			this.dispose();
+		}else {
+			JOptionPane.showMessageDialog(this, "Nalezy wypelnic wszystkie pola", 
+					 "Error: Brak wypelnionego pola", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	
+	private boolean validateFields() {
+		return !getName().isEmpty() && getStartDate() != null && getEndDate()!=null;
+	}
+
+
 	public String getReturnCommand() {
 		return returnCommand;
 	}
@@ -139,6 +175,14 @@ public class EventCreator extends JDialog implements ActionListener{
 	
 	public Date getEndDate() {
 		return endDateChooser.getDate();
+	}
+
+
+	public void setEditable(boolean b) {
+		eventNameField.setEditable(b);
+		startDateChooser.setEnabled(b);
+		endDateChooser.setEnabled(b);
+		okButton.setVisible(b);
 	}
 
 }

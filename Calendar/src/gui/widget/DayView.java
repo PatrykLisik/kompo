@@ -7,18 +7,28 @@ import java.awt.GridBagConstraints;
 import javax.swing.SwingConstants;
 import java.awt.Insets;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+
 import java.awt.SystemColor;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Calendar;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.border.MatteBorder;
+
+import dataLayer.Event;
+
 import javax.swing.JList;
+import java.awt.GridLayout;
 
 public class DayView extends JPanel implements MouseListener{
 	private JLabel lblDaynum;
-	private JList taskList;
+	public JPanel eventsList;
+	private Calendar representedDate;
 
 	/**
 	 * Create the panel.
@@ -43,18 +53,23 @@ public class DayView extends JPanel implements MouseListener{
 		gbc_lblDaynum.gridy = 0;
 		add(lblDaynum, gbc_lblDaynum);
 		
-		taskList = new JList();
-		taskList.setBackground(SystemColor.inactiveCaption);
-		GridBagConstraints gbc_taskList = new GridBagConstraints();
-		gbc_taskList.fill = GridBagConstraints.BOTH;
-		gbc_taskList.gridx = 0;
-		gbc_taskList.gridy = 1;
-		add(taskList, gbc_taskList);
+		eventsList = new JPanel();
+		eventsList.setBackground(SystemColor.inactiveCaption);
+		GridBagConstraints gbc_eventsList = new GridBagConstraints();
+		gbc_eventsList.fill = GridBagConstraints.HORIZONTAL;
+		gbc_eventsList.gridx = 0;
+		gbc_eventsList.gridy = 1;
+		add(eventsList, gbc_eventsList);
+		eventsList.setLayout(new BoxLayout(eventsList, BoxLayout.Y_AXIS));
 
 	}
 
 	public void setDayNum(int dayNumber) {
 		lblDaynum.setText(Integer.toString(dayNumber));
+	}
+	
+	public int getDayNum() {
+		return Integer.parseInt(lblDaynum.getText());
 	}
 
 	@Override
@@ -75,13 +90,22 @@ public class DayView extends JPanel implements MouseListener{
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		this.setBackground(SystemColor.activeCaption);	
-		taskList.setBackground(SystemColor.activeCaption);
+		eventsList.setBackground(SystemColor.activeCaption);
 	}
+	
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		setBackground(SystemColor.inactiveCaption);		
-		taskList.setBackground(SystemColor.inactiveCaption);
+		eventsList.setBackground(SystemColor.inactiveCaption);
+	}
+
+	public Calendar getRepresentedDate() {
+		return this.representedDate;
+	}
+
+	public void setRepresentedDate(Calendar dateClone) {
+		this.representedDate = dateClone;
 	}
 
 }

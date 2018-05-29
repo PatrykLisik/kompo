@@ -5,6 +5,13 @@ import dataLayer.Event.Notification;
 
 import java.sql.*;
 
+/**
+ * Data service which has same functionality like DataServiceNoSQL version, but with every action buffers
+ * query to data base 
+ * use @method syncWithDatabase to save changes to data base 
+ * @author plisik
+ *
+ */
 @SuppressWarnings("serial")
 public class DataServiceSQL extends DataServiceNoSQL {
 
@@ -13,11 +20,17 @@ public class DataServiceSQL extends DataServiceNoSQL {
 	private static final String DATABASE_URL = "jdbc:mysql://localhost/calendar_data?verifyServerCertificate=false&useSSL=true&autoReconnect=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 	private static final String PASSWORD = "Calendar1!";
 	private Connection conn = null;
+	//Statement that 
 	private Statement Gstmt = null;
 	private Properties properties = null;
 
+	/**
+	 * Constructor tries to establish connection with data base 
+	 */
 	public DataServiceSQL() {
 		super();
+		
+		//Establish connection with database
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(DATABASE_URL, getProperties());

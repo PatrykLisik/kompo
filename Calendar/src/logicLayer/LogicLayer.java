@@ -8,12 +8,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import dataLayer.DataService;
 import dataLayer.Event;
 import dataLayer.Person;
 import logicLayer.EventNotifiactionPublisher.NotifiactionSource;
 import dataLayer.Event.Notification;
 
 /**
+ * Interface that generalize logic layer
  * @author plisik
  *
  */
@@ -31,6 +33,7 @@ public interface LogicLayer extends NotifiactionSource{
 	//Operations on events
 	List<Event> EventBetweenDate(Date start, Date end);
 	List<Event> EventsByDate();
+	List<Event> EventsOn(Date start);
 	List<Event> EventsByNumberOfParticipants();
 	void DeleteEventsBetweenDates(Date start, Date end);
 	
@@ -57,7 +60,6 @@ public interface LogicLayer extends NotifiactionSource{
 	public abstract Map<Long, Notification>  getAllNotification(int eventId);
 	public abstract void addPersonToEvent(int eventId,int personId);
 	public abstract void removePersonFromEvent(int eventId,int PersonId);
-
-	
-	
+	DataService getDataService();
+		
 }

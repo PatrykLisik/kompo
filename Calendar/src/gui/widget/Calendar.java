@@ -9,6 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -26,6 +28,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import dataLayer.DataService;
 import dataLayer.Event;
 import dataLayer.Person;
 
@@ -43,9 +46,14 @@ import javax.swing.JLabel;
 
 import gui.popup.ContactCreator;
 import gui.popup.EventCreator;
+import gui.util.SerializationHelper;
 import gui.util.StateContainer;
+import logicLayer.LogicLayer;
+import logicLayer.LogicLayerImpl;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JMenu;
 import javax.swing.JToolBar;
 import javax.swing.JPopupMenu;
@@ -56,6 +64,11 @@ import java.awt.event.MouseEvent;
 
 public class Calendar extends JPanel implements ActionListener, ChangeListener{
 
+	private static final String SAVE_CALENDAR = "Zapisz";
+	private static final String LOAD_CALENDAR = "Wczytaj";
+	private static final String DATA_OPTION = "Dane";
+	private static final String OPTIONS_MENU = "Opcje";
+	private static final String ADD_EVENT_OPTION = "Dodaj wydarzenie";
 	private JTextField txtMiesiac;
 	private MonthView monthView;
 	private JPanel calendar;
@@ -70,9 +83,15 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 	private JMenuBar menuBar;
 	private JMenu mnOptions;
 	private JMenuItem mntmDodaj;
+	private JMenu mnDane;
+	private JMenuItem mntmWczytaj;
+	private JMenuItem mntmZapisz;
 
 	/**
-	 * Create the frame.
+	 * 
+	 * Implementation of the calendar's main view
+	 * @author dwojcik
+	 *
 	 */
 	public Calendar() {
 		java.util.Calendar date = java.util.Calendar.getInstance();
@@ -83,13 +102,31 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 		menuBar = new JMenuBar();
 		add(menuBar, BorderLayout.NORTH);
 		
-		mnOptions = new JMenu("Opcje");
+		mnOptions = new JMenu(OPTIONS_MENU);
 		menuBar.add(mnOptions);
 		
-		mntmDodaj = new JMenuItem("dodaj wydarzenie");
+		mntmDodaj = new JMenuItem(ADD_EVENT_OPTION);
 		mntmDodaj.addActionListener(this);
 		mntmDodaj.setActionCommand(ADD_EVENT);
 		mnOptions.add(mntmDodaj);
+		
+		mnDane = new JMenu(DATA_OPTION);
+		menuBar.add(mnDane);
+		
+		mntmWczytaj = new JMenuItem(LOAD_CALENDAR);
+		mntmWczytaj.addActionListener(a -> {
+			DataService loadedService = SerializationHelper.loadCalendar(this,Calendar.this.stateContainer.getLogic().getDataService());
+			LogicLayer logic = new LogicLayerImpl(loadedService);
+			Calendar.this.stateContainer.setLogicLayer(logic);
+			});
+		mnDane.add(mntmWczytaj);
+		
+		mntmZapisz = new JMenuItem(SAVE_CALENDAR);
+		mntmZapisz.addActionListener(a -> {
+			DataService service = Calendar.this.stateContainer.getLogic().getDataService();
+			SerializationHelper.saveCalendar(this, service);	
+			});
+		mnDane.add(mntmZapisz);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBackground(UIManager.getColor("Panel.background"));
@@ -183,6 +220,7 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 		}
 		this.stateContainer=state;
 		stateContainer.addDateChangedListener(this);
+		stateContainer.addEventChangedListener(this);
 		contactsView.setStateContainer(state);
 		monthView.setStateContainer(state);
 	}
@@ -199,32 +237,16 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 			stateContainer.changeYearTo((Date) spinner.getValue());
 		}
 	}
-	private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
-			}
-		});
-	}
 	
-	public void onAddEvent() {
+	public void createEvent() {
 		EventCreator eventCreator = new EventCreator();
 		eventCreator.setVisible(true);
 		if(eventCreator.getReturnCommand() != null && 
 				eventCreator.getReturnCommand().equals(EventCreator.OK_OPTION)) {
-			stateContainer.getLogic().createEvent(eventCreator.getName(),eventCreator.getStartDate(), eventCreator.getEndDate());
-		}
+			stateContainer.getLogic().createEvent(eventCreator.getName(),eventCreator.getStartDate(), eventCreator.getEndDate());	
+		}			
 	}
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -232,7 +254,7 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 			case NEXT_MONTH: stateContainer.changeMonth(1);break;
 			case PREV_MONTH: stateContainer.changeMonth(-1);break;
 			case StateContainer.DATE_CHANGED_COMMAND: reloadView();break;
-			case ADD_EVENT: onAddEvent();break;	
+			case ADD_EVENT: createEvent(); stateContainer.changeEvents();break;
 		}
 	}
 }

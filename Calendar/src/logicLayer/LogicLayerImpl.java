@@ -21,8 +21,17 @@ import dataLayer.Person;
  * @author plisik
  *
  */
-public class LogicLayerNoSQL implements LogicLayer {
-	DataService data = new DataServiceNoSQL();
+public class LogicLayerImpl implements LogicLayer {
+	DataService data;
+	
+	public LogicLayerImpl() {
+		data = new DataServiceNoSQL();
+	}
+
+	public LogicLayerImpl(DataService data) {
+		super();
+		this.data = data;
+	}
 
 	/**
 	 * Generic method to save 
@@ -105,6 +114,12 @@ public class LogicLayerNoSQL implements LogicLayer {
 	@Override
 	public List<Event> EventsByDate() {
 		return SortingAndSearchPolicies.eventsByDate(data);
+	}
+	
+	
+	@Override
+	public List<Event> EventsOn(Date start) {
+		return SortingAndSearchPolicies.eventsOn(data, start);
 	}
 
 	/*
@@ -315,6 +330,11 @@ public class LogicLayerNoSQL implements LogicLayer {
 				.collect( Collectors.toList());
 		
 		return ans;
+	}
+
+	@Override
+	public DataService getDataService() {
+		return data;
 	}
 
 

@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import dataLayer.DataService;
 import dataLayer.Event;
+import logicLayer.comparator.DateComparator;
 
 /**
  * Implementation of sorting and searching algorithms demanded by logic layer
@@ -30,6 +31,7 @@ public class SortingAndSearchPolicies {
 				.filter(ev -> ev.getStart().compareTo(start) <= 0 && ev.getStart().compareTo(end) >= 0)
 				.collect(Collectors.toList());
 	}
+	
 	/**
 	 * 
 	 * @param data
@@ -39,6 +41,12 @@ public class SortingAndSearchPolicies {
 		List<Event> events = data.getAllEvents().values().stream().collect(Collectors.toList());
 		events.sort(Comparator.comparing(Event::getStart));
 		return events;
+	}
+	
+	static public List<Event> eventsOn(DataService data, Date day) {
+		return data.getAllEvents().values().stream()
+				.filter(ev -> DateComparator.isDateBetween(ev.getStart(), day, ev.getEnd()))
+				.collect(Collectors.toList());
 	}
 
 	/**

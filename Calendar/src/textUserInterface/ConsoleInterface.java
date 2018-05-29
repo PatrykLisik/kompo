@@ -10,7 +10,7 @@ import logicLayer.EventNotifiactionPublisher;
 import logicLayer.EventNotifiactionPublisher.NotificationReciver;
 import logicLayer.LogicLayer;
 import logicLayer.LogicLayerException;
-import logicLayer.LogicLayerNoSQL;
+import logicLayer.LogicLayerImpl;
 
 /**
  * Class that represents TUI itself
@@ -70,7 +70,7 @@ public class ConsoleInterface implements NotificationReciver {
 		}
 	}
 
-	LogicLayer ll = new LogicLayerNoSQL();
+	LogicLayer ll = new LogicLayerImpl();
 	ConsolePrinter printer = new BasicPrinter(ll);
 	EventNotifiactionPublisher notifiactionSource = new EventNotifiactionPublisher(ll);
 	Map<String, Runnable> actions = new TreeMap<String, Runnable>();
