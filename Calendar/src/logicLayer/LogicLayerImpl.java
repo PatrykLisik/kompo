@@ -21,14 +21,14 @@ import dataLayer.Person;
  * @author plisik
  *
  */
-public class LogicLayerNoSQL implements LogicLayer {
+public class LogicLayerImpl implements LogicLayer {
 	DataService data;
 	
-	public LogicLayerNoSQL() {
+	public LogicLayerImpl() {
 		data = new DataServiceNoSQL();
 	}
 
-	public LogicLayerNoSQL(DataService data) {
+	public LogicLayerImpl(DataService data) {
 		super();
 		this.data = data;
 	}
