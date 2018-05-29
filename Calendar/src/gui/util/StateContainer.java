@@ -11,7 +11,7 @@ import java.util.List;
 
 import dataLayer.Person;
 import logicLayer.LogicLayer;
-import logicLayer.LogicLayerNoSQL;
+import logicLayer.LogicLayerImpl;
 
 public class StateContainer {
 	
@@ -31,7 +31,7 @@ public class StateContainer {
 	//TODO: Remove
 	public StateContainer() {
 		super();
-		this.logicLayer = new LogicLayerNoSQL();
+		this.logicLayer = new LogicLayerImpl();
 		this.date = java.util.Calendar.getInstance();
 	}
 	

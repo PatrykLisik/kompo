@@ -14,7 +14,6 @@ public class DateComparator implements Comparator<Date>{
 			return 0;
 		}
 
-			
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d1);
 		int year1 = cal.get(Calendar.YEAR);

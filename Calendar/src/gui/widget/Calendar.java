@@ -49,7 +49,7 @@ import gui.popup.EventCreator;
 import gui.util.SerializationHelper;
 import gui.util.StateContainer;
 import logicLayer.LogicLayer;
-import logicLayer.LogicLayerNoSQL;
+import logicLayer.LogicLayerImpl;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -116,7 +116,7 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 		mntmWczytaj = new JMenuItem(LOAD_CALENDAR);
 		mntmWczytaj.addActionListener(a -> {
 			DataService loadedService = SerializationHelper.loadCalendar(this,Calendar.this.stateContainer.getLogic().getDataService());
-			LogicLayer logic = new LogicLayerNoSQL(loadedService);
+			LogicLayer logic = new LogicLayerImpl(loadedService);
 			Calendar.this.stateContainer.setLogicLayer(logic);
 			});
 		mnDane.add(mntmWczytaj);

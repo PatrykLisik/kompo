@@ -13,7 +13,6 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import dataLayer.DataService;
-import javafx.stage.FileChooser;
 import logicLayer.BinaryImporter;
 import logicLayer.BinarySaver;
 import logicLayer.Importer;
@@ -72,8 +71,8 @@ public class SerializationHelper{
 			return importer.importData(selectedFile.getAbsolutePath());
 		} catch (LogicLayerException | NullPointerException e ) {
 			e.printStackTrace();
-			 JOptionPane.showMessageDialog(parent, "B³¹d deserializacji", 
-					 "Error: Nie uda³o siê wczytaæ danych do pliku.", JOptionPane.ERROR_MESSAGE);
+			 JOptionPane.showMessageDialog(parent, "Bï¿½ï¿½d deserializacji", 
+					 "Error: Nie udaï¿½o siï¿½ wczytaï¿½ danych do pliku.", JOptionPane.ERROR_MESSAGE);
 			return defaultVal;
 		}
 	}
@@ -93,8 +92,8 @@ public class SerializationHelper{
 			saver.save(selectedFile.getAbsolutePath()+"."+operation.getFileExtension(), service);
 		} catch (LogicLayerException e) {
 			e.printStackTrace();
-			 JOptionPane.showMessageDialog(parent, "B³¹d serializacji", 
-					 "Error: Nie uda³o siê zapisaæ danych do pliku.", JOptionPane.ERROR_MESSAGE);
+			 JOptionPane.showMessageDialog(parent, "Bï¿½ï¿½d serializacji", 
+					 "Error: Nie udaï¿½o siï¿½ zapisaï¿½ danych do pliku.", JOptionPane.ERROR_MESSAGE);
 			
 		}
 	}
