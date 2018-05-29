@@ -1,15 +1,17 @@
 DROP DATABASE IF EXISTS calendar_data;
 CREATE DATABASE calendar_data;
 
-use calendar_data
+use calendar_data;
+
+
 
 CREATE TABLE events(
-    id int,
-    name varchar(30),
-    start date,
-    end date
-
+	id int,
+	name varchar(30),
+	start date,
+	end date
 );
+
 ALTER TABLE events
 ADD PRIMARY KEY (id);
 
