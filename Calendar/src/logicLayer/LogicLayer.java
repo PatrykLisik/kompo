@@ -15,6 +15,7 @@ import logicLayer.EventNotifiactionPublisher.NotifiactionSource;
 import dataLayer.Event.Notification;
 
 /**
+ * Interface that generalize logic layer
  * @author plisik
  *
  */

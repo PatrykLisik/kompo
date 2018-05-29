@@ -4,6 +4,7 @@
 package logicLayer;
 
 /**
+ * Exception to throw in logic layer 
  * @author plisik
  *
  */
