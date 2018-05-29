@@ -158,7 +158,7 @@ public class MonthView extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-			case StateContainer.DATE_CHANGED_COMMAND: createDays(stateContainer.getDate());break;
+			case StateContainer.DATE_CHANGED_COMMAND: createDays(stateContainer.getDate());updateEvents();break;
 			case StateContainer.EVENT_CHANGED_COMMAND: updateEvents();
 		}
 		this.repaint();

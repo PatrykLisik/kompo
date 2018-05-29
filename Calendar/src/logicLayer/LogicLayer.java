@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import dataLayer.DataService;
 import dataLayer.Event;
 import dataLayer.Person;
 import logicLayer.EventNotifiactionPublisher.NotifiactionSource;
@@ -58,5 +59,6 @@ public interface LogicLayer extends NotifiactionSource{
 	public abstract Map<Long, Notification>  getAllNotification(int eventId);
 	public abstract void addPersonToEvent(int eventId,int personId);
 	public abstract void removePersonFromEvent(int eventId,int PersonId);
+	DataService getDataService();
 		
 }

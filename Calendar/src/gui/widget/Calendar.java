@@ -28,6 +28,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import dataLayer.DataService;
 import dataLayer.Event;
 import dataLayer.Person;
 
@@ -45,7 +46,11 @@ import javax.swing.JLabel;
 
 import gui.popup.ContactCreator;
 import gui.popup.EventCreator;
+import gui.util.SerializationHelper;
 import gui.util.StateContainer;
+import logicLayer.LogicLayer;
+import logicLayer.LogicLayerNoSQL;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -59,6 +64,9 @@ import java.awt.event.MouseEvent;
 
 public class Calendar extends JPanel implements ActionListener, ChangeListener{
 
+	private static final String SAVE_CALENDAR = "Zapisz";
+	private static final String LOAD_CALENDAR = "Wczytaj";
+	private static final String DATA_OPTION = "Dane";
 	private static final String OPTIONS_MENU = "Opcje";
 	private static final String ADD_EVENT_OPTION = "Dodaj wydarzenie";
 	private JTextField txtMiesiac;
@@ -75,9 +83,15 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 	private JMenuBar menuBar;
 	private JMenu mnOptions;
 	private JMenuItem mntmDodaj;
+	private JMenu mnDane;
+	private JMenuItem mntmWczytaj;
+	private JMenuItem mntmZapisz;
 
 	/**
-	 * Create the frame.
+	 * 
+	 * Implementation of the calendar's main view
+	 * @author dwojcik
+	 *
 	 */
 	public Calendar() {
 		java.util.Calendar date = java.util.Calendar.getInstance();
@@ -95,6 +109,24 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 		mntmDodaj.addActionListener(this);
 		mntmDodaj.setActionCommand(ADD_EVENT);
 		mnOptions.add(mntmDodaj);
+		
+		mnDane = new JMenu(DATA_OPTION);
+		menuBar.add(mnDane);
+		
+		mntmWczytaj = new JMenuItem(LOAD_CALENDAR);
+		mntmWczytaj.addActionListener(a -> {
+			DataService loadedService = SerializationHelper.loadCalendar(this,Calendar.this.stateContainer.getLogic().getDataService());
+			LogicLayer logic = new LogicLayerNoSQL(loadedService);
+			Calendar.this.stateContainer.setLogicLayer(logic);
+			});
+		mnDane.add(mntmWczytaj);
+		
+		mntmZapisz = new JMenuItem(SAVE_CALENDAR);
+		mntmZapisz.addActionListener(a -> {
+			DataService service = Calendar.this.stateContainer.getLogic().getDataService();
+			SerializationHelper.saveCalendar(this, service);	
+			});
+		mnDane.add(mntmZapisz);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBackground(UIManager.getColor("Panel.background"));

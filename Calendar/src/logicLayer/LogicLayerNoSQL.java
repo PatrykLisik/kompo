@@ -22,7 +22,16 @@ import dataLayer.Person;
  *
  */
 public class LogicLayerNoSQL implements LogicLayer {
-	DataService data = new DataServiceNoSQL();
+	DataService data;
+	
+	public LogicLayerNoSQL() {
+		data = new DataServiceNoSQL();
+	}
+
+	public LogicLayerNoSQL(DataService data) {
+		super();
+		this.data = data;
+	}
 
 	/**
 	 * Generic method to save 
@@ -321,6 +330,11 @@ public class LogicLayerNoSQL implements LogicLayer {
 				.collect( Collectors.toList());
 		
 		return ans;
+	}
+
+	@Override
+	public DataService getDataService() {
+		return data;
 	}
 
 

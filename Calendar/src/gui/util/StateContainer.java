@@ -93,4 +93,11 @@ public class StateContainer {
 		}
 		
 	}
+
+	public void setLogicLayer(LogicLayer logic) {
+		this.logicLayer = logic;
+		//Trigger everyone
+		triggerDateChanged();
+		triggerEventChanged();
+	}
 }
