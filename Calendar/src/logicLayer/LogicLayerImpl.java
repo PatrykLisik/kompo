@@ -24,10 +24,6 @@ import dataLayer.Person;
 public class LogicLayerImpl implements LogicLayer {
 	DataService data;
 	
-	public LogicLayerImpl() {
-		data = new DataServiceNoSQL();
-	}
-
 	public LogicLayerImpl(DataService data) {
 		super();
 		this.data = data;

@@ -18,7 +18,7 @@ import java.sql.*;
  *
  */
 @SuppressWarnings("serial")
-public class DataServiceSQL extends DataServiceNoSQL {
+public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService {
 
 	private static final String MAX_POOL = "250";
 	private static final String USERNAME = "calendar";
@@ -52,9 +52,16 @@ public class DataServiceSQL extends DataServiceNoSQL {
 			e.printStackTrace();
 		}
 		
-		//inject data from data base
-		super.data=this.pullFromDataBase();
+		loadFromDatabase();
 
+	}
+
+	/* (non-Javadoc)
+	 * @see dataLayer.DataBaseService#loadFromDatabase()
+	 */
+	@Override
+	public void loadFromDatabase() {
+		super.data=this.pullFromDataBase();
 	}
 
 	public void addNotification(Notification n) {
@@ -241,7 +248,11 @@ public class DataServiceSQL extends DataServiceNoSQL {
 
 	}
 
-	public void syncWithDatabase() {
+	/* (non-Javadoc)
+	 * @see dataLayer.DataBaseService#saveToDatabase()
+	 */
+	@Override
+	public void saveToDatabase() {
 		try {
 			Gstmt.executeBatch();
 			conn.commit();
