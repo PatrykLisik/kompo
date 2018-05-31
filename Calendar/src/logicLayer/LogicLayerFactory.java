@@ -11,12 +11,12 @@ import dataLayer.DataServiceSQL;
  *
  */
 public class LogicLayerFactory {
-	public static LogicLayer getLogicLayerNoSQL() {
+	public static LogicLayerImpl getLogicLayerNoSQL() {
 		return new LogicLayerImpl(new DataServiceNoSQL());
 	}
 	
-	public static LogicLayer getLogicLayerSQL() {
-		return new LogicLayerImpl(new DataServiceSQL());
+	public static LogicLayerSQLImpl getLogicLayerSQL() {
+		return new LogicLayerSQLImpl(new DataServiceSQL());
 	}
 
 }
