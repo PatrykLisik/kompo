@@ -78,6 +78,7 @@ public class ConsoleInterface implements NotificationReciver {
 
 	public ConsoleInterface() {
 		notifiactionSource.addReciver(this);
+		ll.addEventNotificationPublisher(notifiactionSource);
 		actions.put("Save to XML", new Runnable() {
 
 			@Override
@@ -218,7 +219,6 @@ public class ConsoleInterface implements NotificationReciver {
 				System.out.print("End date ");
 				Date end = ConsoleInterfaceElements.getDateFromUser();
 				ll.createEvent(desc, start, end);
-				notifiactionSource.update();
 			}
 
 		});
@@ -227,7 +227,6 @@ public class ConsoleInterface implements NotificationReciver {
 	public void run() {
 		List<String> entries = actions.keySet().stream().collect(Collectors.toList());
 		ConsoleMenu menu = new ConsoleMenu(entries);
-		notifiactionSource.update();
 		while (true) {
 			System.out.print(printer.show());
 			String option = menu.getMenuOption();
