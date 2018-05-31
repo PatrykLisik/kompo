@@ -10,6 +10,7 @@ import logicLayer.EventNotifiactionPublisher;
 import logicLayer.EventNotifiactionPublisher.NotificationReciver;
 import logicLayer.LogicLayer;
 import logicLayer.LogicLayerException;
+import logicLayer.LogicLayerFactory;
 import logicLayer.LogicLayerImpl;
 
 /**
@@ -70,7 +71,7 @@ public class ConsoleInterface implements NotificationReciver {
 		}
 	}
 
-	LogicLayer ll = new LogicLayerImpl();
+	LogicLayer ll = LogicLayerFactory.getLogicLayerSQL();
 	ConsolePrinter printer = new BasicPrinter(ll);
 	EventNotifiactionPublisher notifiactionSource = new EventNotifiactionPublisher(ll);
 	Map<String, Runnable> actions = new TreeMap<String, Runnable>();
