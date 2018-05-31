@@ -4,13 +4,13 @@
 package logicLayer;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import dataLayer.DataService;
-import dataLayer.DataServiceNoSQL;
 import dataLayer.Event;
 import dataLayer.Event.Notification;
 import dataLayer.Person;
@@ -23,6 +23,7 @@ import dataLayer.Person;
  */
 public class LogicLayerImpl implements LogicLayer {
 	DataService data;
+	List<EventNotifiactionPublisher> notifiers = new LinkedList<EventNotifiactionPublisher>();
 	
 	public LogicLayerImpl(DataService data) {
 		super();
@@ -48,6 +49,7 @@ public class LogicLayerImpl implements LogicLayer {
 	 */
 	private void importData(String fileName, Importer importer) throws LogicLayerException {
 		data = importer.importData(fileName);
+		notifyAllNotifiers();
 	}
 
 	@Override
@@ -132,6 +134,8 @@ public class LogicLayerImpl implements LogicLayer {
 	public void DeleteEventsBetweenDates(Date start, Date end) {
 		// TODO Auto-generated method stub
 		
+		notifyAllNotifiers();
+		
 	}
 	
 	/*
@@ -208,6 +212,8 @@ public class LogicLayerImpl implements LogicLayer {
 	public void createEvent(String name,Date start, Date end) {
 		Event ev = new Event(name,start, end);
 		data.createEvent(ev);
+		
+		notifyAllNotifiers();
 
 	}
 
@@ -230,6 +236,8 @@ public class LogicLayerImpl implements LogicLayer {
 	@Override
 	public void updateEvent(int id, Event ev) {
 		data.updateEvent(id, ev);
+		
+		notifyAllNotifiers();
 
 	}
 
@@ -241,6 +249,8 @@ public class LogicLayerImpl implements LogicLayer {
 	@Override
 	public void deleteEvent(Event ev) {
 		data.deleteEvent(ev);
+		
+		notifyAllNotifiers();
 
 	}
 
@@ -252,6 +262,8 @@ public class LogicLayerImpl implements LogicLayer {
 	@Override
 	public void deleteEvent(int id) {
 		data.deleteEvent(id);
+		
+		notifyAllNotifiers();
 
 	}
 
@@ -272,6 +284,7 @@ public class LogicLayerImpl implements LogicLayer {
 		ev.addNotification(date,description);
 		data.updateEvent(EventId,ev);
 		
+		notifyAllNotifiers();
 	}
 
 	@Override
@@ -282,6 +295,7 @@ public class LogicLayerImpl implements LogicLayer {
 		ev.setNotifications(notifications);
 		data.updateEvent(EventId,ev);
 		
+		notifyAllNotifiers();
 	}
 
 	@Override
@@ -331,6 +345,17 @@ public class LogicLayerImpl implements LogicLayer {
 	@Override
 	public DataService getDataService() {
 		return data;
+	}
+
+	@Override
+	public void addEventNotificationPublisher(EventNotifiactionPublisher enp) {
+		this.notifiers.add(enp);
+		
+	}
+	
+	private void notifyAllNotifiers() {
+		for(EventNotifiactionPublisher enp : this.notifiers)
+			enp.update();
 	}
 
 

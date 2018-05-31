@@ -11,6 +11,7 @@ import java.util.TimerTask;
 import dataLayer.Event.Notification;
 
 /**
+ * Notification publisher based on listener-subscriber design pattern
  * @author plisik
  *
  */
@@ -21,8 +22,14 @@ public class EventNotifiactionPublisher {
 
 	}
 
+	/**
+	 * Notification source is supposed to invoke update method when notification list is changed
+	 * @author plisik
+	 *
+	 */
 	public interface NotifiactionSource {
 		List<Notification> getAllNotifications();
+		void addEventNotificationPublisher(EventNotifiactionPublisher enp);
 	}
 
 	private class NotifiactionTask extends TimerTask {
@@ -56,10 +63,18 @@ public class EventNotifiactionPublisher {
 
 	}
 
+	/**
+	 * Add notification reviver
+	 * @param reciver
+	 */
 	public void addReciver(NotificationReciver reciver) {
 		recivers.add(reciver);
 	}
 
+	/**
+	 * Schedule 
+	 * @param notifySet
+	 */
 	private void scheduleAllNotifications(List<Notification> notifySet) {
 		/*
 		 * schedule every notification for every receiver
