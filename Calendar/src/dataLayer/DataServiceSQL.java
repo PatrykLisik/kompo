@@ -94,7 +94,6 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 		try (PreparedStatement stmt = conn.prepareStatement(querry)) {
 			stmt.setInt(1, personId);
 			stmt.setInt(2, eventId);
-			System.out.println(getSQL(stmt));
 			this.Gstmt.addBatch(getSQL(stmt));
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -109,7 +108,6 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 			stmt.setString(2, ev.getName());
 			stmt.setTimestamp(3, new java.sql.Timestamp(ev.getStart().getTime()));
 			stmt.setTimestamp(4, new java.sql.Timestamp(ev.getEnd().getTime()));
-			System.out.println(getSQL(stmt));
 			this.Gstmt.addBatch(getSQL(stmt));
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -129,7 +127,6 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 			stmt.setInt(1, super.personCounter);
 			stmt.setString(2, p.getName());
 			stmt.setString(3, p.getSurname());
-			System.out.println(getSQL(stmt));
 			this.Gstmt.addBatch(getSQL(stmt));
 		} catch (SQLException e) {
 			e.printStackTrace();
