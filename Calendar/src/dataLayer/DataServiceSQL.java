@@ -1,14 +1,19 @@
 package dataLayer;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
+
 import dataLayer.Event.Notification;
 
 import java.sql.*;
 
 /**
- * Data service which has same functionality like DataServiceNoSQL version, but with every action buffers
- * query to data base 
- * use @method syncWithDatabase to save changes to data base 
+ * Data service which has same functionality like DataServiceNoSQL version, but
+ * with every action buffers query to data base use @method syncWithDatabase to
+ * save changes to data base
+ * 
  * @author plisik
  *
  */
@@ -20,17 +25,17 @@ public class DataServiceSQL extends DataServiceNoSQL {
 	private static final String DATABASE_URL = "jdbc:mysql://localhost/calendar_data?verifyServerCertificate=false&useSSL=true&autoReconnect=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 	private static final String PASSWORD = "Calendar1!";
 	private Connection conn = null;
-	//Statement that 
+	// Statement that
 	private Statement Gstmt = null;
 	private Properties properties = null;
 
 	/**
-	 * Constructor tries to establish connection with data base 
+	 * Constructor tries to establish connection with data base
 	 */
 	public DataServiceSQL() {
 		super();
-		
-		//Establish connection with database
+
+		// Establish connection with database
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(DATABASE_URL, getProperties());
@@ -46,6 +51,9 @@ public class DataServiceSQL extends DataServiceNoSQL {
 
 			e.printStackTrace();
 		}
+		
+		//inject data from data base
+		super.data=this.pullFromDataBase();
 
 	}
 
@@ -241,6 +249,78 @@ public class DataServiceSQL extends DataServiceNoSQL {
 			e.printStackTrace();
 		}
 
+	}
+
+	private DataContext pullFromDataBase() {
+		DataContext ret = new DataContext();
+		ret.Events = this.pullEventFromDatabase();
+		ret.Persons = this.pullPersonFromDatabase();
+		return ret;
+	}
+
+	private HashMap<Integer, Event> pullEventFromDatabase() {
+		
+		String querry = "SELECT * FROM events;";
+		HashMap<Integer, Event> ret = new HashMap<Integer, Event>();
+		try (PreparedStatement stmt = conn.prepareStatement(querry)) {
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Integer EventID = rs.getInt("id");
+				Event ev = new Event(rs.getString("name"),rs.getDate("start"),rs.getDate("end"));
+				ev.setAssociatedPersons(this.getPersonsOfEvent(EventID));
+				ev.setNotifications(this.getNotificationOfEvent(EventID));
+				ret.put(EventID, ev);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
+
+	private Set<Integer> getPersonsOfEvent(Integer eventId) {
+		String querry = "SELECT * FROM event_person WHERE  event_id = ?;";
+		Set<Integer> ret = new HashSet<Integer>();
+		try (PreparedStatement stmt = conn.prepareStatement(querry)) {
+			stmt.setInt(1, eventId);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				ret.add(rs.getInt("person_id"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
+
+	private HashMap<Long, Notification> getNotificationOfEvent(Integer eventId) {
+		String querry = "SELECT * FROM notifications WHERE id IN "
+				+ "(SELECT notification_id FROM notifications_events WHERE event_id = ?);";
+		HashMap<Long, Notification> ret = new HashMap<Long, Notification>();
+		try (PreparedStatement stmt = conn.prepareStatement(querry)) {
+			stmt.setInt(1, eventId);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				int notification_id = rs.getInt("notification_id");
+				ret.put((long) notification_id,new Notification(rs.getDate("notify_date"), rs.getString("description"), notification_id));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
+
+	private HashMap<Integer, Person> pullPersonFromDatabase() {
+		String querry = "SELECT * FROM persons;";
+		HashMap<Integer, Person> ret = new HashMap<Integer, Person>();
+		try (PreparedStatement stmt = conn.prepareStatement(querry)) {
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				ret.put(rs.getInt("id"), new Person(rs.getString("name"), rs.getString("surname")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ret;
 	}
 
 	@Override
