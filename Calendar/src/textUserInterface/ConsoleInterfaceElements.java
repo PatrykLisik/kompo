@@ -29,6 +29,10 @@ public class ConsoleInterfaceElements {
 		System.out.flush();
 	}
 
+	/**
+	 * get user input as string
+	 * @return
+	 */
 	static String getUserInput() {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String s = null;
@@ -40,6 +44,10 @@ public class ConsoleInterfaceElements {
 		return s;
 	}
 
+	/**
+	 * get user input as integer
+	 * @return
+	 */
 	static Integer getIntegerFromUser() {
 
 		Integer ans = null;
@@ -56,13 +64,17 @@ public class ConsoleInterfaceElements {
 		return ans;
 	}
 
+	/**
+	 * Get date from user
+	 * @return
+	 */
 	static Date getDateFromUser() {
 		String target = "27-09-1991 20:29:30";
-		String format="dd-MM-yyyy HH:mm:ss";
+		String format = "dd-MM-yyyy HH:mm:ss";
 		DateFormat df = new SimpleDateFormat(format);
 		Date result;
-		System.out.println("Give date in format "+format);
-		System.out.println("Example "+target);
+		System.out.println("Give date in format " + format);
+		System.out.println("Example " + target);
 		while (true) {
 
 			target = getUserInput();
