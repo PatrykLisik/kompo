@@ -9,7 +9,6 @@ import dataLayer.Event.Notification;
 
 import java.sql.*;
 
-
 /**
  * Data service which has same functionality like DataServiceNoSQL version, but
  * with every action buffers query to data base use @method syncWithDatabase to
@@ -51,23 +50,24 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 
 			e.printStackTrace();
 		}
-		
+
 		loadFromDatabase();
 
 	}
 
 	/**
-	 *Delete current data and load from database 
+	 * Delete current data and load from database
 	 */
 	@Override
 	public void loadFromDatabase() {
-		super.data=this.pullFromDataBase();
+		super.data = this.pullFromDataBase();
 	}
 
 	/**
 	 * Adds the notification.
 	 *
-	 * @param n the notification
+	 * @param n
+	 *            the notification
 	 */
 	public void addNotification(Notification n) {
 		String querry = "INSERT INTO notifications VALUES(?, ?, ?);";
@@ -83,16 +83,12 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 	}
 
 	/**
-<<<<<<< Updated upstream
 	 * Create entry that connects event and notification in database
+	 * 
 	 * @param notificationId
+	 *            the notification id
 	 * @param eventId
-=======
-	 * Adds the notification to event.
-	 *
-	 * @param notificationId the notification id
-	 * @param eventId the event id
->>>>>>> Stashed changes
+	 *            the event id
 	 */
 	public void addNotificationToEvent(int notificationId, int eventId) {
 		String querry = "INSERT INTO notifications_events VALUES(?, ?);";
@@ -107,16 +103,12 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 	}
 
 	/**
-<<<<<<< Updated upstream
-	 * Create entry that connects event and person in database
+	 * Create database entry with person and event
+	 * 
 	 * @param personId
+	 *            id of person
 	 * @param eventId
-=======
-	 * Adds the person to event.
-	 *
-	 * @param personId the person id
-	 * @param eventId the event id
->>>>>>> Stashed changes
+	 *            id of event
 	 */
 	public void addPersonToEvent(int personId, int eventId) {
 		String querry = "INSERT INTO event_person VALUES(?, ?);";
@@ -129,8 +121,8 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see dataLayer.DataServiceNoSQL#createEvent(dataLayer.Event)
+	/**
+	 * Add event to database and local structure
 	 */
 	@Override
 	public void createEvent(Event ev) {
@@ -149,8 +141,8 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 
 	}
 
-	/* (non-Javadoc)
-	 * @see dataLayer.DataServiceNoSQL#createPerson(dataLayer.Person)
+	/**
+	 * Add person to database and local structure
 	 */
 	@Override
 	public void createPerson(Person p) {
@@ -170,8 +162,8 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 
 	}
 
-	/* (non-Javadoc)
-	 * @see dataLayer.DataServiceNoSQL#deleteEvent(dataLayer.Event)
+	/**
+	 * Delete event from database and local structure
 	 */
 	@Override
 	public void deleteEvent(Event ev) {
@@ -192,8 +184,11 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 
 	}
 
-	/* (non-Javadoc)
-	 * @see dataLayer.DataServiceNoSQL#deleteEvent(int)
+	/**
+	 * Delete event with particular id from database and local structure
+	 * 
+	 * @param id
+	 *            id of event to delete
 	 */
 	@Override
 	public void deleteEvent(int id) {
@@ -212,8 +207,11 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 
 	}
 
-	/* (non-Javadoc)
-	 * @see dataLayer.DataServiceNoSQL#deletePerson(int)
+	/**
+	 * Delete person with particular id from database and local structure
+	 * 
+	 * @param id
+	 *            id of person to delete
 	 */
 	@Override
 	public void deletePerson(int id) {
@@ -228,8 +226,11 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 
 	}
 
-	/* (non-Javadoc)
-	 * @see dataLayer.DataServiceNoSQL#deletePerson(dataLayer.Person)
+	/**
+	 * Delete person from database and local structure
+	 * 
+	 * @param p
+	 *            id of person to delete
 	 */
 	@Override
 	public void deletePerson(Person p) {
@@ -246,14 +247,11 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 	}
 
 	/**
-<<<<<<< Updated upstream
+	 * 
 	 * Notifications of particular event will be removed from database
+	 * 
 	 * @param ev
-=======
-	 * Delete notifications of event.
-	 *
-	 * @param ev the event
->>>>>>> Stashed changes
+	 *            event to delete
 	 */
 	public void delteNotificationsOfEvent(Event ev) {
 		String querry = "DELETE FROM notifications WHERE id IN "
@@ -271,7 +269,9 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 
 	/**
 	 * Notifications of particular event will be removed from database
+	 * 
 	 * @param eventId
+	 *            id of event
 	 */
 	public void delteNotificationsOfEvent(int eventId) {
 		String querry = "DELETE FROM notifications WHERE id IN (SELECT notification_id FROM  notifications_events WHERE event_id= ?);";
@@ -298,7 +298,8 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 	 * Remove first part of PreparedStatement class name from toString
 	 * 
 	 * @param stmt
-	 * @return
+	 *            to extract SQL-query
+	 * @return string with SQL-query
 	 */
 	private String getSQL(PreparedStatement stmt) {
 		String parts[] = stmt.toString().split("com.mysql.cj.jdbc.ClientPreparedStatement:");
@@ -322,6 +323,7 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 
 	/**
 	 * Create data context from database
+	 * 
 	 * @return
 	 */
 	private DataContext pullFromDataBase() {
@@ -332,14 +334,14 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 	}
 
 	private HashMap<Integer, Event> pullEventFromDatabase() {
-		
+
 		String querry = "SELECT * FROM events;";
 		HashMap<Integer, Event> ret = new HashMap<Integer, Event>();
 		try (PreparedStatement stmt = conn.prepareStatement(querry)) {
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				Integer EventID = rs.getInt("id");
-				Event ev = new Event(rs.getString("name"),rs.getDate("start"),rs.getDate("end"));
+				Event ev = new Event(rs.getString("name"), rs.getDate("start"), rs.getDate("end"));
 				ev.setAssociatedPersons(this.getPersonsOfEvent(EventID));
 				ev.setNotifications(this.getNotificationOfEvent(EventID));
 				ret.put(EventID, ev);
@@ -374,7 +376,8 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				int notification_id = rs.getInt("notification_id");
-				ret.put((long) notification_id,new Notification(rs.getDate("notify_date"), rs.getString("description"), notification_id));
+				ret.put((long) notification_id,
+						new Notification(rs.getDate("notify_date"), rs.getString("description"), notification_id));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -396,7 +399,9 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 		return ret;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see dataLayer.DataServiceNoSQL#updateEvent(int, dataLayer.Event)
 	 */
 	@Override
@@ -427,7 +432,9 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see dataLayer.DataServiceNoSQL#updatePerson(int, dataLayer.Person)
 	 */
 	@Override
