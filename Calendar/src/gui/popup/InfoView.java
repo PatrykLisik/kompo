@@ -21,16 +21,19 @@ import java.awt.Window.Type;
  */
 public class InfoView extends JDialog{
 	
+	private static InfoView INSTANCE = new InfoView();
+	
+	public static void makeVisible(boolean flag) {
+		INSTANCE.setVisible(flag);
+	}
+
 	/**
 	 * Instantiates a new info view.
 	 */
-	public InfoView() {
+	private InfoView() {
 		setResizable(false);
 		setSize(350,260);
-		setType(Type.POPUP);
-		setModalityType(ModalityType.APPLICATION_MODAL);
 		setAlwaysOnTop(true);
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Calendar - informacje");
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0};

@@ -262,8 +262,7 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 	 * Show info.
 	 */
 	private void showInfo() {
-		InfoView info = new InfoView();	
-		info.setVisible(true);
+		InfoView.makeVisible(true);
 	}
 	
 	
