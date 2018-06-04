@@ -24,6 +24,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
 import gui.popup.EventCreator;
+import gui.popup.InfoView;
 import gui.util.SerializationHelper;
 import gui.util.StateContainer;
 import logicLayer.LogicLayer;
@@ -47,6 +48,7 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 	private static final String SAVE_CALENDAR = "Zapisz";
 	private static final String CONNECT_WITH_DATABASE = "Po\u0142\u0105cz z baz\u0105";
 	private static final String LOAD_CALENDAR = "Wczytaj";
+	private static final String INFO = "Info";
 	private static final String DATA_OPTION = "Dane";
 	private static final String OPTIONS_MENU = "Opcje";
 	private static final String ADD_EVENT_OPTION = "Dodaj wydarzenie";
@@ -68,6 +70,8 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 	private JMenuItem mntmWczytaj;
 	private JMenuItem mntmZapisz;
 	private JMenuItem mntmPolaczZBaza;
+	private JMenu mnPomoc;
+	private JMenuItem mntmInformacje;
 
 
 	/**
@@ -115,6 +119,14 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 			Calendar.this.stateContainer.setLogicLayer(logic);
 			});
 		mnDane.add(mntmPolaczZBaza);
+		
+		mnPomoc = new JMenu("Pomoc");
+		menuBar.add(mnPomoc);
+		
+		mntmInformacje = new JMenuItem("Informacje");
+		mntmInformacje.addActionListener(this);
+		mntmInformacje.setActionCommand(INFO);
+		mnPomoc.add(mntmInformacje);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBackground(UIManager.getColor("Panel.background"));
@@ -224,7 +236,7 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 		txtMiesiac.setText(nextMonth);	
 	}
 
-	/* (non-Javadoc)
+	/* 
 	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
 	 */
 	@Override
@@ -246,8 +258,16 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 		}			
 	}
 	
+	/**
+	 * Show info.
+	 */
+	private void showInfo() {
+		InfoView info = new InfoView();	
+		info.setVisible(true);
+	}
 	
-	/* (non-Javadoc)
+	
+	/* 
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	@Override
@@ -257,6 +277,9 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 			case PREV_MONTH: stateContainer.changeMonth(-1);break;
 			case StateContainer.DATE_CHANGED_COMMAND: reloadView();break;
 			case ADD_EVENT: createEvent(); stateContainer.changeEvents();break;
+			case INFO: showInfo();break;
 		}
 	}
+
+
 }

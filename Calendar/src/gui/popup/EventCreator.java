@@ -155,7 +155,7 @@ public class EventCreator extends JDialog implements ActionListener{
 	}
 	
 
-	/* (non-Javadoc)
+	/* 
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	@Override
