@@ -32,7 +32,7 @@ public class EventView extends JPanel implements ActionListener, MouseListener {
 	private static final long serialVersionUID = 1L;
 	
 	/** The Constant EVENT_DETAILS_WINDOW_TITLE. */
-	private static final String EVENT_DETAILS_WINDOW_TITLE = "Szczegó³y wydarzenia";
+	private static final String EVENT_DETAILS_WINDOW_TITLE = "Szczegoly wydarzenia";
 	
 	/** The Constant DELETE_EVENT. */
 	private static final String DELETE_EVENT = "EVENT_DELETE";
@@ -69,11 +69,11 @@ public class EventView extends JPanel implements ActionListener, MouseListener {
 		add(lblEventName, gbc_lblEventName);
 		
 		JPopupMenu popup= new JPopupMenu();
-		JMenuItem deleteMenuItem = new JMenuItem("Usuñ");
+		JMenuItem deleteMenuItem = new JMenuItem("Usun");
 		deleteMenuItem.setActionCommand(DELETE_EVENT);
 		deleteMenuItem.addActionListener(this);
 		
-		JMenuItem detailsMenuItem = new JMenuItem("Szczegó³y");
+		JMenuItem detailsMenuItem = new JMenuItem("Szczegoly");
 		detailsMenuItem.setActionCommand(DETAILS_EVENT);
 		detailsMenuItem.addActionListener(this);
 		

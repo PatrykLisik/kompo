@@ -119,7 +119,7 @@ public class ContactsView extends JPanel implements ActionListener{
 	public void onDeleteContact() {
 		int index = contactsList.getSelectedIndex();
 		if(index <0) {
-			 JOptionPane.showMessageDialog(this, "Nie wybrano kontaktu do usuniêcia", 
+			 JOptionPane.showMessageDialog(this, "Nie wybrano kontaktu do usuniecia", 
 					 "Error: Brak zaznaczonego kontaktu", JOptionPane.ERROR_MESSAGE);
 			return;
 		}

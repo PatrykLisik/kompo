@@ -15,7 +15,7 @@ import logicLayer.LogicLayer;
 public class PersonPrinter extends CalendarPrinterDecorator {
 
 	/**
-	 * @param printer
+	 * @param printer any other instance of printer
 	 */
 	public PersonPrinter(ConsolePrinter printer) {
 		super(printer);

@@ -13,7 +13,7 @@ import dataLayer.Event;
 import logicLayer.comparator.DateComparator;
 
 /**
- * Implementation of sorting and searching algorithms to perform operations on {@link dataLyer.DataService} object
+ * Implementation of sorting and searching algorithms to perform operations on {@link dataLayer.DataService} object
  * 
  * @author plisik
  *
@@ -21,7 +21,7 @@ import logicLayer.comparator.DateComparator;
 public class SortingAndSearchPolicies {
 	/**
 	 * 
-	 * @param data 
+	 * @param data dataService to operate on 
 	 * @param start date
 	 * @param end date
 	 * @return Inclusive list of events from start to end
@@ -34,7 +34,7 @@ public class SortingAndSearchPolicies {
 	
 	/**
 	 * 
-	 * @param data
+	 * @param data dataService to operate on
 	 * @return events list sorted by start date 
 	 */
 	static public List<Event> eventsByDate(DataService data) {
@@ -43,6 +43,12 @@ public class SortingAndSearchPolicies {
 		return events;
 	}
 	
+	/**
+	 * Events on particular day
+	 * @param data dataService to operate on 
+	 * @param day to find events on
+	 * @return list of events on day
+	 */
 	static public List<Event> eventsOn(DataService data, Date day) {
 		return data.getAllEvents().values().stream()
 				.filter(ev -> DateComparator.isDateBetween(ev.getStart(), day, ev.getEnd()))
@@ -51,7 +57,7 @@ public class SortingAndSearchPolicies {
 
 	/**
 	 * 
-	 * @param data
+	 * @param data dataService to operate on 
 	 * @return events list sorted by number of associated persons
 	 */
 	static public List<Event> eventsByNumberOfAssociatedPersons(DataService data) {

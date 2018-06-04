@@ -100,8 +100,12 @@ public class Event implements Serializable {
 	Date start;
 
 	/**
+	 * @param name 
+	 * 			  description of event
 	 * @param start
+	 *            date on which event starts
 	 * @param end
+	 *            date on which event ends
 	 */
 	public Event(String name, Date start, Date end) {
 		this.start = start;
@@ -119,12 +123,23 @@ public class Event implements Serializable {
 	}
 
 	/**
-	 * @param
+	 * Add person by id
+	 * 
+	 * @param personId
+	 *            id of person to add
 	 */
 	public void addAssociatedPerson(Integer personId) {
 		associatedPersons.add(personId);
 	}
 
+	/**
+	 * Create notification from date and description
+	 * 
+	 * @param date
+	 *            timeStamp to notify on
+	 * @param descripton
+	 *            text that will be shown
+	 */
 	public void addNotification(Date date, String descripton) {
 		Notification n = new Notification(date, descripton);
 		this.notification.put(n.getId(), n);

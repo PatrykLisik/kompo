@@ -8,7 +8,7 @@ import logicLayer.LogicLayer;
 
 /**
  * Events printer decorator
- * @basicPrinter is necessary because that part stores logic layer
+ * basicPrinter is necessary because that part stores logic layer
  * @author plisik
  *
  */
