@@ -28,6 +28,12 @@ import java.beans.PropertyChangeListener;
 import javax.swing.Action;
 
 
+/**
+ * 
+ * A class that is responsible for a contacts view. 
+ * @author dwojcik
+ *
+ */
 
 public class ContactsView extends JPanel implements ActionListener{
 
@@ -82,6 +88,10 @@ public class ContactsView extends JPanel implements ActionListener{
 		this.stateContainer=state;
 		updateContacts();
 	}
+	
+	/**
+	 * Update all contact. 
+	 */
 
 	public void updateContacts() {
 		DefaultListModel<Person> listModel = new DefaultListModel<Person>();
@@ -91,6 +101,12 @@ public class ContactsView extends JPanel implements ActionListener{
 		}
 		contactsList.setModel(listModel);
 	}
+	
+	/**
+	 * Delete selected contact. 
+	 * If none has been selected return error message.
+	 * Update contacts.
+	 */
 
 	public void onDeleteContact() {
 		int index = contactsList.getSelectedIndex();
@@ -104,6 +120,10 @@ public class ContactsView extends JPanel implements ActionListener{
 		updateContacts();
 	}
 
+	/**
+	 * Create action after OK button clicked. 
+	 * The method create Person and update contacts.
+	 */
 	public void onAddContact() {
 		ContactCreator contactCreator = new ContactCreator();
 		contactCreator.setVisible(true);
