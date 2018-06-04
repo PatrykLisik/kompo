@@ -32,7 +32,7 @@ public class StateContainer {
 	//TODO: Remove
 	public StateContainer() {
 		super();
-		this.logicLayer = LogicLayerFactory.getLogicLayerSQL();
+		this.logicLayer = LogicLayerFactory.getLogicLayerNoSQL();
 		this.date = java.util.Calendar.getInstance();
 	}
 	

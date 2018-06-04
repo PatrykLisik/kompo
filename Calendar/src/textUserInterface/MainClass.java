@@ -5,6 +5,7 @@ package textUserInterface;
 
 import logicLayer.LogicLayer;
 import logicLayer.LogicLayerException;
+import logicLayer.LogicLayerFactory;
 import logicLayer.LogicLayerImpl;
 
 /**
@@ -14,7 +15,8 @@ import logicLayer.LogicLayerImpl;
 public class MainClass {
 	public static void main(String[] args) throws LogicLayerException {
 
-		LogicLayer ll=new LogicLayerImpl();
+		LogicLayerFactory lf=new LogicLayerFactory();
+		LogicLayerImpl ll = lf.getLogicLayerNoSQL();
 		
 		ll.createPerson("aaa", "adada");
 		ll.saveToODT("plik.odt");

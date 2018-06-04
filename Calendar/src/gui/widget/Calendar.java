@@ -1,16 +1,9 @@
 package gui.widget;
 
-
 import java.awt.BorderLayout;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.GridLayout;
-
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -18,33 +11,18 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
-import java.time.Month;
-
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
-import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import dataLayer.DataService;
-import dataLayer.Event;
-import dataLayer.Person;
-
-import java.awt.Color;
+import dataLayer.DataServiceSQL;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TimeZone;
-import java.util.Map.Entry;
-
-import javax.swing.SpinnerNumberModel;
-import javax.swing.JLabel;
-
-import gui.popup.ContactCreator;
 import gui.popup.EventCreator;
 import gui.util.SerializationHelper;
 import gui.util.StateContainer;
@@ -53,18 +31,19 @@ import logicLayer.LogicLayerImpl;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JMenu;
-import javax.swing.JToolBar;
-import javax.swing.JPopupMenu;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+
+/**
+ * 
+ * A class that implements a base calendar view. 
+ * @author dwojcik
+ *
+ */
 
 public class Calendar extends JPanel implements ActionListener, ChangeListener{
 
 	private static final String SAVE_CALENDAR = "Zapisz";
+	private static final String CONNECT_WITH_DATABASE = "Po\u0142\u0105cz z baz\u0105";
 	private static final String LOAD_CALENDAR = "Wczytaj";
 	private static final String DATA_OPTION = "Dane";
 	private static final String OPTIONS_MENU = "Opcje";
@@ -86,13 +65,9 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 	private JMenu mnDane;
 	private JMenuItem mntmWczytaj;
 	private JMenuItem mntmZapisz;
+	private JMenuItem mntmPolaczZBaza;
 
-	/**
-	 * 
-	 * Implementation of the calendar's main view
-	 * @author dwojcik
-	 *
-	 */
+
 	public Calendar() {
 		java.util.Calendar date = java.util.Calendar.getInstance();
 		setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -127,6 +102,14 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 			SerializationHelper.saveCalendar(this, service);	
 			});
 		mnDane.add(mntmZapisz);
+		
+		mntmPolaczZBaza = new JMenuItem(CONNECT_WITH_DATABASE);
+		mntmPolaczZBaza.addActionListener(a -> {
+			DataService data = new DataServiceSQL();
+			LogicLayer logic = new LogicLayerImpl(data);
+			Calendar.this.stateContainer.setLogicLayer(logic);
+			});
+		mnDane.add(mntmPolaczZBaza);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBackground(UIManager.getColor("Panel.background"));

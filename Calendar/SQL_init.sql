@@ -9,6 +9,7 @@ CREATE TABLE events(
     name varchar(30),
     start DATETIME,
     end DATETIME
+);
 
 
 ALTER TABLE events

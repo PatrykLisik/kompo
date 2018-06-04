@@ -71,7 +71,7 @@ public class SerializationHelper{
 			return importer.importData(selectedFile.getAbsolutePath());
 		} catch (LogicLayerException | NullPointerException e ) {
 			e.printStackTrace();
-			 JOptionPane.showMessageDialog(parent, "B��d deserializacji", 
+			 JOptionPane.showMessageDialog(parent, "Blad deserializacji", 
 					 "Error: Nie uda�o si� wczyta� danych do pliku.", JOptionPane.ERROR_MESSAGE);
 			return defaultVal;
 		}
