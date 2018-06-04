@@ -28,9 +28,11 @@ import java.beans.PropertyChangeListener;
 import javax.swing.Action;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * 
  * A class that is responsible for a contacts view. 
+ * 
  * @author dwojcik
  *
  */
@@ -42,8 +44,9 @@ public class ContactsView extends JPanel implements ActionListener{
 	private JList<Person> contactsList;
 	private StateContainer stateContainer;
 
+
 	/**
-	 * Create the panel.
+	 * Instantiates a new contacts view.
 	 */
 	public ContactsView() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -84,6 +87,11 @@ public class ContactsView extends JPanel implements ActionListener{
 
 	}
 
+	/**
+	 * Sets the state container.
+	 *
+	 * @param state the new state container
+	 */
 	public void setStateContainer(StateContainer state) {
 		this.stateContainer=state;
 		updateContacts();
@@ -134,6 +142,9 @@ public class ContactsView extends JPanel implements ActionListener{
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()){

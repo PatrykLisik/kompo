@@ -19,9 +19,19 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
 
+
+/**
+ * The Class ContactCreator.
+ * 
+ * @author dwojcik
+ * 
+ */
 public class ContactCreator extends JDialog implements ActionListener{
 
+	/** The Constant CANCEL_OPTION. */
 	public static final String CANCEL_OPTION = "Cancel";
+	
+	/** The Constant OK_OPTION. */
 	public static final String OK_OPTION = "OK";
 	private final JPanel contentPanel = new JPanel();
 	private JTextField lastnameField;
@@ -101,19 +111,38 @@ public class ContactCreator extends JDialog implements ActionListener{
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.returnCommand = e.getActionCommand();
 		this.dispose();
 	}
 
+	/**
+	 * Gets the return command.
+	 *
+	 * @return the return command
+	 */
 	public String getReturnCommand() {
 		return returnCommand;
 	}
 
+	/**
+	 * Gets the firstname.
+	 *
+	 * @return the firstname
+	 */
 	public String getFirstname() {
 		return firstnameField.getText();
 	} 
+	
+	/**
+	 * Gets the lastname.
+	 *
+	 * @return the lastname
+	 */
 	public String getLastname() {
 		return lastnameField.getText();
 	}

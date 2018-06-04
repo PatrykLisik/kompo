@@ -22,9 +22,19 @@ import gui.util.StateContainer;
 import javax.swing.DefaultListModel;
 import javax.swing.JCheckBox;
 
+
+/**
+ * The Class MonthView.
+ * 
+ *  @author dwojcik
+ *  
+ */
 public class MonthView extends JPanel implements ActionListener{
 	
+	/** The days. */
 	private List<DayView> days= new ArrayList<>();
+	
+	/** The state container. */
 	private StateContainer stateContainer;
 
 	/**
@@ -91,6 +101,11 @@ public class MonthView extends JPanel implements ActionListener{
 		createDays(date);
 	}
 
+	/**
+	 * Creates the days.
+	 *
+	 * @param date the date
+	 */
 	private void createDays(java.util.Calendar date) {
 			
 		for(DayView comp: days) {
@@ -127,6 +142,11 @@ public class MonthView extends JPanel implements ActionListener{
 		}
 	}
 
+	/**
+	 * Sets the state container.
+	 *
+	 * @param state the new state container
+	 */
 	public void setStateContainer(StateContainer state) {
 		if(stateContainer!=null) {
 			stateContainer.unregisterDateChaned(this);
@@ -139,6 +159,9 @@ public class MonthView extends JPanel implements ActionListener{
 	
 
 	
+	/**
+	 * Update events.
+	 */
 	private void updateEvents() {
 		for(DayView day: days) {
 			java.util.Calendar date = day.getRepresentedDate();		
@@ -155,6 +178,9 @@ public class MonthView extends JPanel implements ActionListener{
 	}
 
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {

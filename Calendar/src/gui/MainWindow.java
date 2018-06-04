@@ -10,12 +10,20 @@ import gui.widget.Calendar;
 import java.awt.BorderLayout;
 import javax.swing.BoxLayout;
 
+
+/**
+ * The Class MainWindow.
+ * 
+ * @author dwojcik
+ */
 public class MainWindow {
 
 	private JFrame frame;
 
 	/**
 	 * Launch the application.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

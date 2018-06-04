@@ -14,21 +14,39 @@ import logicLayer.LogicLayer;
 import logicLayer.LogicLayerFactory;
 import logicLayer.LogicLayerImpl;
 
+
+/**
+ * The Class StateContainer.
+ * 
+ * @author dwojcik
+ * 
+ */
 public class StateContainer {
 	
+	/** The Constant DATE_CHANGED_COMMAND. */
 	public static final String DATE_CHANGED_COMMAND = "DATE_CHANGED";
+	
+	/** The Constant EVENT_CHANGED_COMMAND. */
 	public static final String EVENT_CHANGED_COMMAND = "EVENT_CHANGED";
 	private LogicLayer logicLayer;
 	private java.util.Calendar date;
 	private List<ActionListener> dateChangeListener = new ArrayList<>();
 	private List<ActionListener> eventChangeListener = new ArrayList<>();
 
+	/**
+	 * Instantiates a new state container.
+	 *
+	 * @param logicLayer the logic layer
+	 */
 	public StateContainer(LogicLayer logicLayer) {
 		super();
 		this.logicLayer = logicLayer;
 		this.date = java.util.Calendar.getInstance();
 	}
 	
+	/**
+	 * Instantiates a new state container.
+	 */
 	//TODO: Remove
 	public StateContainer() {
 		super();
@@ -36,6 +54,11 @@ public class StateContainer {
 		this.date = java.util.Calendar.getInstance();
 	}
 	
+	/**
+	 * Gets the logic.
+	 *
+	 * @return the logic
+	 */
 	public LogicLayer getLogic() {
 		return logicLayer;
 	}
@@ -47,10 +70,20 @@ public class StateContainer {
 		}
 	}
 
+	/**
+	 * Adds the date changed listener.
+	 *
+	 * @param listener the listener
+	 */
 	public void addDateChangedListener(ActionListener listener) {
 		this.dateChangeListener.add(listener);
 	}
 
+	/**
+	 * Change month.
+	 *
+	 * @param monthShift the month shift
+	 */
 	public void changeMonth(int monthShift) {
 		if(date != null) {
 			date.add(java.util.Calendar.MONTH, monthShift);
@@ -58,19 +91,39 @@ public class StateContainer {
 		}
 	}
 
+	/**
+	 * Gets the date.
+	 *
+	 * @return the date
+	 */
 	public java.util.Calendar getDate() {
 		return (Calendar) date.clone();
 	}
 
+	/**
+	 * Unregister date chaned.
+	 *
+	 * @param listener the listener
+	 */
 	public void unregisterDateChaned(ActionListener listener) {
 		this.dateChangeListener.remove(listener);
 	}
 
+	/**
+	 * Sets the date.
+	 *
+	 * @param instance the new date
+	 */
 	public void setDate(Calendar instance) {
 		date= instance;
 		triggerDateChanged();	
 	}
 
+	/**
+	 * Change year to.
+	 *
+	 * @param value the value
+	 */
 	public void changeYearTo(Date value) {
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(value);
@@ -79,10 +132,18 @@ public class StateContainer {
 		triggerDateChanged();	
 	}
 
+	/**
+	 * Change events.
+	 */
 	public void changeEvents() {
 		triggerEventChanged();		
 	}
 	
+	/**
+	 * Adds the event changed listener.
+	 *
+	 * @param listener the listener
+	 */
 	public void addEventChangedListener(ActionListener listener) {
 		this.eventChangeListener.add(listener);
 	}
@@ -95,6 +156,11 @@ public class StateContainer {
 		
 	}
 
+	/**
+	 * Sets the logic layer.
+	 *
+	 * @param logic the new logic layer
+	 */
 	public void setLogicLayer(LogicLayer logic) {
 		this.logicLayer = logic;
 		//Trigger everyone

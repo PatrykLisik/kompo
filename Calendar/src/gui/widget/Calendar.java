@@ -33,9 +33,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 
+// TODO: Auto-generated Javadoc
 /**
  * 
  * A class that implements a base calendar view. 
+ * 
  * @author dwojcik
  *
  */
@@ -68,6 +70,9 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 	private JMenuItem mntmPolaczZBaza;
 
 
+	/**
+	 * Instantiates a new calendar.
+	 */
 	public Calendar() {
 		java.util.Calendar date = java.util.Calendar.getInstance();
 		setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -197,6 +202,11 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 		contacts.add(contactsView, gbc_contactsView);
 	}
 
+	/**
+	 * Sets the state container.
+	 *
+	 * @param state the new state container
+	 */
 	public void setStateContainer(StateContainer state) {
 		if(stateContainer!=null) {
 			stateContainer.unregisterDateChaned(this);
@@ -214,6 +224,9 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 		txtMiesiac.setText(nextMonth);	
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
+	 */
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		if(e.getSource() == spinner) {
@@ -221,6 +234,9 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 		}
 	}
 	
+	/**
+	 * Creates the event.
+	 */
 	public void createEvent() {
 		EventCreator eventCreator = new EventCreator();
 		eventCreator.setVisible(true);
@@ -231,6 +247,9 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()){

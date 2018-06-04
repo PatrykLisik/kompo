@@ -3,41 +3,48 @@ package gui.popup;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
-
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
-
 import java.awt.GridBagLayout;
-import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import com.toedter.calendar.JDateChooser;
-
 import dataLayer.Event;
-
 import java.awt.Label;
-import java.awt.Dialog.ModalityType;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import java.awt.GridLayout;
-import javax.swing.JLabel;
 
+
+
+/**
+ * The Class EventCreator.
+ * 
+ * @author dwojcik
+ * 
+ */
 public class EventCreator extends JDialog implements ActionListener{
 	private JTextField eventNameField;
 	private String returnCommand;
 	private JDateChooser startDateChooser;
 	private JDateChooser endDateChooser;
 	private JButton okButton;
+	
+	/** The Constant CANCEL_OPTION. */
 	public static final String CANCEL_OPTION = "Cancel";
+	
+	/** The Constant OK_OPTION. */
 	public static final String OK_OPTION = "OK";
 	private GridBagConstraints gbc_eventNameLbl;
 	private GridBagConstraints gbc_eventStartLbl;
 	private GridBagConstraints gbc_windowTitleLbl;
 	private GridBagConstraints gbc_eventEndLbl;
 	
+	/**
+	 * Instantiates a new event creator.
+	 *
+	 * @param data the data
+	 * @param windowTitle the window title
+	 */
 	public EventCreator(Event data, String windowTitle) {
 		this();
 		this.eventNameField.setText(data.getName());
@@ -46,6 +53,9 @@ public class EventCreator extends JDialog implements ActionListener{
 		setTitle(windowTitle);
 	}
 	
+	/**
+	 * Instantiates a new event creator.
+	 */
 	public EventCreator() {
 		this.setModalityType(ModalityType.APPLICATION_MODAL);
 		setTitle("Dodawanie wydarzenia");
@@ -145,6 +155,9 @@ public class EventCreator extends JDialog implements ActionListener{
 	}
 	
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand() == CANCEL_OPTION || validateFields()) {
@@ -161,23 +174,46 @@ public class EventCreator extends JDialog implements ActionListener{
 	}
 
 
+	/**
+	 * Gets the return command.
+	 *
+	 * @return the return command
+	 */
 	public String getReturnCommand() {
 		return returnCommand;
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.awt.Component#getName()
+	 */
 	public String getName() {
 		return eventNameField.getText();
 	} 
 	
+	/**
+	 * Gets the start date.
+	 *
+	 * @return the start date
+	 */
 	public Date getStartDate() {
 		return startDateChooser.getDate();
 	}
 	
+	/**
+	 * Gets the end date.
+	 *
+	 * @return the end date
+	 */
 	public Date getEndDate() {
 		return endDateChooser.getDate();
 	}
 
 
+	/**
+	 * Sets the editable.
+	 *
+	 * @param b the new editable
+	 */
 	public void setEditable(boolean b) {
 		eventNameField.setEditable(b);
 		startDateChooser.setEnabled(b);

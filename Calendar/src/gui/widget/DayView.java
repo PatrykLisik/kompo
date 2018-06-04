@@ -7,31 +7,30 @@ import java.awt.GridBagConstraints;
 import javax.swing.SwingConstants;
 import java.awt.Insets;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
-
 import java.awt.SystemColor;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Calendar;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import javax.swing.border.LineBorder;
 import java.awt.Color;
-import javax.swing.border.MatteBorder;
 
-import dataLayer.Event;
 
-import javax.swing.JList;
-import java.awt.GridLayout;
-
+/**
+ * The Class DayView.
+ * 
+ * @author dwojcik
+ * 
+ */
 public class DayView extends JPanel implements MouseListener{
 	private JLabel lblDaynum;
+	
+	/** The events list. */
 	public JPanel eventsList;
 	private Calendar representedDate;
 
+
 	/**
-	 * Create the panel.
+	 * Instantiates a new day view.
 	 */
 	public DayView() {
 		setBorder(new LineBorder(new Color(180, 180, 180), 2));
@@ -64,29 +63,51 @@ public class DayView extends JPanel implements MouseListener{
 
 	}
 
+	/**
+	 * Sets the day num.
+	 *
+	 * @param dayNumber the new day num
+	 */
 	public void setDayNum(int dayNumber) {
 		lblDaynum.setText(Integer.toString(dayNumber));
 	}
 	
+	/**
+	 * Gets the day num.
+	 *
+	 * @return the day num
+	 */
 	public int getDayNum() {
 		return Integer.parseInt(lblDaynum.getText());
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
+	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
+	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
+	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
+	 */
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		this.setBackground(SystemColor.activeCaption);	
@@ -94,16 +115,29 @@ public class DayView extends JPanel implements MouseListener{
 	}
 	
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
+	 */
 	@Override
 	public void mouseExited(MouseEvent e) {
 		setBackground(SystemColor.inactiveCaption);		
 		eventsList.setBackground(SystemColor.inactiveCaption);
 	}
 
+	/**
+	 * Gets the represented date.
+	 *
+	 * @return the represented date
+	 */
 	public Calendar getRepresentedDate() {
 		return this.representedDate;
 	}
 
+	/**
+	 * Sets the represented date.
+	 *
+	 * @param dateClone the new represented date
+	 */
 	public void setRepresentedDate(Calendar dateClone) {
 		this.representedDate = dateClone;
 	}

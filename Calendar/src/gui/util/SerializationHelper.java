@@ -22,6 +22,11 @@ import logicLayer.Saver;
 import logicLayer.XMLImporter;
 import logicLayer.XMLSaver;
 
+/**
+ * The Class SerializationHelper.
+ * 
+ * @author dwojcik
+ */
 public class SerializationHelper{
 	
 	private static class OperationLogic{
@@ -57,6 +62,13 @@ public class SerializationHelper{
 		operators.put(openOfficeFilter, new OperationLogic(null, new OpenOfficeSaver(),"odt"));
 	}
 	
+	/**
+	 * Load calendar.
+	 *
+	 * @param parent the parent
+	 * @param defaultVal the default val
+	 * @return the data service
+	 */
 	public static DataService loadCalendar(Component parent,DataService defaultVal) {
 		JFileChooser fChooser = prepareFileChooser();
 		int option = fChooser.showOpenDialog(parent);
@@ -77,6 +89,12 @@ public class SerializationHelper{
 		}
 	}
 	
+	/**
+	 * Save calendar.
+	 *
+	 * @param parent the parent
+	 * @param service the service
+	 */
 	public static void saveCalendar(Component parent, DataService service) {
 		JFileChooser fChooser = prepareFileChooser();
 		int option =fChooser.showSaveDialog(parent);
