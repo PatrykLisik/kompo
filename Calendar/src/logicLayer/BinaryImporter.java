@@ -16,10 +16,8 @@ import dataLayer.DataService;
  */
 public class BinaryImporter implements Importer {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see logicLayer.Importer#importData(java.lang.String)
+	/**
+	 * Override current data with data from file
 	 */
 	@Override
 	public DataService importData(String fileName) throws LogicLayerException {

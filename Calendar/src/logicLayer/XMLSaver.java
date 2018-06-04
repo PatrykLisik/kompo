@@ -17,10 +17,8 @@ import dataLayer.DataService;
  */
 public class XMLSaver implements Saver {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see logicLayer.Saver#save(java.lang.String, dataLayer.DataService)
+	/**
+	 * Save current sate of {@link dataLayer.DataService} to XML file
 	 */
 	@Override
 	public void save(String filename, DataService data) {

@@ -17,10 +17,8 @@ import dataLayer.DataService;
  */
 public class BinarySaver implements Saver {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see logicLayer.Saver#save(java.lang.String, dataLayer.DataService)
+	/**
+	 * Save current sate of {@link dataLayer.DataService} to binary file
 	 */
 	@Override
 	public void save(String filename, DataService data) throws LogicLayerException {

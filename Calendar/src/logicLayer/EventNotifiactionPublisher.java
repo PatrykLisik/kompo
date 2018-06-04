@@ -12,6 +12,7 @@ import dataLayer.Event.Notification;
 
 /**
  * Notification publisher based on listener-subscriber design pattern
+ * 
  * @author plisik
  *
  */
@@ -23,12 +24,15 @@ public class EventNotifiactionPublisher {
 	}
 
 	/**
-	 * Notification source is supposed to invoke update method when notification list is changed
+	 * Notification source is supposed to invoke update method when notification
+	 * list is changed
+	 * 
 	 * @author plisik
 	 *
 	 */
 	public interface NotifiactionSource {
 		List<Notification> getAllNotifications();
+
 		void addEventNotificationPublisher(EventNotifiactionPublisher enp);
 	}
 
@@ -57,14 +61,16 @@ public class EventNotifiactionPublisher {
 	List<NotificationReciver> recivers = new LinkedList<NotificationReciver>();
 	Timer timer = new Timer();
 	NotifiactionSource source;
+
 	public EventNotifiactionPublisher(NotifiactionSource source) {
 		this.scheduleAllNotifications(source.getAllNotifications());
-		this.source=source;
+		this.source = source;
 
 	}
 
 	/**
 	 * Add notification reviver
+	 * 
 	 * @param reciver
 	 */
 	public void addReciver(NotificationReciver reciver) {
@@ -72,7 +78,8 @@ public class EventNotifiactionPublisher {
 	}
 
 	/**
-	 * Schedule 
+	 * Schedule
+	 * 
 	 * @param notifySet
 	 */
 	private void scheduleAllNotifications(List<Notification> notifySet) {
@@ -87,9 +94,10 @@ public class EventNotifiactionPublisher {
 
 		}
 	}
-/**
- * Delete all notifications and reschedule all
- */
+
+	/**
+	 * Delete all notifications and reschedule all
+	 */
 	public void update() {
 		timer.purge();
 		scheduleAllNotifications(source.getAllNotifications());

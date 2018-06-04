@@ -13,7 +13,7 @@ import dataLayer.Event;
 import logicLayer.comparator.DateComparator;
 
 /**
- * Implementation of sorting and searching algorithms demanded by logic layer
+ * Implementation of sorting and searching algorithms to perform operations on {@link dataLyer.DataService} object
  * 
  * @author plisik
  *

@@ -56,8 +56,8 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 
 	}
 
-	/* (non-Javadoc)
-	 * @see dataLayer.DataBaseService#loadFromDatabase()
+	/**
+	 *Delete current data and load from database 
 	 */
 	@Override
 	public void loadFromDatabase() {
@@ -77,6 +77,11 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 
 	}
 
+	/**
+	 * Create entry that connects event and notification in database
+	 * @param notificationId
+	 * @param eventId
+	 */
 	public void addNotificationToEvent(int notificationId, int eventId) {
 		String querry = "INSERT INTO notifications_events VALUES(?, ?);";
 		try (PreparedStatement stmt = conn.prepareStatement(querry)) {
@@ -89,6 +94,11 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 
 	}
 
+	/**
+	 * Create entry that connects event and person in database
+	 * @param personId
+	 * @param eventId
+	 */
 	public void addPersonToEvent(int personId, int eventId) {
 		String querry = "INSERT INTO event_person VALUES(?, ?);";
 		try (PreparedStatement stmt = conn.prepareStatement(querry)) {
@@ -198,6 +208,10 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 
 	}
 
+	/**
+	 * Notifications of particular event will be removed from database
+	 * @param ev
+	 */
 	public void delteNotificationsOfEvent(Event ev) {
 		String querry = "DELETE FROM notifications WHERE id IN "
 				+ "(SELECT notification_id FROM  notifications_events WHERE event_id IN"
@@ -212,6 +226,10 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 		}
 	}
 
+	/**
+	 * Notifications of particular event will be removed from database
+	 * @param eventId
+	 */
 	public void delteNotificationsOfEvent(int eventId) {
 		String querry = "DELETE FROM notifications WHERE id IN (SELECT notification_id FROM  notifications_events WHERE event_id= ?);";
 		try (PreparedStatement stmt = conn.prepareStatement(querry)) {
@@ -245,8 +263,8 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 
 	}
 
-	/* (non-Javadoc)
-	 * @see dataLayer.DataBaseService#saveToDatabase()
+	/**
+	 * Save changes to database
 	 */
 	@Override
 	public void saveToDatabase() {
@@ -259,6 +277,10 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 
 	}
 
+	/**
+	 * Create data context from database
+	 * @return
+	 */
 	private DataContext pullFromDataBase() {
 		DataContext ret = new DataContext();
 		ret.Events = this.pullEventFromDatabase();

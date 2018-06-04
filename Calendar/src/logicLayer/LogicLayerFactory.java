@@ -7,14 +7,14 @@ import dataLayer.DataServiceNoSQL;
 import dataLayer.DataServiceSQL;
 
 /**
- * Factory that produces different versions of logic layer 
+ * Factory that produces different versions of {@link logicLayer.LogicLayerImpl}
  * @author plisik
  *
  */
 public class LogicLayerFactory {
 	/**
 	 * Logic layer without database
-	 * @return instance of LogicLayerImpl
+	 * @return instance of {@link logicLayer.LogicLayerImpl}
 	 */
 	public static LogicLayerImpl getLogicLayerNoSQL() {
 		return new LogicLayerImpl(new DataServiceNoSQL());

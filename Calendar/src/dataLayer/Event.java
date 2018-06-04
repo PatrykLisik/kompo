@@ -43,11 +43,11 @@ public class Event implements Serializable {
 			NotifiactionCounter++;
 
 		}
-		
+
 		public Notification(Date date, String descripton, long id) {
-			this(date,descripton);
-			this.id=id;
-			
+			this(date, descripton);
+			this.id = id;
+
 		}
 
 		public Date getDate() {
@@ -84,6 +84,7 @@ public class Event implements Serializable {
 		}
 
 	}
+
 	private static final long serialVersionUID = -4070684017733510355L;
 	/**
 	 * associatedPersons stores IDs of Persons associated with event There is no

@@ -1,5 +1,10 @@
 package dataLayer;
 
+/**
+ * Generalisation of database usage
+ * @author plisik
+ *
+ */
 public interface DataBaseService {
 
 	/**

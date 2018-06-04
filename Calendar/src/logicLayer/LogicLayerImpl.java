@@ -21,6 +21,22 @@ import dataLayer.Person;
  * @author plisik
  *
  */
+/**
+ * @author plisik
+ *
+ */
+/**
+ * @author plisik
+ *
+ */
+/**
+ * @author plisik
+ *
+ */
+/**
+ * @author plisik
+ *
+ */
 public class LogicLayerImpl implements LogicLayer {
 	DataService data;
 	List<EventNotifiactionPublisher> notifiers = new LinkedList<EventNotifiactionPublisher>();
@@ -52,16 +68,17 @@ public class LogicLayerImpl implements LogicLayer {
 		notifyAllNotifiers();
 	}
 
+	/**
+	 * Save current sate to binary file
+	 */
 	@Override
 	public void saveToBianry(String fileName) throws LogicLayerException {
 		this.save(fileName, new BinarySaver());
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see logicLayer.LogicLayer#saveToXML(java.lang.String)
+	/**
+	 * Save current sate to XML file
 	 */
 	@Override
 	public void saveToXML(String fileName) throws LogicLayerException {
@@ -69,23 +86,27 @@ public class LogicLayerImpl implements LogicLayer {
 
 	}
 	
+	/**
+	 * Export to OpenOffice file
+	 */
 	@Override
 	public void saveToODT(String fileName) throws LogicLayerException {
 		this.save(fileName,new OpenOfficeSaver());
 		
 	}
 
-	
+
+	/**
+	 * Override current by state from binary file
+	 */
 	@Override
 	public void importFromBianry(String fileName) throws LogicLayerException {
 		Importer imp = new BinaryImporter();
 		data = imp.importData(fileName);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see logicLayer.LogicLayer#importFromXML(java.lang.String)
+	/**
+	 * Override current by state from XML file
 	 */
 	@Override
 	public void importFromXML(String fileName) throws LogicLayerException {
@@ -93,46 +114,48 @@ public class LogicLayerImpl implements LogicLayer {
 
 	}
 
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see logicLayer.LogicLayer#EventBetweenDate(java.util.Date, java.util.Date)
+	/**
+	 * Events between dates
+	 * @return List of events between dates
 	 */
 	@Override
 	public List<Event> EventBetweenDate(Date start, Date end) {
 		return SortingAndSearchPolicies.eventsBetweenDates(data,start,end);
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
 	 * 
-	 * @see logicLayer.LogicLayer#EventsByDate()
+	 * @return List of events sorted by dates
 	 */
 	@Override
 	public List<Event> EventsByDate() {
 		return SortingAndSearchPolicies.eventsByDate(data);
 	}
 	
-	
+	/**
+	 * Events on particular day
+	 */
 	@Override
 	public List<Event> EventsOn(Date start) {
 		return SortingAndSearchPolicies.eventsOn(data, start);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see logicLayer.LogicLayer#EventsByNumberOfParticipants()
+	/**
+	 * List of events sorted by number of participants 
 	 */
 	@Override
 	public List<Event> EventsByNumberOfParticipants() {
 		return SortingAndSearchPolicies.eventsByNumberOfAssociatedPersons(data);
 	}
 
+	/**
+	 * Delete events in range 
+	 */
 	@Override
 	public void DeleteEventsBetweenDates(Date start, Date end) {
-		// TODO Auto-generated method stub
+		List<Event> eventsToRemove=this.EventBetweenDate(start, end);
+		for(Event ev: eventsToRemove)
+			deleteEvent(ev);
 		
 		notifyAllNotifiers();
 		

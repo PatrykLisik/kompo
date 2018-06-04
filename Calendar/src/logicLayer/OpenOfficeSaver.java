@@ -50,6 +50,9 @@ public class OpenOfficeSaver implements Saver {
 		return out;
 	}
 
+	/**
+	 * Save current sate of {@link dataLayer.DataService} to OpenOfficeFile file
+	 */
 	@Override
 	public void save(String filename, DataService data) throws LogicLayerException {
 
