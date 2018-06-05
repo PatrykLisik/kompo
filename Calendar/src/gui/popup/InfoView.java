@@ -13,6 +13,7 @@ import java.awt.Insets;
 import java.awt.Dialog.ModalityType;
 import java.awt.Window.Type;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class InfoView.
  * 
@@ -23,6 +24,11 @@ public class InfoView extends JDialog{
 	
 	private static InfoView INSTANCE = new InfoView();
 	
+	/**
+	 * Make visible.
+	 *
+	 * @param flag the flag
+	 */
 	public static void makeVisible(boolean flag) {
 		INSTANCE.setVisible(flag);
 	}

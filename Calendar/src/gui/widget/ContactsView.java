@@ -93,7 +93,11 @@ public class ContactsView extends JPanel implements ActionListener{
 	 * @param state the new state container
 	 */
 	public void setStateContainer(StateContainer state) {
+		if(stateContainer!=null) {
+			stateContainer.unregisterContactChanged(this);
+		}
 		this.stateContainer=state;
+		state.registerContactChanged(this);
 		updateContacts();
 	}
 	
@@ -150,6 +154,7 @@ public class ContactsView extends JPanel implements ActionListener{
 		switch (e.getActionCommand()){
 		case ADD_CONTACT: onAddContact();break;
 		case REMOVE_CONTACT: onDeleteContact();break;
+		case StateContainer.CONTACTS_CHANGED_COMMAND: this.updateContacts();break;
 		}
 	}
 }

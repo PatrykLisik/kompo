@@ -10,6 +10,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import dataLayer.Person;
+import gui.widget.ContactsView;
 import logicLayer.LogicLayer;
 import logicLayer.LogicLayerFactory;
 import logicLayer.LogicLayerImpl;
@@ -28,10 +29,13 @@ public class StateContainer {
 	
 	/** The Constant EVENT_CHANGED_COMMAND. */
 	public static final String EVENT_CHANGED_COMMAND = "EVENT_CHANGED";
+
+	public static final String CONTACTS_CHANGED_COMMAND = "CONTACT_CHANGED";
 	private LogicLayer logicLayer;
 	private java.util.Calendar date;
 	private List<ActionListener> dateChangeListener = new ArrayList<>();
 	private List<ActionListener> eventChangeListener = new ArrayList<>();
+	private List<ActionListener> contactsChangedListener = new ArrayList<>();
 
 	/**
 	 * Instantiates a new state container.
@@ -166,5 +170,22 @@ public class StateContainer {
 		//Trigger everyone
 		triggerDateChanged();
 		triggerEventChanged();
+		triggerContactsChanged();
+	}
+
+	private void triggerContactsChanged() {
+		ActionEvent event = new ActionEvent(this, 0, CONTACTS_CHANGED_COMMAND);
+		for(ActionListener l:this.contactsChangedListener) {
+			l.actionPerformed(event);
+		}
+
+	}
+
+	public void registerContactChanged(ActionListener listener) {
+		contactsChangedListener.add(listener);		
+	}
+
+	public void unregisterContactChanged(ActionListener listener) {
+		contactsChangedListener.remove(listener);
 	}
 }
