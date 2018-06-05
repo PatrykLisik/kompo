@@ -16,6 +16,7 @@ import logicLayer.LogicLayerFactory;
 import logicLayer.LogicLayerImpl;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class StateContainer.
  * 
@@ -30,6 +31,7 @@ public class StateContainer {
 	/** The Constant EVENT_CHANGED_COMMAND. */
 	public static final String EVENT_CHANGED_COMMAND = "EVENT_CHANGED";
 
+	/** The Constant CONTACTS_CHANGED_COMMAND. */
 	public static final String CONTACTS_CHANGED_COMMAND = "CONTACT_CHANGED";
 	private LogicLayer logicLayer;
 	private java.util.Calendar date;
@@ -105,7 +107,7 @@ public class StateContainer {
 	}
 
 	/**
-	 * Unregister date chaned.
+	 * Unregister date changed.
 	 *
 	 * @param listener the listener
 	 */
@@ -181,10 +183,20 @@ public class StateContainer {
 
 	}
 
+	/**
+	 * Register contact changed.
+	 *
+	 * @param listener the listener
+	 */
 	public void registerContactChanged(ActionListener listener) {
 		contactsChangedListener.add(listener);		
 	}
 
+	/**
+	 * Unregister contact changed.
+	 *
+	 * @param listener the listener
+	 */
 	public void unregisterContactChanged(ActionListener listener) {
 		contactsChangedListener.remove(listener);
 	}
