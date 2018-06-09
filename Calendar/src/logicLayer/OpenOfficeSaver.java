@@ -5,13 +5,9 @@ package logicLayer;
 
 import java.util.Arrays;
 
-import javax.swing.table.TableModel;
-
-import org.apache.commons.collections.MapUtils;
 import org.odftoolkit.odfdom.doc.OdfTextDocument;
 
 import dataLayer.DataService;
-import dnl.utils.text.table.TextTable;
 
 /**
  * @author plisik

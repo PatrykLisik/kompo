@@ -9,18 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.swing.JSeparator;
-
-import dataLayer.DataService;
-import dataLayer.Person;
 import dataLayer.Event;
 import gui.util.StateContainer;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JCheckBox;
 
 
 /**
@@ -29,6 +19,7 @@ import javax.swing.JCheckBox;
  *  @author dwojcik
  *  
  */
+@SuppressWarnings("serial")
 public class MonthView extends JPanel implements ActionListener{
 	
 	/** The days. */

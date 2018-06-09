@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
  * @author dwojcik
  * 
  */
+@SuppressWarnings("serial")
 public class EventCreator extends JDialog implements ActionListener{
 	private JTextField eventNameField;
 	private String returnCommand;

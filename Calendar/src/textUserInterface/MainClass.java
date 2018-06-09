@@ -3,9 +3,11 @@
  */
 package textUserInterface;
 
+import java.util.Date;
+
 import logicLayer.LogicLayerException;
 import logicLayer.LogicLayerFactory;
-import logicLayer.LogicLayerImpl;
+import logicLayer.LogicLayerSQLImpl;
 
 /**
  * @author plisik
@@ -14,11 +16,11 @@ import logicLayer.LogicLayerImpl;
 public class MainClass {
 	public static void main(String[] args) throws LogicLayerException {
 
-		LogicLayerFactory lf=new LogicLayerFactory();
-		LogicLayerImpl ll = lf.getLogicLayerNoSQL();
+		LogicLayerSQLImpl ll = LogicLayerFactory.getLogicLayerSQL();
 
 		ll.createPerson("aaa", "adada");
-		ll.saveToODT("plik.odt");
+		ll.createEvent("test1", new Date(), new Date());
+		ll.saveToDatabase();
 		System.out.println("END");
 
 	}

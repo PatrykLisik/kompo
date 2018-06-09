@@ -9,7 +9,6 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
 import dataLayer.Person;
@@ -17,15 +16,10 @@ import gui.popup.ContactCreator;
 import gui.util.StateContainer;
 
 import java.awt.SystemColor;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
-
-import javax.swing.Action;
 
 
 // TODO: Auto-generated Javadoc
@@ -37,6 +31,7 @@ import javax.swing.Action;
  *
  */
 
+@SuppressWarnings("serial")
 public class ContactsView extends JPanel implements ActionListener{
 
 	private static final String REMOVE_CONTACT = "RC";

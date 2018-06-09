@@ -1,17 +1,10 @@
 package gui.popup;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.Dialog.ModalityType;
-import java.awt.Window.Type;
 
 // TODO: Auto-generated Javadoc
 /**

@@ -2,18 +2,14 @@ package gui.util;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import dataLayer.Person;
-import gui.widget.ContactsView;
-import logicLayer.LogicLayer;
 import logicLayer.LogicLayerFactory;
-import logicLayer.LogicLayerImpl;
+import logicLayer.LogicLayerSQLImpl;
 
 
 // TODO: Auto-generated Javadoc
@@ -33,22 +29,12 @@ public class StateContainer {
 
 	/** The Constant CONTACTS_CHANGED_COMMAND. */
 	public static final String CONTACTS_CHANGED_COMMAND = "CONTACT_CHANGED";
-	private LogicLayer logicLayer;
+	private LogicLayerSQLImpl logicLayer;
 	private java.util.Calendar date;
 	private List<ActionListener> dateChangeListener = new ArrayList<>();
 	private List<ActionListener> eventChangeListener = new ArrayList<>();
 	private List<ActionListener> contactsChangedListener = new ArrayList<>();
 
-	/**
-	 * Instantiates a new state container.
-	 *
-	 * @param logicLayer the logic layer
-	 */
-	public StateContainer(LogicLayer logicLayer) {
-		super();
-		this.logicLayer = logicLayer;
-		this.date = java.util.Calendar.getInstance();
-	}
 	
 	/**
 	 * Instantiates a new state container.
@@ -56,7 +42,7 @@ public class StateContainer {
 	//TODO: Remove
 	public StateContainer() {
 		super();
-		this.logicLayer = LogicLayerFactory.getLogicLayerNoSQL();
+		this.logicLayer = LogicLayerFactory.getLogicLayerSQL();
 		this.date = java.util.Calendar.getInstance();
 	}
 	
@@ -65,7 +51,7 @@ public class StateContainer {
 	 *
 	 * @return the logic
 	 */
-	public LogicLayer getLogic() {
+	public LogicLayerSQLImpl getLogic() {
 		return logicLayer;
 	}
 	
@@ -167,9 +153,14 @@ public class StateContainer {
 	 *
 	 * @param logic the new logic layer
 	 */
-	public void setLogicLayer(LogicLayer logic) {
+	public void setLogicLayer(LogicLayerSQLImpl logic) {
 		this.logicLayer = logic;
 		//Trigger everyone
+		refresh();
+
+	}
+	
+	public void refresh() {
 		triggerDateChanged();
 		triggerEventChanged();
 		triggerContactsChanged();

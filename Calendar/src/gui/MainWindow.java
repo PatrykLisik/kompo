@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -7,8 +8,6 @@ import javax.swing.UIManager;
 
 import gui.util.StateContainer;
 import gui.widget.Calendar;
-import java.awt.BorderLayout;
-import javax.swing.BoxLayout;
 
 
 /**

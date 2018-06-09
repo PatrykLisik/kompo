@@ -76,7 +76,6 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 			stmt.setString(2, n.getDescripton());
 			stmt.setTimestamp(3, new java.sql.Timestamp(n.getDate().getTime()));
 			this.Gstmt.addBatch(getSQL(stmt));
-			this.saveToDatabase();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -97,7 +96,6 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 			stmt.setInt(1, notificationId);
 			stmt.setInt(2, eventId);
 			this.Gstmt.addBatch(getSQL(stmt));
-			this.saveToDatabase();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -118,7 +116,7 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 			stmt.setInt(1, personId);
 			stmt.setInt(2, eventId);
 			this.Gstmt.addBatch(getSQL(stmt));
-			this.saveToDatabase();
+			 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -136,7 +134,6 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 			stmt.setTimestamp(3, new java.sql.Timestamp(ev.getStart().getTime()));
 			stmt.setTimestamp(4, new java.sql.Timestamp(ev.getEnd().getTime()));
 			this.Gstmt.addBatch(getSQL(stmt));
-			this.saveToDatabase();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -159,7 +156,6 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 			stmt.setString(2, p.getName());
 			stmt.setString(3, p.getSurname());
 			this.Gstmt.addBatch(getSQL(stmt));
-			this.saveToDatabase();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -181,7 +177,6 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 			stmt.setTimestamp(2, new java.sql.Timestamp(ev.getStart().getTime()));
 			stmt.setTimestamp(3, new java.sql.Timestamp(ev.getEnd().getTime()));
 			this.Gstmt.addBatch(getSQL(stmt));
-			this.saveToDatabase();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -205,7 +200,6 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 		try (PreparedStatement stmt = conn.prepareStatement(querry)) {
 			stmt.setInt(1, id);
 			this.Gstmt.addBatch(getSQL(stmt));
-			this.saveToDatabase();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -226,7 +220,6 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 		try (PreparedStatement stmt = conn.prepareStatement(querry)) {
 			stmt.setInt(1, id);
 			this.Gstmt.addBatch(getSQL(stmt));
-			this.saveToDatabase();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -247,7 +240,6 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 			stmt.setString(1, p.getName());
 			stmt.setString(2, p.getSurname());
 			this.Gstmt.addBatch(getSQL(stmt));
-			this.saveToDatabase();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -271,7 +263,7 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 			stmt.setTimestamp(2, new java.sql.Timestamp(ev.getStart().getTime()));
 			stmt.setTimestamp(3, new java.sql.Timestamp(ev.getEnd().getTime()));
 			this.Gstmt.addBatch(getSQL(stmt));
-			this.saveToDatabase();
+			 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -288,7 +280,7 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 		try (PreparedStatement stmt = conn.prepareStatement(querry)) {
 			stmt.setInt(1, eventId);
 			this.Gstmt.addBatch(getSQL(stmt));
-			this.saveToDatabase();
+			 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -341,6 +333,8 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 		DataContext ret = new DataContext();
 		ret.Events = this.pullEventFromDatabase();
 		ret.Persons = this.pullPersonFromDatabase();
+		super.personCounter=ret.Events.size()+1;
+		super.eventCounter=ret.Persons.size()+1;
 		return ret;
 	}
 
@@ -424,7 +418,7 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 			stmt.setTimestamp(3, new java.sql.Timestamp(ev.getEnd().getTime()));
 			stmt.setInt(4, id);
 			this.Gstmt.addBatch(getSQL(stmt));
-			this.saveToDatabase();
+			 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -21,6 +21,7 @@ import java.awt.Color;
  * @author dwojcik
  * 
  */
+@SuppressWarnings("serial")
 public class DayView extends JPanel implements MouseListener{
 	private JLabel lblDaynum;
 	

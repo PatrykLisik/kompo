@@ -1,8 +1,6 @@
 package gui.util;
 
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,12 +36,6 @@ public class SerializationHelper{
 			this.importer = importer;
 			this.saver = saver;
 			this.fileExtension=fileExtension;
-		}
-		public Importer getImporter() {
-			return importer;
-		}
-		public Saver getSaver() {
-			return saver;
 		}
 		public String getFileExtension() {
 			return fileExtension;

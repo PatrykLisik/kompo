@@ -19,7 +19,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import dataLayer.DataService;
-import dataLayer.DataServiceSQL;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
@@ -27,8 +26,8 @@ import gui.popup.EventCreator;
 import gui.popup.InfoView;
 import gui.util.SerializationHelper;
 import gui.util.StateContainer;
-import logicLayer.LogicLayer;
-import logicLayer.LogicLayerImpl;
+import logicLayer.LogicLayerFactory;
+import logicLayer.LogicLayerSQLImpl;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -43,10 +42,12 @@ import javax.swing.JMenu;
  *
  */
 
+@SuppressWarnings("serial")
 public class Calendar extends JPanel implements ActionListener, ChangeListener{
 
 	private static final String SAVE_CALENDAR = "Zapisz";
-	private static final String CONNECT_WITH_DATABASE = "Po\u0142\u0105cz z baz\u0105";
+	private static final String SAVE_TO_DATABASE = "Zapisz do bazy";
+	private static final String LOAD_FROM_DATABASE = "Wczytaj z bazy";
 	private static final String LOAD_CALENDAR = "Wczytaj";
 	private static final String INFO = "Info";
 	private static final String DATA_OPTION = "Dane";
@@ -69,7 +70,8 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 	private JMenu mnDane;
 	private JMenuItem mntmWczytaj;
 	private JMenuItem mntmZapisz;
-	private JMenuItem mntmPolaczZBaza;
+	private JMenuItem mntmZapiszDoBazy;
+	private JMenuItem mntmWczytajZBazy;
 	private JMenu mnPomoc;
 	private JMenuItem mntmInformacje;
 
@@ -99,8 +101,7 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 		
 		mntmWczytaj = new JMenuItem(LOAD_CALENDAR);
 		mntmWczytaj.addActionListener(a -> {
-			DataService loadedService = SerializationHelper.loadCalendar(this,Calendar.this.stateContainer.getLogic().getDataService());
-			LogicLayer logic = new LogicLayerImpl(loadedService);
+			LogicLayerSQLImpl logic = LogicLayerFactory.getLogicLayerSQL();
 			Calendar.this.stateContainer.setLogicLayer(logic);
 			});
 		mnDane.add(mntmWczytaj);
@@ -112,13 +113,17 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 			});
 		mnDane.add(mntmZapisz);
 		
-		mntmPolaczZBaza = new JMenuItem(CONNECT_WITH_DATABASE);
-		mntmPolaczZBaza.addActionListener(a -> {
-			DataService data = new DataServiceSQL();
-			LogicLayer logic = new LogicLayerImpl(data);
-			Calendar.this.stateContainer.setLogicLayer(logic);
+		mntmZapiszDoBazy = new JMenuItem(SAVE_TO_DATABASE);
+		mntmZapiszDoBazy.addActionListener(a -> {
+			(Calendar.this.stateContainer.getLogic()).saveToDatabase();
 			});
-		mnDane.add(mntmPolaczZBaza);
+		mnDane.add(mntmZapiszDoBazy);
+		
+		mntmWczytajZBazy = new JMenuItem(LOAD_FROM_DATABASE);
+		mntmWczytajZBazy.addActionListener(a -> {
+			(Calendar.this.stateContainer.getLogic()).loadFromDatabase();
+			});
+		mnDane.add(mntmWczytajZBazy);
 		
 		mnPomoc = new JMenu("Pomoc");
 		menuBar.add(mnPomoc);

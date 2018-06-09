@@ -11,7 +11,6 @@ import logicLayer.EventNotifiactionPublisher.NotificationReciver;
 import logicLayer.LogicLayer;
 import logicLayer.LogicLayerException;
 import logicLayer.LogicLayerFactory;
-import logicLayer.LogicLayerImpl;
 
 /**
  * Class that represents TUI itself
