@@ -16,16 +16,20 @@ import java.sql.*;
  *
  * @author plisik
  */
-@SuppressWarnings("serial")
+
 public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4222814676917565076L;
 	private static final String MAX_POOL = "250";
 	private static final String USERNAME = "calendar";
 	private static final String DATABASE_URL = "jdbc:mysql://localhost/calendar_data?verifyServerCertificate=false&useSSL=true&autoReconnect=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 	private static final String PASSWORD = "Calendar1!";
-	private Connection conn = null;
+	private transient Connection conn = null;
 	// Statement that
-	private Statement Gstmt = null;
+	private transient Statement Gstmt = null;
 	private Properties properties = null;
 
 	/**
@@ -129,7 +133,7 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 	public void createEvent(Event ev) {
 		String querry = "INSERT INTO events VALUES(?, ?, ?, ? );";
 		try (PreparedStatement stmt = conn.prepareStatement(querry)) {
-			stmt.setInt(1, super.eventCounter);
+			stmt.setInt(1, DataServiceNoSQL.eventCounter);
 			stmt.setString(2, ev.getName());
 			stmt.setTimestamp(3, new java.sql.Timestamp(ev.getStart().getTime()));
 			stmt.setTimestamp(4, new java.sql.Timestamp(ev.getEnd().getTime()));
@@ -152,7 +156,7 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 		String querry = "INSERT INTO persons VALUES( ? , ? , ? );";
 		try (PreparedStatement stmt = conn.prepareStatement(querry)) {
 
-			stmt.setInt(1, super.personCounter);
+			stmt.setInt(1, DataServiceNoSQL.personCounter);
 			stmt.setString(2, p.getName());
 			stmt.setString(3, p.getSurname());
 			this.Gstmt.addBatch(getSQL(stmt));
@@ -333,8 +337,8 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 		DataContext ret = new DataContext();
 		ret.Events = this.pullEventFromDatabase();
 		ret.Persons = this.pullPersonFromDatabase();
-		super.personCounter=ret.Events.size()+1;
-		super.eventCounter=ret.Persons.size()+1;
+		DataServiceNoSQL.personCounter=ret.Events.size()+1;
+		DataServiceNoSQL.eventCounter=ret.Persons.size()+1;
 		return ret;
 	}
 

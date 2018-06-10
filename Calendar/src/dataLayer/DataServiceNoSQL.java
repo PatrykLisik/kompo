@@ -22,11 +22,11 @@ public class DataServiceNoSQL implements DataService {
 
 	/** The person counter. */
 	// number of person that will created next
-	protected int personCounter = 0;
+	protected static int personCounter = 0;
 
 	/** The event counter. */
 	// number of event that will be created next
-	protected int eventCounter = 0;
+	protected static int eventCounter = 0;
 
 	/* (non-Javadoc)
 	 * @see dataLayer.DataService#getDataContext()
