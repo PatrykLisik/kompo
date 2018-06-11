@@ -4,10 +4,40 @@
 \usepackage{caption}
 \usepackage{graphicx}
 \usepackage[polish]{babel}
+\usepackage{color}
 \title{Kompo - sprawko}
 \author{Patryk Lisik}
 \date{June 2018}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{ltgray}{rgb}{0.5,0.5,0.5}
 
+\usepackage{listings}
+\lstset{%
+  	backgroundcolor=\color{white},
+  	basicstyle=\footnotesize,
+  	breakatwhitespace=false,
+  	breaklines=true,
+  	captionpos=b,
+  	commentstyle=\color{dkgreen},
+  	deletekeywords={...},
+  	escapeinside={\%*}{*)},
+  	extendedchars=true,
+  	frame=single,
+  	keepspaces=true,
+  	keywordstyle=\color{blue},
+  	language=SQL,
+  	morekeywords={*,modify,MODIFY,...},
+  	numbers=left,
+  	numbersep=15pt,
+  	numberstyle=\tiny,
+  	rulecolor=\color{ltgray},
+  	showspaces=false,
+  	showstringspaces=false, 
+  	showtabs=false,
+  	stepnumber=1,
+  	tabsize=4,
+  	title=\lstname
+}
 \begin{document}
 
 \begin{titlepage}
@@ -148,12 +178,51 @@ Warstwa danych przechowuje wyżej wymienione obiekty.
 
 \section{Warstwa interfejsu}
 \subsection{Najważniejsze klasy warstwy interfejsu}
+%TODO 
 \subsection{Zrzuty ekranu najważniejszych widoków działającej aplikacji}
 \subsubsection{Główne okno kalendarza ''organizera''}
+
+\begin{minipage}{\textwidth}
+
+    \includegraphics[width=\textwidth]{./screen/AppScreen/MainViewLinux.png}
+        \captionof{figure}{Główne okono kalendarze w sytstemi linux}
+    \label{MainViewLinux}
+
+\end{minipage}
+
 \subsubsection{Okienko ''O programie''}
+
+\begin{center}
+\begin{minipage}{0.5\textwidth}
+
+    \includegraphics[width=\textwidth]{./screen/AppScreen/AboutDialog.png}
+        \captionof{figure}{Okno pokazujące informacje o programie}
+    \label{MainViewLinux}
+
+\end{minipage}
+\end{center}
+
 \subsubsection{Okienka dialogowe zapisujące/odczytujące dane i ustawienia do/z bazy/pliku XML}
+\begin{minipage}{\textwidth}
+
+    \includegraphics[width=\textwidth]{./screen/AppScreen/SaveTo.png}
+        \captionof{figure}{Okno zapisu do XML}
+    \label{MainViewLinux}
+
+\end{minipage}
+
+\begin{minipage}{\textwidth}
+
+    \includegraphics[width=\textwidth]{./screen/AppScreen/SaveToAll.png}
+        \captionof{figure}{Wybór formatu zapisu w oknie zapisu}
+    \label{MainViewLinux}
+
+\end{minipage}
+
 \subsection{Jasny i czytelny opis klawiszy funkcyjnych i przycisków obsługujących aplikację}
 \section{Postać bazy danych z zapisanymi informacjami o zdarzeniach}
+W projekcie zastosowano bazę danych MySQl w wersji 8.0.11. Wybór ten podyktowany był znacznie prostszą konfiguracją w systemie linux(wystarczy jedna komenda w terminalu).
+\lstinputlisting[language=sql,caption={Skrypt tworzący bazę danych}]{../SQL_init.sql}
 \section{Podsumowanie i ewentualne uwagi grupy nt. projektu. }
 
 \end{document}
