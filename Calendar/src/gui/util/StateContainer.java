@@ -8,7 +8,9 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import logicLayer.LogicLayerException;
 import logicLayer.LogicLayerFactory;
+import logicLayer.LogicLayerImpl;
 import logicLayer.LogicLayerSQLImpl;
 
 
@@ -29,7 +31,7 @@ public class StateContainer {
 
 	/** The Constant CONTACTS_CHANGED_COMMAND. */
 	public static final String CONTACTS_CHANGED_COMMAND = "CONTACT_CHANGED";
-	private LogicLayerSQLImpl logicLayer;
+	private LogicLayerImpl logicLayer;
 	private java.util.Calendar date;
 	private List<ActionListener> dateChangeListener = new ArrayList<>();
 	private List<ActionListener> eventChangeListener = new ArrayList<>();
@@ -38,11 +40,12 @@ public class StateContainer {
 	
 	/**
 	 * Instantiates a new state container.
+	 * @throws LogicLayerException 
 	 */
 	//TODO: Remove
-	public StateContainer() {
+	public StateContainer() throws LogicLayerException {
 		super();
-		this.logicLayer = LogicLayerFactory.getLogicLayerSQL();
+		this.logicLayer = LogicLayerFactory.getLogicLayerNoSQL();
 		this.date = java.util.Calendar.getInstance();
 	}
 	
@@ -51,7 +54,7 @@ public class StateContainer {
 	 *
 	 * @return the logic
 	 */
-	public LogicLayerSQLImpl getLogic() {
+	public LogicLayerImpl getLogic() {
 		return logicLayer;
 	}
 	
@@ -151,10 +154,10 @@ public class StateContainer {
 	/**
 	 * Sets the logic layer.
 	 *
-	 * @param logic the new logic layer
+	 * @param logicLayerImpl the new logic layer
 	 */
-	public void setLogicLayer(LogicLayerSQLImpl logic) {
-		this.logicLayer = logic;
+	public void setLogicLayer(LogicLayerImpl logicLayerImpl) {
+		this.logicLayer = logicLayerImpl;
 		//Trigger everyone
 		refresh();
 

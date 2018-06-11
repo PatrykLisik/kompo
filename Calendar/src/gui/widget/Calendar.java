@@ -22,15 +22,19 @@ import dataLayer.DataService;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
+import java.util.Optional;
+
 import gui.popup.EventCreator;
 import gui.popup.InfoView;
 import gui.util.SerializationHelper;
 import gui.util.StateContainer;
 import logicLayer.LogicLayerFactory;
+import logicLayer.LogicLayerImpl;
 import logicLayer.LogicLayerSQLImpl;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JMenu;
 
 // TODO: Auto-generated Javadoc
@@ -101,27 +105,34 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 		
 		mntmWczytaj = new JMenuItem(LOAD_CALENDAR);
 		mntmWczytaj.addActionListener(a -> {
-			LogicLayerSQLImpl logic = LogicLayerFactory.getLogicLayerSQL();
-			Calendar.this.stateContainer.setLogicLayer(logic);
+			Optional<LogicLayerImpl> logic = SerializationHelper.loadCalendar(this);
+			if(logic.isPresent())
+				Calendar.this.stateContainer.setLogicLayer(logic.get());
 			});
 		mnDane.add(mntmWczytaj);
 		
 		mntmZapisz = new JMenuItem(SAVE_CALENDAR);
 		mntmZapisz.addActionListener(a -> {
-			DataService service = Calendar.this.stateContainer.getLogic().getDataService();
-			SerializationHelper.saveCalendar(this, service);	
+			LogicLayerImpl logicLayer = Calendar.this.stateContainer.getLogic();
+			SerializationHelper.saveCalendar(this, logicLayer);	
 			});
 		mnDane.add(mntmZapisz);
 		
 		mntmZapiszDoBazy = new JMenuItem(SAVE_TO_DATABASE);
 		mntmZapiszDoBazy.addActionListener(a -> {
-			(Calendar.this.stateContainer.getLogic()).saveToDatabase();
+			LogicLayerImpl logicLayer = Calendar.this.stateContainer.getLogic();
+			if(logicLayer instanceof LogicLayerSQLImpl)
+				((LogicLayerSQLImpl)logicLayer).saveToDatabase();
+			else
+				 JOptionPane.showMessageDialog(this, "Zapis do bazy danych wymaga wczesniej otwartego polaczenia.", 
+						 "Error: Blad zapisu", JOptionPane.ERROR_MESSAGE);
 			});
 		mnDane.add(mntmZapiszDoBazy);
 		
 		mntmWczytajZBazy = new JMenuItem(LOAD_FROM_DATABASE);
 		mntmWczytajZBazy.addActionListener(a -> {
-			(Calendar.this.stateContainer.getLogic()).loadFromDatabase();
+			LogicLayerImpl logicLayer = LogicLayerFactory.getLogicLayerSQL();
+			Calendar.this.stateContainer.setLogicLayer(logicLayer);
 			});
 		mnDane.add(mntmWczytajZBazy);
 		

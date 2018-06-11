@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -15,6 +16,8 @@ import logicLayer.BinaryImporter;
 import logicLayer.BinarySaver;
 import logicLayer.Importer;
 import logicLayer.LogicLayerException;
+import logicLayer.LogicLayerFactory;
+import logicLayer.LogicLayerImpl;
 import logicLayer.OpenOfficeSaver;
 import logicLayer.Saver;
 import logicLayer.XMLImporter;
@@ -61,23 +64,23 @@ public class SerializationHelper{
 	 * @param defaultVal the default val
 	 * @return the data service
 	 */
-	public static DataService loadCalendar(Component parent,DataService defaultVal) {
+	public static Optional<LogicLayerImpl> loadCalendar(Component parent) {
 		JFileChooser fChooser = prepareFileChooser();
 		int option = fChooser.showOpenDialog(parent);
 		if(option != JFileChooser.APPROVE_OPTION) {
-			return defaultVal;
+			return Optional.empty();
 		}
 		File selectedFile = fChooser.getSelectedFile();
 		FileFilter selectedFilter = fChooser.getFileFilter();
 		
 		Importer importer = operators.get(selectedFilter).importer;
 		try {
-			return importer.importData(selectedFile.getAbsolutePath());
+			return Optional.of(LogicLayerFactory.getLogicLayerNoSQL(selectedFile.getAbsolutePath(), importer));
 		} catch (LogicLayerException | NullPointerException e ) {
 			e.printStackTrace();
 			 JOptionPane.showMessageDialog(parent, "Blad deserializacji", 
-					 "Error: Nie uda�o si� wczyta� danych do pliku.", JOptionPane.ERROR_MESSAGE);
-			return defaultVal;
+					 "Error: Nie udalo sie wczytac danych do pliku.", JOptionPane.ERROR_MESSAGE);
+			 return Optional.empty();
 		}
 	}
 	
@@ -87,7 +90,7 @@ public class SerializationHelper{
 	 * @param parent the parent
 	 * @param service the service
 	 */
-	public static void saveCalendar(Component parent, DataService service) {
+	public static void saveCalendar(Component parent, LogicLayerImpl logicLayer) {
 		JFileChooser fChooser = prepareFileChooser();
 		int option =fChooser.showSaveDialog(parent);
 		if(option != JFileChooser.APPROVE_OPTION) {
@@ -99,11 +102,12 @@ public class SerializationHelper{
 		OperationLogic operation =  operators.get(selectedFilter);
 		Saver saver = operation.saver;
 		try {
-			saver.save(selectedFile.getAbsolutePath()+"."+operation.getFileExtension(), service);
+			String fileName= selectedFile.getAbsolutePath()+"."+operation.getFileExtension();
+			logicLayer.save(fileName, saver);
 		} catch (LogicLayerException e) {
 			e.printStackTrace();
-			 JOptionPane.showMessageDialog(parent, "B��d serializacji", 
-					 "Error: Nie uda�o si� zapisa� danych do pliku.", JOptionPane.ERROR_MESSAGE);
+			 JOptionPane.showMessageDialog(parent, "Blad serializacji", 
+					 "Error: Nie udalo sie zapisac danych do pliku.", JOptionPane.ERROR_MESSAGE);
 			
 		}
 	}

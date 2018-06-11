@@ -52,7 +52,7 @@ public class LogicLayerImpl implements LogicLayer {
 	 * @param saver
 	 * @throws LogicLayerException 
 	 */
-	private void save(String fileName, Saver saver) throws LogicLayerException {
+	public void save(String fileName, Saver saver) throws LogicLayerException {
 		saver.save(fileName,data);
 	}
 
@@ -63,7 +63,7 @@ public class LogicLayerImpl implements LogicLayer {
 	 * @param saver
 	 * @throws LogicLayerException 
 	 */
-	private void importData(String fileName, Importer importer) throws LogicLayerException {
+	void importData(String fileName, Importer importer) throws LogicLayerException {
 		data = importer.importData(fileName);
 		notifyAllNotifiers();
 	}

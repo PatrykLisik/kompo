@@ -8,6 +8,7 @@ import javax.swing.UIManager;
 
 import gui.util.StateContainer;
 import gui.widget.Calendar;
+import logicLayer.LogicLayerException;
 
 
 /**
@@ -44,13 +45,18 @@ public class MainWindow {
 	 * Create the application.
 	 */
 	public MainWindow() {
-		initialize();
+		try {
+			initialize();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws LogicLayerException 
 	 */
-	private void initialize() {
+	private void initialize() throws LogicLayerException {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,7 +66,6 @@ public class MainWindow {
 		Calendar calendar = new Calendar();
 		StateContainer container = new StateContainer();
 		calendar.setStateContainer(container);
-		container.setDate(java.util.Calendar.getInstance());
 		frame.getContentPane().add(calendar);
 	}
 
