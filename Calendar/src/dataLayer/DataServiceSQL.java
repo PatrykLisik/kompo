@@ -401,7 +401,7 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 			stmt.setInt(1, eventId);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				int notification_id = rs.getInt("notification_id");
+				int notification_id = rs.getInt("id");
 				ret.put((long) notification_id,
 						new Notification(rs.getDate("notify_date"), rs.getString("description"), notification_id));
 			}
