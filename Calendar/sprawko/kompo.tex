@@ -74,8 +74,10 @@ Dominika & Wójcik  & 210355 \\
 Stworzona aplikacja jest kalendarzem przechowującym, wydarzenia, kontakty oraz powiadomienia. Pozwala utrwalać oraz pobierać dane za pomocą formatu XML, serializacji binarnej Javy oraz bazy danych MySQL. Użytkownikowi zostaje udostępniony interfejs graficzny zaprezentowany w podpunktach 3.2.1 -  3.2.3. 
        
 \section{Najważniejsze klasy warstwy danych projektu}
-Warstwa danych umożliwia przechowywanie danyh o osobach wydarzeniach i powiadomieniach. Osoby są reprezentowane przez klasę Person posiadające dwa pola imię i nazwisko będące stringami. Wydarzenie jest reprezentowane poprzez klasę Event, na którą składają się opis, data początku, końca oraz lista powiadomień. Powiadomienie jest reprezentowane przez klasę Notafication, na którą składają się opis powiadomienia oraz jego data. 
-Warstwa danych przechowuje wyżej wymienione obiekty. 
+Warstwa danych umożliwia przechowywanie danych o osobach wydarzeniach i powiadomieniach. Osoby są reprezentowane przez klasę Person posiadające dwa pola imię i nazwisko będące stringami. Wydarzenie jest reprezentowane poprzez klasę Event, na którą składają się opis, data początku, końca oraz lista powiadomień. Powiadomienie jest reprezentowane przez klasę Notafication, na którą składają się opis powiadomienia oraz jego data. 
+Warstwa danych przechowuje wyżej wymienione obiekty.
+
+Stworzono dwie implementacje warstwy danych bez połączenia, oraz z połączaniem do bazy danych. Druga z nich rozszerza pierwszą dodając metody pozwalające zapisać zmiany do bazy danych lub wczytać stan z bazy. Połączanie z bazą danych zostało zaimplementowane na zasadzie migawki. Gdy tworzona jest nowa instancja klasy wczytywane są dane z bazy. W tracie wykonania programu w buforze zapisywane są kwerendy zmieniające stan bazy do takiego do tożsamego z tym zapisanym w pamięci. 
 
 \begin{minipage}{\textwidth}
 
@@ -125,8 +127,25 @@ Warstwa danych przechowuje wyżej wymienione obiekty.
  \item znalezienie wydarzeń w danym dniu
  \item posortowanie wydarzeń po dacie 
  \item posortowanie wydarzeń po ilości uczestniczących osób
- \item zapis i odczyt z XML i serializacji binarnej 
+ \item zapis i odczyt z XML i serializacji binarnej
+ \item zapis do formatu odt(OpenOffice)
+ \item informowanie o zmianie stanu kolekcji
 \end{enumerate}
+
+Do seralizowania danych do formatu XML wykorzystano bibliotekę XStream.
+
+Zapis i odczyt z formatów standardowych zrealizowano za pomocą wzorca projektowego strategi. Stworzone zostały interface'y Importer i Saver które uogólniają zapis i odczyt z dowolnego formatu. Na ich podstwie powstały konkretne klasy jak XMLSaver,XMLImporter,ODTSaver itd.
+
+
+Zaimplementowane zostało automatyczne uruchamianie powiadomień. Odpowiada za to klasa EventNotifiactionPublisher posiadająca dwa wewnętrzne interfac'y:
+\begin{itemize}
+\item NotificationReciver -- uogólniający dowolnego odbiorcę powiadomień, do którego o odpowiednim czasie(zdefiniowanym przez samo powiadomienie) zostanie wysłana teść powiadomienia(poprzez wyołnie odpowiedniej metody).
+\item NotifiactionSource -- 
+\end{itemize}
+
+
+
+   
 
 \begin{minipage}{\textwidth}
 
@@ -144,7 +163,7 @@ Warstwa danych przechowuje wyżej wymienione obiekty.
 
 \end{minipage}
 
-\begin{minipage}{0.8\textwidth}
+\begin{minipage}{0.75\textwidth}
 
     \includegraphics[width=\textwidth]{./screen/logicLayer/LogicLayerImpl.png}
         \captionof{figure}{Dokumentacja klasy LogicLayerImpl}
@@ -203,15 +222,14 @@ Warstwa danych przechowuje wyżej wymienione obiekty.
 \end{center}
 
 \subsubsection{Okienka dialogowe zapisujące/odczytujące dane i ustawienia do/z bazy/pliku XML}
-\begin{minipage}{\textwidth}
+\begin{minipage}{0.5\textwidth}
 
     \includegraphics[width=\textwidth]{./screen/AppScreen/SaveTo.png}
         \captionof{figure}{Okno zapisu do XML}
     \label{MainViewLinux}
 
 \end{minipage}
-
-\begin{minipage}{\textwidth}
+\begin{minipage}{0.5\textwidth}
 
     \includegraphics[width=\textwidth]{./screen/AppScreen/SaveToAll.png}
         \captionof{figure}{Wybór formatu zapisu w oknie zapisu}
@@ -223,6 +241,14 @@ Warstwa danych przechowuje wyżej wymienione obiekty.
 \section{Postać bazy danych z zapisanymi informacjami o zdarzeniach}
 W projekcie zastosowano bazę danych MySQl w wersji 8.0.11. Wybór ten podyktowany był znacznie prostszą konfiguracją w systemie linux(wystarczy jedna komenda w terminalu).
 \lstinputlisting[language=sql,caption={Skrypt tworzący bazę danych}]{../SQL_init.sql}
+
 \section{Podsumowanie i ewentualne uwagi grupy nt. projektu. }
+
+Programistyczna strona projektu, poza kilkoma nieporozumieniami związanymi z wykorzystaniem klas zaimplementowanych przez drugą osobę, nie sprawiła większych problemów. Popełniliśmy natomiast kilka błędów związanych z używanymi narzędziami:
+\begin{itemize}
+\item Zbyt późno zaczęliśmy używać Mavan'a do zarządzania zależnościami, przez co często traciliśmy czas na doinstalowywanie bibliotek i edycję pliku "BuildPatch".
+
+\item Brak tworzenia testów automatycznych i ciągłej integracji poskutkował kilkoma regresami i trudnymi do zlokalizowania błędami wynikającymi z niewielkich zmian. 
+\end{itemize}
 
 \end{document}
