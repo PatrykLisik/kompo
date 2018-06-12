@@ -64,23 +64,23 @@ public class SerializationHelper{
 	 * @param defaultVal the default val
 	 * @return the data service
 	 */
-	public static Optional<LogicLayerImpl> loadCalendar(Component parent) {
+	public static void loadCalendar(Component parent,LogicLayerImpl logicLayer) {
 		JFileChooser fChooser = prepareFileChooser();
 		int option = fChooser.showOpenDialog(parent);
 		if(option != JFileChooser.APPROVE_OPTION) {
-			return Optional.empty();
+			Optional.empty();
 		}
 		File selectedFile = fChooser.getSelectedFile();
 		FileFilter selectedFilter = fChooser.getFileFilter();
 		
 		Importer importer = operators.get(selectedFilter).importer;
 		try {
-			return Optional.of(LogicLayerFactory.getLogicLayerNoSQL(selectedFile.getAbsolutePath(), importer));
+			logicLayer.importData(selectedFile.getAbsolutePath(), importer);
 		} catch (LogicLayerException | NullPointerException e ) {
 			e.printStackTrace();
 			 JOptionPane.showMessageDialog(parent, "Blad deserializacji", 
 					 "Error: Nie udalo sie wczytac danych do pliku.", JOptionPane.ERROR_MESSAGE);
-			 return Optional.empty();
+			  Optional.empty();
 		}
 	}
 	

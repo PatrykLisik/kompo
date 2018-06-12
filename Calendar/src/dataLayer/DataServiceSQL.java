@@ -1,5 +1,6 @@
 package dataLayer;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Properties;
@@ -80,6 +81,7 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 			stmt.setString(2, n.getDescripton());
 			stmt.setTimestamp(3, new java.sql.Timestamp(n.getDate().getTime()));
 			this.Gstmt.addBatch(getSQL(stmt));
+			System.out.println(getSQL(stmt));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -120,7 +122,7 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 			stmt.setInt(1, personId);
 			stmt.setInt(2, eventId);
 			this.Gstmt.addBatch(getSQL(stmt));
-			 
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -133,16 +135,18 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 	public void createEvent(Event ev) {
 		String querry = "INSERT INTO events VALUES(?, ?, ?, ? );";
 		try (PreparedStatement stmt = conn.prepareStatement(querry)) {
-			stmt.setInt(1, DataServiceNoSQL.eventCounter);
+			stmt.setInt(1, super.eventCounter);
 			stmt.setString(2, ev.getName());
 			stmt.setTimestamp(3, new java.sql.Timestamp(ev.getStart().getTime()));
 			stmt.setTimestamp(4, new java.sql.Timestamp(ev.getEnd().getTime()));
 			this.Gstmt.addBatch(getSQL(stmt));
+			System.out.println(getSQL(stmt));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		this.updateNotificationsOfEvent(ev);
+
 		super.createEvent(ev);
+		this.updateNotificationsOfEvent(ev);
 
 	}
 
@@ -156,10 +160,11 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 		String querry = "INSERT INTO persons VALUES( ? , ? , ? );";
 		try (PreparedStatement stmt = conn.prepareStatement(querry)) {
 
-			stmt.setInt(1, DataServiceNoSQL.personCounter);
+			stmt.setInt(1, super.personCounter);
 			stmt.setString(2, p.getName());
 			stmt.setString(3, p.getSurname());
 			this.Gstmt.addBatch(getSQL(stmt));
+			System.out.println(getSQL(stmt));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -267,7 +272,7 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 			stmt.setTimestamp(2, new java.sql.Timestamp(ev.getStart().getTime()));
 			stmt.setTimestamp(3, new java.sql.Timestamp(ev.getEnd().getTime()));
 			this.Gstmt.addBatch(getSQL(stmt));
-			 
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -284,7 +289,7 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 		try (PreparedStatement stmt = conn.prepareStatement(querry)) {
 			stmt.setInt(1, eventId);
 			this.Gstmt.addBatch(getSQL(stmt));
-			 
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -324,6 +329,8 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 			conn.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			System.out.println("VendorError: " + e.getErrorCode());
+			System.out.println("State: " + e.getSQLState());
 		}
 
 	}
@@ -337,8 +344,18 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 		DataContext ret = new DataContext();
 		ret.Events = this.pullEventFromDatabase();
 		ret.Persons = this.pullPersonFromDatabase();
-		DataServiceNoSQL.personCounter=ret.Events.size()+1;
-		DataServiceNoSQL.eventCounter=ret.Persons.size()+1;
+		if (ret.Persons.keySet().size() > 0) {
+			super.personCounter = Collections.max(ret.Persons.keySet()) + 1;
+		} else {
+			super.personCounter = 1;
+		}
+
+		if (ret.Events.keySet().size() > 0) {
+			super.eventCounter = Collections.max(ret.Events.keySet()) + 1;
+		} else {
+			super.eventCounter = 1;
+		}
+
 		return ret;
 	}
 
@@ -415,30 +432,38 @@ public class DataServiceSQL extends DataServiceNoSQL implements DataBaseService 
 	 */
 	@Override
 	public void updateEvent(int id, Event ev) {
-		String querry = "\\UPDATE events  SET name= ?, start= ?, end = ? where id= ? ;";
+		String querry = "UPDATE events  SET name= ?, start= ?, end = ? where id= ? ;";
 		try (PreparedStatement stmt = conn.prepareStatement(querry)) {
 			stmt.setString(1, ev.getName());
 			stmt.setTimestamp(2, new java.sql.Timestamp(ev.getStart().getTime()));
 			stmt.setTimestamp(3, new java.sql.Timestamp(ev.getEnd().getTime()));
 			stmt.setInt(4, id);
 			this.Gstmt.addBatch(getSQL(stmt));
-			 
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		// Delete previous notifications and add present
-
-		updateNotificationsOfEvent(ev);
 		super.updateEvent(id, ev);
+		updateNotificationsOfEvent(ev);
 
+	}
+
+	private Integer getIdOfEvent(Event ev) {
+
+		for (Integer o : super.getAllEvents().keySet()) {
+			if (super.getAllEvents().get(o).equals(ev)) {
+				return o;
+			}
+		}
+		return 0;
 	}
 
 	private void updateNotificationsOfEvent(Event ev) {
 		this.delteNotificationsOfEvent(ev);
+		System.out.print(ev.equals(ev));
 		for (Notification n : ev.getNotifications().values()) {
 			this.addNotification(n);
-
+			this.addNotificationToEvent((int) n.getId(), getIdOfEvent(ev));
 		}
 	}
 

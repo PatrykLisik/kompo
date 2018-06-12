@@ -12,16 +12,6 @@ import dataLayer.DataServiceSQL;
  *
  */
 public class LogicLayerFactory {
-	/**
-	 * Logic layer from file
-	 * @return instance of {@link logicLayer.LogicLayerImpl}
-	 * @throws LogicLayerException 
-	 */
-	public static LogicLayerImpl getLogicLayerNoSQL(String fileName, Importer importer) throws LogicLayerException {
-		LogicLayerImpl ll = new LogicLayerImpl(new DataServiceNoSQL());
-		ll.importData(fileName, importer);
-		return ll;
-	}
 	
 	/**
 	 * Empty Logic layer without database

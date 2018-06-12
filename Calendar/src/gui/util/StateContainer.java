@@ -10,7 +10,6 @@ import java.util.List;
 
 import logicLayer.LogicLayerException;
 import logicLayer.LogicLayerFactory;
-import logicLayer.LogicLayerImpl;
 import logicLayer.LogicLayerSQLImpl;
 
 
@@ -31,7 +30,7 @@ public class StateContainer {
 
 	/** The Constant CONTACTS_CHANGED_COMMAND. */
 	public static final String CONTACTS_CHANGED_COMMAND = "CONTACT_CHANGED";
-	private LogicLayerImpl logicLayer;
+	private LogicLayerSQLImpl logicLayer;
 	private java.util.Calendar date;
 	private List<ActionListener> dateChangeListener = new ArrayList<>();
 	private List<ActionListener> eventChangeListener = new ArrayList<>();
@@ -45,7 +44,7 @@ public class StateContainer {
 	//TODO: Remove
 	public StateContainer() throws LogicLayerException {
 		super();
-		this.logicLayer = LogicLayerFactory.getLogicLayerNoSQL();
+		this.logicLayer = LogicLayerFactory.getLogicLayerSQL();
 		this.date = java.util.Calendar.getInstance();
 	}
 	
@@ -54,7 +53,7 @@ public class StateContainer {
 	 *
 	 * @return the logic
 	 */
-	public LogicLayerImpl getLogic() {
+	public LogicLayerSQLImpl getLogic() {
 		return logicLayer;
 	}
 	
@@ -156,7 +155,7 @@ public class StateContainer {
 	 *
 	 * @param logicLayerImpl the new logic layer
 	 */
-	public void setLogicLayer(LogicLayerImpl logicLayerImpl) {
+	public void setLogicLayer(LogicLayerSQLImpl logicLayerImpl) {
 		this.logicLayer = logicLayerImpl;
 		//Trigger everyone
 		refresh();

@@ -5,7 +5,6 @@ package dataLayer;
 
 import java.util.HashMap;
 
-
 /**
  * Data service implementation of DataService without SQL queries Class which
  * contains data about events and persons.
@@ -22,13 +21,15 @@ public class DataServiceNoSQL implements DataService {
 
 	/** The person counter. */
 	// number of person that will created next
-	protected static int personCounter = 0;
+	protected int personCounter = 0;
 
 	/** The event counter. */
 	// number of event that will be created next
-	protected static int eventCounter = 0;
+	protected int eventCounter = 0;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see dataLayer.DataService#getDataContext()
 	 */
 	@Override
@@ -36,7 +37,9 @@ public class DataServiceNoSQL implements DataService {
 		return data;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see dataLayer.DataService#createPerson(dataLayer.Person)
 	 */
 	@Override
@@ -46,7 +49,9 @@ public class DataServiceNoSQL implements DataService {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see dataLayer.DataService#getPerson(int)
 	 */
 	@Override
@@ -55,7 +60,9 @@ public class DataServiceNoSQL implements DataService {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see dataLayer.DataService#updatePerson(int, dataLayer.Person)
 	 */
 	@Override
@@ -68,7 +75,9 @@ public class DataServiceNoSQL implements DataService {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see dataLayer.DataService#deletePerson(dataLayer.Person)
 	 */
 	@Override
@@ -76,7 +85,9 @@ public class DataServiceNoSQL implements DataService {
 		data.Persons.values().remove(p);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see dataLayer.DataService#deletePerson(int)
 	 */
 	@Override
@@ -85,7 +96,9 @@ public class DataServiceNoSQL implements DataService {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see dataLayer.DataService#getAllPersons()
 	 */
 	@Override
@@ -93,7 +106,9 @@ public class DataServiceNoSQL implements DataService {
 		return new HashMap<Integer, Person>(data.Persons);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see dataLayer.DataService#createEvent(dataLayer.Event)
 	 */
 	@Override
@@ -103,7 +118,9 @@ public class DataServiceNoSQL implements DataService {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see dataLayer.DataService#getEvent(int)
 	 */
 	@Override
@@ -112,7 +129,9 @@ public class DataServiceNoSQL implements DataService {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see dataLayer.DataService#updateEvent(int, dataLayer.Event)
 	 */
 	@Override
@@ -125,7 +144,9 @@ public class DataServiceNoSQL implements DataService {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see dataLayer.DataService#deleteEvent(dataLayer.Event)
 	 */
 	@Override
@@ -134,7 +155,9 @@ public class DataServiceNoSQL implements DataService {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see dataLayer.DataService#deleteEvent(int)
 	 */
 	@Override
@@ -143,7 +166,9 @@ public class DataServiceNoSQL implements DataService {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see dataLayer.DataService#getAllEvents()
 	 */
 	@Override

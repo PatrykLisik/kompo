@@ -100,8 +100,8 @@ public class Event implements Serializable {
 	Date start;
 
 	/**
-	 * @param name 
-	 * 			  description of event
+	 * @param name
+	 *            description of event
 	 * @param start
 	 *            date on which event starts
 	 * @param end
@@ -224,4 +224,16 @@ public class Event implements Serializable {
 		return "Event [start=" + start + ", end=" + end + ", name=" + name + ", associatedPersons=" + associatedPersons
 				+ ", notification=" + notification + "]";
 	}
+
+	/**
+	 * Compare for equality
+	 * 
+	 * @param ev
+	 * @return
+	 */
+	public boolean equals(Event ev) {
+		return ev.getName().compareTo(getName()) + ev.getStart().compareTo(getStart())
+				+ ev.getEnd().compareTo(end) == 0;
+	}
+
 }

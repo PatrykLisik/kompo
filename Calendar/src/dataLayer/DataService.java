@@ -8,6 +8,7 @@ import java.util.HashMap;
  * The Interface DataService.
  * 
  * @author dwojcik
+ * @author plisik
  * 
  */
 public interface DataService extends Serializable{

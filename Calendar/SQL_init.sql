@@ -48,10 +48,6 @@ CREATE TABLE notifications_events(
     notification_id int
 );
 
-ALTER TABLE notifications_events
-ADD FOREIGN KEY (event_id) REFERENCES events(id);
-ALTER TABLE notifications_events
-ADD FOREIGN KEY (notification_id) REFERENCES notifications(id);
 
 DESCRIBE persons;
 DESCRIBE event_person;

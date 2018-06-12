@@ -105,10 +105,8 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 		
 		mntmWczytaj = new JMenuItem(LOAD_CALENDAR);
 		mntmWczytaj.addActionListener(a -> {
-			Optional<LogicLayerImpl> logic = SerializationHelper.loadCalendar(this);
-			if(logic.isPresent())
-				Calendar.this.stateContainer.setLogicLayer(logic.get());
-			});
+			SerializationHelper.loadCalendar(this, Calendar.this.stateContainer.getLogic());
+		});
 		mnDane.add(mntmWczytaj);
 		
 		mntmZapisz = new JMenuItem(SAVE_CALENDAR);
@@ -131,8 +129,7 @@ public class Calendar extends JPanel implements ActionListener, ChangeListener{
 		
 		mntmWczytajZBazy = new JMenuItem(LOAD_FROM_DATABASE);
 		mntmWczytajZBazy.addActionListener(a -> {
-			LogicLayerImpl logicLayer = LogicLayerFactory.getLogicLayerSQL();
-			Calendar.this.stateContainer.setLogicLayer(logicLayer);
+			Calendar.this.stateContainer.getLogic().loadFromDatabase();
 			});
 		mnDane.add(mntmWczytajZBazy);
 		
