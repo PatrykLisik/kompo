@@ -1,6 +1,8 @@
 \documentclass[a4paper,12pt]{article}
 \usepackage[verbose,a4paper,tmargin=2cm,bmargin=3cm,lmargin=2cm,rmargin=2cm]{geometry}
 \usepackage[utf8]{inputenc}
+\usepackage{polski}
+\usepackage[latin2]{inputenc}
 \usepackage{caption}
 \usepackage{graphicx}
 \usepackage[polish]{babel}
@@ -77,7 +79,7 @@ Stworzona aplikacja jest kalendarzem przechowującym, wydarzenia, kontakty oraz 
 Warstwa danych umożliwia przechowywanie danych o osobach wydarzeniach i powiadomieniach. Osoby są reprezentowane przez klasę Person posiadające dwa pola imię i nazwisko będące stringami. Wydarzenie jest reprezentowane poprzez klasę Event, na którą składają się opis, data początku, końca oraz lista powiadomień. Powiadomienie jest reprezentowane przez klasę Notafication, na którą składają się opis powiadomienia oraz jego data. 
 Warstwa danych przechowuje wyżej wymienione obiekty.
 
-Stworzono dwie implementacje warstwy danych bez połączenia, oraz z połączaniem do bazy danych. Druga z nich rozszerza pierwszą dodając metody pozwalające zapisać zmiany do bazy danych lub wczytać stan z bazy. Połączanie z bazą danych zostało zaimplementowane na zasadzie migawki. Gdy tworzona jest nowa instancja klasy wczytywane są dane z bazy. W tracie wykonania programu w buforze zapisywane są kwerendy zmieniające stan bazy do takiego do tożsamego z tym zapisanym w pamięci. 
+Stworzono dwie implementacje warstwy danych bez połączenia, oraz z połączaniem do bazy danych. Druga z nich rozszerza pierwszą dodając metody pozwalające zapisać zmiany do bazy danych lub wczytać stan z bazy. Połączanie z bazą danych zostało zaimplementowane na zasadzie migawki. Gdy tworzona jest nowa instancja klasy wczytywane są dane z bazy. W tracie wykonania programu w buforze zapisywane są kwerendy zmieniające stan bazy do tożsamego z tym zapisanym w pamięci. 
 
 \begin{minipage}{\textwidth}
 
@@ -134,13 +136,13 @@ Stworzono dwie implementacje warstwy danych bez połączenia, oraz z połączani
 
 Do seralizowania danych do formatu XML wykorzystano bibliotekę XStream.
 
-Zapis i odczyt z formatów standardowych zrealizowano za pomocą wzorca projektowego strategi. Stworzone zostały interface'y Importer i Saver które uogólniają zapis i odczyt z dowolnego formatu. Na ich podstwie powstały konkretne klasy jak XMLSaver,XMLImporter,ODTSaver itd.
+Zapis i odczyt z formatów standardowych zrealizowano za pomocą wzorca projektowego strategi. Stworzone zostały interface'y Importer i Saver które uogólniają zapis i odczyt z dowolnego formatu. Na ich podstawie powstały konkretne klasy jak XMLSaver,XMLImporter,ODTSaver itd.
 
 
 Zaimplementowane zostało automatyczne uruchamianie powiadomień. Odpowiada za to klasa EventNotifiactionPublisher posiadająca dwa wewnętrzne interfac'y:
 \begin{itemize}
-\item NotificationReciver -- uogólniający dowolnego odbiorcę powiadomień, do którego o odpowiednim czasie(zdefiniowanym przez samo powiadomienie) zostanie wysłana teść powiadomienia(poprzez wyołnie odpowiedniej metody).
-\item NotifiactionSource -- 
+\item NotificationReciver -- uogólniający dowolnego odbiorcę powiadomień, do którego o odpowiednim czasie(zdefiniowanym przez samo powiadomienie) zostanie wysłana teść powiadomienia(poprzez wywołanie odpowiedniej metody).
+\item NotifiactionSource -- uogólnienie źródła powiadomień. oczekuje się że wywołana odpowiednią metodę jeśli lista powiadomień zostanie zmieniona. 
 \end{itemize}
 
 
@@ -197,7 +199,26 @@ Zaimplementowane zostało automatyczne uruchamianie powiadomień. Odpowiada za t
 
 \section{Warstwa interfejsu}
 \subsection{Najważniejsze klasy warstwy interfejsu}
-%TODO 
+Główną klasą odpowiedzialną za uruchomienie wszystkich mechanizmów związanych z widokiem aplikacji jest klasa MainWindow.
+Podczas uruchomienia aplikacji powstaje obiekt klasy Calendar odpowiedzialny za główny widok okna oraz utworzenie słuchaczy, czyli obiektów klasy implementującej interfejs ActionListener. Pozostałe klasy takie jak ContactsView, DayView, MonthView i inne implementują pozostałe elementy kalendarza.
+W warstwie prezentacji znajduje się także klasa StateContainer odpowiedzialna za zarządzanie  generowanymi podczas działania programu zdarzeniami.
+
+\begin{minipage}{.75\textwidth}
+
+    \includegraphics[width=\textwidth]{./screen/GUI/calendar.png}
+        \captionof{figure}{Dokumentacja klasy calendar}
+    \label{MainViewLinux}
+
+\end{minipage}
+
+\begin{minipage}{.75\textwidth}
+
+    \includegraphics[width=\textwidth]{./screen/GUI/stateContainer.png}
+        \captionof{figure}{Dokumentacja klasy stateContainer}
+    \label{MainViewLinux}
+
+\end{minipage}
+
 \subsection{Zrzuty ekranu najważniejszych widoków działającej aplikacji}
 \subsubsection{Główne okno kalendarza ''organizera''}
 
@@ -242,6 +263,43 @@ Zaimplementowane zostało automatyczne uruchamianie powiadomień. Odpowiada za t
 W projekcie zastosowano bazę danych MySQl w wersji 8.0.11. Wybór ten podyktowany był znacznie prostszą konfiguracją w systemie linux(wystarczy jedna komenda w terminalu).
 \lstinputlisting[language=sql,caption={Skrypt tworzący bazę danych}]{../SQL_init.sql}
 
+
+\begin{lstlisting}[style=DOS]
+mysql> SELECT * FROM events;
++----+------+---------------------+---------------------+
+| id | name | start               | end                 |
++----+------+---------------------+---------------------+
+|  1 | test | 2018-06-13 22:00:00 | 2018-06-16 06:57:18 |
++----+------+---------------------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM persons;
++----+--------+---------+
+| id | name   | surname |
++----+--------+---------+
+|  1 | patryk | lisik   |
++----+--------+---------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM notifications;
++----+------------------------------+---------------------+
+| id | description                  | notify_date         |
++----+------------------------------+---------------------+
+|  0 | is starting now              | 2018-06-13 22:00:00 |
+|  1 | is going to start in one day | 2018-06-12 22:00:00 |
++----+------------------------------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM notifications_events;
++----------+-----------------+
+| event_id | notification_id |
++----------+-----------------+
+|        0 |               1 |
+|        1 |               1 |
++----------+-----------------+
+2 rows in set (0.00 sec)
+\end{lstlisting}
+\captionof{lstlisting}{Listing z stanu bazy danych po wykonaniu kilku operacji}
 \section{Podsumowanie i ewentualne uwagi grupy nt. projektu. }
 
 Programistyczna strona projektu, poza kilkoma nieporozumieniami związanymi z wykorzystaniem klas zaimplementowanych przez drugą osobę, nie sprawiła większych problemów. Popełniliśmy natomiast kilka błędów związanych z używanymi narzędziami:
